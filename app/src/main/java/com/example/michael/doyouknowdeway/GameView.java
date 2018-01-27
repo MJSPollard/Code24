@@ -36,6 +36,7 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     public void run() {
+
         while (isPlaying) {
             update();
             draw();
