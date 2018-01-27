@@ -1,0 +1,106 @@
+package com.example.michael.doyouknowdeway;
+
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
+
+/**
+ * Created by michael on 1/27/18.
+ */
+
+public class GameView extends SurfaceView implements Runnable {
+
+    volatile boolean isPlaying = true;
+    private Thread gameThread = null;
+    private SurfaceHolder surfaceHolder;
+    private Canvas canvas;
+    private Context context;
+    private Activity activity;
+    private int screenWidth = 0, screenHeight = 0;
+
+
+    public GameView(Context context, int screenX, int screenY) {
+        super(context);
+        screenWidth = screenX;
+        screenHeight = screenY;
+
+        activity = (Activity) context;
+        this.context = context;
+        surfaceHolder = getHolder();
+
+
+    }
+
+    public void run() {
+        while (isPlaying) {
+            update();
+            draw();
+            setFPS();
+        }
+    }
+
+    /**
+     * Redraws the screen in the new positions
+     */
+    public void draw() {
+        if (surfaceHolder.getSurface().isValid()) {
+            canvas = surfaceHolder.lockCanvas();
+            canvas.drawColor(Color.GREEN);
+            surfaceHolder.unlockCanvasAndPost(canvas);
+        }
+    }
+
+    /**
+     * updates the positions of everything on the screen if needed
+     */
+    public void update() {
+
+    }
+
+    /**
+     * ignore for now
+     *
+     * @param s
+     */
+    public void setLevel(String s) {
+    }
+
+    /**
+     * Sets the FPS to roughly 60 fps
+     */
+    public void setFPS() {
+        try {
+            gameThread.sleep(17);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void gameOver() {
+
+    }
+
+    /**
+     * Pause game
+     */
+    public void pause() {
+        isPlaying = false;
+        try {
+            gameThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void resume() {
+        isPlaying = true;
+        gameThread = new Thread(this);
+        gameThread.start();
+    }
+
+}
