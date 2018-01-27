@@ -5,6 +5,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -21,15 +23,19 @@ public class GameView extends SurfaceView implements Runnable {
     private Context context;
     private Activity activity;
     private int screenWidth = 0, screenHeight = 0;
+    private Player player;
+    Paint paint = new Paint();
 
 
     public GameView(Context context, int screenX, int screenY) {
         super(context);
+
+
         screenWidth = screenX;
         screenHeight = screenY;
-
         activity = (Activity) context;
         this.context = context;
+        player = new Player(context, screenX, screenY);
         surfaceHolder = getHolder();
 
 
@@ -50,6 +56,9 @@ public class GameView extends SurfaceView implements Runnable {
         if (surfaceHolder.getSurface().isValid()) {
             canvas = surfaceHolder.lockCanvas();
             canvas.drawColor(Color.GREEN);
+            canvas.drawBitmap(player.getPlayerImage(),player.getXVal(), player.getYVal(), paint);
+
+            //releases the canvas to be redrawn again
             surfaceHolder.unlockCanvasAndPost(canvas);
         }
     }
@@ -58,7 +67,7 @@ public class GameView extends SurfaceView implements Runnable {
      * updates the positions of everything on the screen if needed
      */
     public void update() {
-
+        player.update();
     }
 
     /**
@@ -82,6 +91,17 @@ public class GameView extends SurfaceView implements Runnable {
 
     public void gameOver() {
 
+    }
+
+    public boolean onTouchEvent(MotionEvent event){
+
+        int touchAction = event.getAction();
+
+        if(touchAction == MotionEvent.ACTION_DOWN){
+            player.isJumping = true;
+        }
+
+        return true;
     }
 
     /**

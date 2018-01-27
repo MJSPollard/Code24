@@ -3,6 +3,7 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
+import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -37,6 +38,7 @@ public class GameActivity extends AppCompatActivity {
         setContentView(gameView);
 
     }
+
 
 
     //pauses the game
