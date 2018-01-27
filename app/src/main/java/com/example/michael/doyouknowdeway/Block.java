@@ -15,7 +15,15 @@ public class Block {
     private Bitmap blockImageResized;
     private Boolean harmful;
 
-    public Block(Context context, int selection)
+    Block(Block copy, int x, int y)
+    {
+        this.blockImage = copy.blockImage;
+        this.blockImageResized = copy.blockImageResized;
+        this.harmful = copy.harmful;
+        this.x = x;
+        this.y = y;
+    }
+    Block(Context context, int selection)
     {
         if(selection == 0)
         {
@@ -40,5 +48,23 @@ public class Block {
     {
         self.x = x;
         self.y = y;
+    }
+
+    public int getX()
+    {
+        return x;
+    }
+
+    public int getY()
+    {
+        return y;
+    }
+
+    public int[] getPosition()
+    {
+        int[] position = new int[2];
+        position[0] = x;
+        position[1] = y;
+        return position;
     }
 }

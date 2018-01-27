@@ -40,10 +40,15 @@ public class Tile {
             {
                 if(i == 25 && j == 25)
                 {
-                    tileMap[i][j] = blocks[0];
+                    tileMap[i][j] = new Block(block[0], i, j);
                 }
             }
         }
+    }
+
+    public int[] getBlock(int x, int y)
+    {
+        return tileMap[x][y].getPosition();
     }
 
 }
