@@ -1,33 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/Theme.AppCompat.Light"
-    android:background="@android:color/black"
+    android:background="@android:color/darker_gray"
     tools:context="com.example.michael.doyouknowdeway.MainActivity">
 
-    <TextView
-        android:id="@+id/Title"
-        android:layout_width="wrap_content"
-        android:text="De Way"
-        android:textColor="@android:color/white"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textSize="50dp"
-        android:gravity="center"
-        android:fontFamily="sans-serif"
-        android:layout_marginBottom="40dp"
-        android:layout_centerHorizontal="true"/>
+
+
     <Button
         android:id="@+id/startButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Play Game"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="88dp"
         android:layout_weight="1"
-        android:layout_below="@+id/Title"
-        android:layout_centerHorizontal="true" />
+        android:text="Play Game" />
 
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/grassBackground" />
+
+    <TextView
+        android:id="@+id/Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_weight="1"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:text="De Way"
+        android:textColor="@android:color/black"
+        android:textSize="50dp"
+        tools:fontFamily="casual" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/startButton"
+        android:layout_marginTop="12dp"
+        app:srcCompat="@drawable/ugandaKnuckles" />
 
 </RelativeLayout>
 
