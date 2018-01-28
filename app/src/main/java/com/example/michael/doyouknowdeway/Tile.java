@@ -36,9 +36,9 @@ public class Tile {
     Tile(int length, int height, int ID)
     {
         this.ID = ID + 1;
-        tileMap = new Block[(length + 100)/100][height/100];
-        this.height = height/100;
-        this.length = (length + 100)/100;
+        tileMap = new Block[length][height];
+        this.height = height;
+        this.length = length;
     }
 
     public void fillTile()
