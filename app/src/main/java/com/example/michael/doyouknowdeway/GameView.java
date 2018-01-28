@@ -42,10 +42,11 @@ public class GameView extends SurfaceView implements Runnable {
         backgroundImageResized = Bitmap.createScaledBitmap(backgroundImage, screenX, screenY, false);
 
         jumpNoise = MediaPlayer.create(context, R.raw.jump_takeoff);
-        backgroundMusic = MediaPlayer.create(context, R.raw.spit);
+        backgroundMusic = MediaPlayer.create(context, R.raw.music_baby);
         screenWidth = screenX;
         screenHeight = screenY;
         activity = (Activity) context;
+        backgroundMusic.start();
         this.context = context;
         player = new Player(context, screenX, screenY);
         surfaceHolder = getHolder();
