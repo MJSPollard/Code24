@@ -12,6 +12,13 @@ public class Tile {
     private Block[][] tileMap;
     //private int[] possible_next_tile;
 
+    Tile(Tile copy)
+    {
+        this.length = copy.length;
+        this.height = copy.height;
+        this.blocks = copy.blocks;
+        this.tileMap = copy.tileMap;
+    }
 
     //Creates the initial starting tile
     Tile(Context context, int number_block_types, int length, int height)
