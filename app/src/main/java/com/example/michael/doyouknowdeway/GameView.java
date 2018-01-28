@@ -60,6 +60,7 @@ public class GameView extends SurfaceView implements Runnable {
         if (surfaceHolder.getSurface().isValid()) {
             canvas = surfaceHolder.lockCanvas();
             canvas.drawColor(Color.GREEN);
+
             canvas.drawBitmap(player.getPlayerImage(),player.getXVal(), player.getYVal(), paint);
 
             for(int i = 0; i < initTile.getHeight(); i++)
