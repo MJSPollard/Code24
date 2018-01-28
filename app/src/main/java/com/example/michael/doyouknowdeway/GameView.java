@@ -196,7 +196,7 @@ public class GameView extends SurfaceView implements Runnable {
         }
         else
         {
-            passOver= 0;
+            passOver= -25;
         }
 
         for(int i = 0; i < currentTile.getHeight(); i++)
@@ -230,6 +230,35 @@ public class GameView extends SurfaceView implements Runnable {
         checkGroundCollision(highestY);
 
         checkTidePodCollision(currentTile, nextTile);
+
+        checkForwardCollision(nextTile, currentX, highestY, passOver);
+    }
+
+    public void checkForwardCollision(Tile next, int x, int y, int passOver)
+    {
+        boolean collision = false;
+        Rect rect = new Rect();
+
+        if(next != null && passOver >= 0)
+        {
+            rect.top = y * 100;
+            rect.bottom = screenHeight;
+            rect.left = passOver + (player.getBitmap().getWidth() / 2);
+            rect.right = passOver + (player.getBitmap().getWidth() / 2) + 100;
+
+             collision = Rect.intersects(player.getHitBox(), rect);
+        }
+        else
+        {
+            rect.top = y * 100;
+            rect.bottom = screenHeight;
+            rect.left = (x+1)* 100;
+            rect.right = (x+2) * 100;
+
+            collision = Rect.intersects(player.getHitBox(), rect);
+        }
+
+        //if collision is true, half player movement until its not true
     }
 
     public void checkTidePodCollision(Tile currentTile, Tile next)

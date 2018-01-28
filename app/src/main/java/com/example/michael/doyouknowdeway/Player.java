@@ -58,6 +58,10 @@ public class Player {
     hitBox.right = Xval + playerImageResized.getWidth();
   }
 
+  public Bitmap getBitmap()
+  {
+    return playerImageResized;
+  }
 
   public Rect getHitBox(){
     return hitBox;
