@@ -13,7 +13,7 @@ import android.widget.ImageButton;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageButton startButton;
-    private MediaPlayer mp;
+    private MediaPlayer deway;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,11 +30,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startButton = findViewById(R.id.imageButton2);
         startButton.setOnClickListener(this);
 
-
+        deway = MediaPlayer.create(this, R.raw.do_u_kno_de_way.wav);
     }
 
     public void onClick(View v) {
         if (v == startButton) {
+            deway.start();
             Intent myIntent = new Intent(this, GameActivity.class);
             myIntent.putExtra("levelValue", "1");
             startActivity(myIntent);
