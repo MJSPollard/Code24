@@ -53,7 +53,6 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     public void run() {
-        backgroundMusic.start();
         initTile = new Tile(context, 2, screenWidth * 2, screenHeight);
         currentTile = initTile;
         initTile.fillTile();
