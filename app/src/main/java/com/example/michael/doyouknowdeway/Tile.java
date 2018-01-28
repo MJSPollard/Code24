@@ -51,16 +51,11 @@ public class Tile {
             {
                 if(j == tileMap[i].length - 1)
                 {
-                    if(i == 3)
-                    {
+                    if(i == 3) {
                         tileMap[i][j] = new Block(blocks[1], i, j);
                     }
-<<<<<<< HEAD
                     else if(i == 8 || i == 9)
                     {
-=======
-                    else if(i == 8 || i == 9) {
->>>>>>> be1737594565e36c5eb4ca170f653115ac9c085a
                         continue;
                     }
                     else {

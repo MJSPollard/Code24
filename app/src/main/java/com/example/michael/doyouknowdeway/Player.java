@@ -44,6 +44,7 @@ public class Player {
     }
 
     else if(isFalling) {
+      isJumping = false;
       Yval += 30;
       //change to when ground is hit
       if(GameView.isColliding){
