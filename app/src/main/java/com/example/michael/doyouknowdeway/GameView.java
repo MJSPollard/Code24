@@ -213,7 +213,6 @@ public class GameView extends SurfaceView implements Runnable {
                 if(nextTile.getBlock(passOver/100, i) != null)
                 {
                     highestY = i;
-                    isPassOver = true;
                     break;
                 }
             }
