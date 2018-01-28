@@ -118,11 +118,7 @@ public class GameView extends SurfaceView implements Runnable {
             canvas.drawColor(Color.WHITE);
             canvas.drawBitmap(backgroundImageResized, 0, 0, paint);
             canvas.drawBitmap(podCountResized, 0, 0, paint);
-<<<<<<< HEAD
             paint.setColor(Color.BLACK);
-=======
-            paint.setColor(Color.black);
->>>>>>> 9df3f1230eba18c5a92a0601e34a460ffbef04fd
             paint.setTextSize(20);
             canvas.drawText(Integer.toString(scoreCount), 150, 10, paint);
 
@@ -253,10 +249,7 @@ public class GameView extends SurfaceView implements Runnable {
 
                 if(hit)
                 {
-<<<<<<< HEAD
                     System.out.println("WINNER WINNER");
-=======
->>>>>>> 9df3f1230eba18c5a92a0601e34a460ffbef04fd
                     eatNoise.start();
                     scoreCount++;
                     nextTile.setNullBlock(x, y);
