@@ -58,7 +58,7 @@ public class GameView extends SurfaceView implements Runnable {
     public void draw() {
         if (surfaceHolder.getSurface().isValid()) {
             canvas = surfaceHolder.lockCanvas();
-            canvas.drawColor(Color.GREEN);
+            canvas.drawColor(Color.WHITE);
 
             for(int i = 0; i < initTile.getLength(); i++)
             {
