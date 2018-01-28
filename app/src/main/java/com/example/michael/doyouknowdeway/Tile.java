@@ -40,7 +40,7 @@ public class Tile {
             {
                 if(i == 25 && j == 25)
                 {
-                    tileMap[i][j] = new Block(block[0], i, j);
+                    tileMap[i][j] = new Block(blocks[0], i, j);
                 }
             }
         }

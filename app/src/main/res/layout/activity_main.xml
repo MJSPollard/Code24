@@ -28,7 +28,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:scaleType="fitXY"
-        app:srcCompat="@drawable/grassBackground" />
+        app:srcCompat="@drawable/grass_background" />
 
     <TextView
         android:id="@+id/Title"
@@ -52,7 +52,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/startButton"
         android:layout_marginTop="12dp"
-        app:srcCompat="@drawable/ugandaKnuckles" />
+        app:srcCompat="@drawable/main_screen_knuckle" />
 
 </RelativeLayout>
 

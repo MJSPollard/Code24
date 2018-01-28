@@ -46,8 +46,8 @@ public class Block {
 
     public void setPosition(int x,int y)
     {
-        self.x = x;
-        self.y = y;
+        this.x = x;
+        this.y = y;
     }
 
     public int getX()

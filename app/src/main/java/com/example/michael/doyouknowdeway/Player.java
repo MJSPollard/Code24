@@ -25,8 +25,8 @@ public class Player {
     screenWidth = screenY;
     screenHeight = screenX;
 
-    playerImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.grass_block);
-    playerImageResized = Bitmap.createScaledBitmap(playerImage, 60, 300, false);
+    playerImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.main_screen_knuckle);
+    playerImageResized = Bitmap.createScaledBitmap(playerImage, 200, 200, false);
 
     Xval = 200;
     Yval = screenHeight - 1200;
@@ -35,15 +35,15 @@ public class Player {
   }
   public void update(){
     if(isJumping){
-      Yval -= 20;
-      if(Yval <= 100) {
+      Yval -= 30;
+      if(Yval <= 400) {
         isJumping = false;
         isFalling = true;
       }
     }
 
     if(isFalling) {
-      Yval += 20;
+      Yval += 30;
       if(Yval >= screenHeight - 1200){
         isFalling = false;
       }
