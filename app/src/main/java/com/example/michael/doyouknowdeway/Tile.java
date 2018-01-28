@@ -7,7 +7,7 @@ import android.content.Context;
  */
 
 public class Tile {
-    private int length, height, ID; //might make height constant variable
+    private int length, height, ID;
     private Block[] blocks = new Block[5];
     private Block[][] tileMap;
     //private int[] possible_next_tile;
@@ -26,9 +26,9 @@ public class Tile {
             this.height = height/100;
             this.length = (length + 100)/100;
     }
-    public Tile(int length, int height)
+    Tile(int length, int height, int ID)
     {
-        ID++;
+        this.ID = ID + 1;
         tileMap = new Block[(length + 100)/100][height/100];
         this.height = height/100;
         this.length = (length + 100)/100;
@@ -77,7 +77,7 @@ public class Tile {
 
     Tile getNextTile()
     {
-        Tile nextTile = new Tile(length, height);
+        Tile nextTile = new Tile(length, height, ID);
         nextTile.fillTile();
         return nextTile;
     }
