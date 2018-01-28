@@ -77,7 +77,8 @@ public class GameView extends SurfaceView implements Runnable {
                 currentTile = nextTile;
             }
 
-            if(currentTile.equals(initTile)) {
+
+            if(currentTile == initTile) {
                 for (int i = 0; i < currentTile.getLength(); i++) {
                     for (int j = 0; j < currentTile.getHeight(); j++) {
                         if (currentTile.getBlock(i, j) != null) {
@@ -97,7 +98,7 @@ public class GameView extends SurfaceView implements Runnable {
                     for (int j = 0; j < currentTile.getHeight(); j++) {
                         if (currentTile.getBlock(i, j) != null) {
                             canvas.drawBitmap(currentTile.getBlock(i, j).getImage(), (i * 100) - move_const, (j * 100) + 10, paint);
-                            if(!(nextTile.equals(currentTile)))
+                            if(nextTile != currentTile)
                             {
                                 canvas.drawBitmap(nextTile.getBlock(i, j).getImage(), (i * 100) + currentTile.getLength() - move_const, (j * 100) + 10, paint);
                             }
