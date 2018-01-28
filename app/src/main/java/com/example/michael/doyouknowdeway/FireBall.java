@@ -36,8 +36,8 @@ public class FireBall {
             Xval += 50;
             if(Xval > screenWidth) {
                 isShooting = false;
-                Xval = player.getXVal();
-                Yval = player.getYVal();
+                Xval = 250;
+                Yval = player.getYVal() - (player.getBitmap(),getYVal() / 2);
             }
         }
     }
