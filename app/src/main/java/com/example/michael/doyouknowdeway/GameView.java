@@ -104,6 +104,7 @@ public class GameView extends SurfaceView implements Runnable {
 
             if(player.getXVal() >= currentTile.getLength()*100 - 25)
             {
+                System.out.println("fuckfuck fuck");
                 currentTile = new Tile(nextTile);
             }
             if(init) {
@@ -127,9 +128,11 @@ public class GameView extends SurfaceView implements Runnable {
                     for (int j = 0; j < currentTile.getHeight(); j++) {
                         if (currentTile.getBlock(i, j) != null) {
                             canvas.drawBitmap(currentTile.getBlock(i, j).getImage(), (i * 100) - move_const, (j * 100) + 10, paint);
-                            System.out.println(nextTile.getID() + " || " + currentTile.getID());
-                            if (!(0 == nextTile.isEqualTo(currentTile))) {
-                                canvas.drawBitmap(nextTile.getBlock(i, j).getImage(), (i * 100) + currentTile.getLength() - move_const, (j * 100) + 10, paint);
+                            if(nextTile != null) {
+                                System.out.println(nextTile.getID() + " || " + currentTile.getID());
+                                if (!(0 == nextTile.isEqualTo(currentTile))) {
+                                    canvas.drawBitmap(nextTile.getBlock(i, j).getImage(), (i * 100) + currentTile.getLength() - move_const, (j * 100) + 10, paint);
+                                }
                             }
                             System.out.println("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
                         }
@@ -149,7 +152,8 @@ public class GameView extends SurfaceView implements Runnable {
      */
     public void update() {
         player.update();
-        if(player.getXVal() >= currentTile.getLength()*100 - 1600)
+        System.out.println(player.getXVal() + "ZZZZZZZZZZZ");
+        if(player.getXVal() >= currentTile.getLength()*100 - 2000)
         {
             nextTile = currentTile.getNextTile();
         }
