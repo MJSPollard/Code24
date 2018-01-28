@@ -114,11 +114,8 @@ public class GameView extends SurfaceView implements Runnable {
             canvas.drawColor(Color.WHITE);
             canvas.drawBitmap(backgroundImageResized, 0, 0, paint);
             canvas.drawBitmap(podCountResized, 0, 0, paint);
-<<<<<<< HEAD
             canvas.drawText(Integer.toString(scoreCount), 150, 150, paint);
-=======
             canvas.drawText(Integer.toString(scoreCount), 150, 10, paint);
->>>>>>> be1737594565e36c5eb4ca170f653115ac9c085a
 
             if(-100 >= (currentTile.getBlock(currentTile.getLength() - 1, currentTile.getHeight() - 1).getX() *100) - move_const)
             {
@@ -174,23 +171,14 @@ public class GameView extends SurfaceView implements Runnable {
             fireball.update();
         }
 
-        if((currentTile.getBlock(currentTile.getLength()-(screenWidth/100), currentTile.getHeight() -1).getX() * 100) - move_const <= 200)
-        {
+        if((currentTile.getBlock(currentTile.getLength()-(screenWidth/100), currentTile.getHeight() -1).getX() * 100) - move_const <= 200) {
             nextTile = currentTile.getNextTile();
         }
-
-<<<<<<< HEAD
-<<<<<<< HEAD
         if(player.getYVal() >= 2000){
             gameOver();
         }
-=======
         detectCollisions();
->>>>>>> 8593dc6d52fffb1d3cb7494095df1eff104179cf
-=======
         detectCollisions();
->>>>>>> be1737594565e36c5eb4ca170f653115ac9c085a
-
     }
 
     static boolean isColliding = false;
@@ -275,10 +263,7 @@ public class GameView extends SurfaceView implements Runnable {
             } else {
                 fireball.setOnScreen(true);
             }
-
-
         }
-
         return true;
     }
 
@@ -293,8 +278,6 @@ public class GameView extends SurfaceView implements Runnable {
             e.printStackTrace();
         }
     }
-
-
     /**
      * Resume the game
      */
