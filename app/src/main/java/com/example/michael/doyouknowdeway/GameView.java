@@ -20,7 +20,7 @@ import android.view.SurfaceView;
 public class GameView extends SurfaceView implements Runnable {
 
 
-    volatile boolean isPlaying = true, init = true;
+    volatile boolean isPlaying = true;
     private Thread gameThread = null;
     private SurfaceHolder surfaceHolder;
     private Canvas canvas;
@@ -30,7 +30,7 @@ public class GameView extends SurfaceView implements Runnable {
     private Player player;
     private MediaPlayer jumpNoise;
     private Bitmap backgroundImage;
-    Tile initTile;
+    Tile initTile, currentTile, nextTile;
     Paint paint = new Paint();
 
 
@@ -49,7 +49,8 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     public void run() {
-        initTile = new Tile(context, 2, screenWidth, screenHeight);
+        initTile = new Tile(context, 2, screenWidth * 2, screenHeight);
+        currentTile = initTile;
         initTile.fillTile();
         while (isPlaying) {
             update();
@@ -68,10 +69,7 @@ public class GameView extends SurfaceView implements Runnable {
 
             canvas.drawBitmap(backgroundImage, 0, 0, paint);
 
-
-
-            if(init) {
-                init = false;
+            if(currentTile.equals(initTile)) {
                 for (int i = 0; i < initTile.getLength(); i++) {
                     for (int j = 0; j < initTile.getHeight(); j++) {
                         if (initTile.getBlock(i, j) != null) {
@@ -108,6 +106,10 @@ public class GameView extends SurfaceView implements Runnable {
      */
     public void update() {
         player.update();
+        if(player.getXVal() >= currentTile.getLength() - 1700)
+        {
+            currentTile.getNextTile();
+        }
     }
 
     /**
