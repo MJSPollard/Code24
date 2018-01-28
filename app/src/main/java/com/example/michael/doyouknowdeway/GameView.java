@@ -41,6 +41,7 @@ public class GameView extends SurfaceView implements Runnable {
         backgroundImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.background_sky);
         backgroundImageResized = Bitmap.createScaledBitmap(backgroundImage, screenX, screenY, false);
         jumpNoise = MediaPlayer.create(context, R.raw.jump_takeoff);
+        backgroundMusic = MediaPlayer.create(context, R.raw.spit);
         screenWidth = screenX;
         screenHeight = screenY;
         activity = (Activity) context;
@@ -52,6 +53,7 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     public void run() {
+        backgroundMusic.start();
         initTile = new Tile(context, 2, screenWidth * 2, screenHeight);
 
         initTile.fillTile();
