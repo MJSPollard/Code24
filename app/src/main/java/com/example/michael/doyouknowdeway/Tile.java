@@ -13,15 +13,13 @@ public class Tile {
 
 
     //Creates the initial starting tile
-    public Tile(Context context, int number_block_types)
+    public Tile(Context context, int number_block_types, int length, int height)
     {
         //create block classes?
         for(int i = 0; i < number_block_types; i++)
         {
            // blocks[i] = new Block("grass")
             blocks[i] = new Block(context, i);
-            length = 50;
-            height = 50;
             tileMap = new Block[length][height];
         }
     }
@@ -38,7 +36,7 @@ public class Tile {
         {
             for(int j = 0; j < height; j++)
             {
-                if(i == 1 || (i == 25 && j == 25))
+                if(j == height)
                 {
                     tileMap[i][j] = new Block(blocks[0], i, j);
                 }

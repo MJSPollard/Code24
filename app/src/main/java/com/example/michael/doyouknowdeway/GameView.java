@@ -44,7 +44,7 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     public void run() {
-        initTile = new Tile(context, 1);
+        initTile = new Tile(context, 1, screenWidth, screenHeight);
         initTile.fillTile();
         while (isPlaying) {
             update();
