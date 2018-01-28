@@ -2,6 +2,7 @@ package com.example.michael.doyouknowdeway;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -71,7 +72,7 @@ public class GameView extends SurfaceView implements Runnable {
         this.context = context;
         player = new Player(context, screenX, screenY);
         fireball = new FireBall(context, screenX, screenY);
-        currentTile = new Tile(context, 2, screenWidth + 200, screenHeight);
+        currentTile = new Tile(context, 3, screenWidth + 200, screenHeight);
         currentTile.fillTile();
 
         surfaceHolder = getHolder();
@@ -114,11 +115,7 @@ public class GameView extends SurfaceView implements Runnable {
             canvas.drawColor(Color.WHITE);
             canvas.drawBitmap(backgroundImageResized, 0, 0, paint);
             canvas.drawBitmap(podCountResized, 0, 0, paint);
-<<<<<<< HEAD
-            canvas.drawText(Integer.toString(scoreCount), 150, 150, paint);
-=======
             canvas.drawText(Integer.toString(scoreCount), 150, 10, paint);
->>>>>>> be1737594565e36c5eb4ca170f653115ac9c085a
 
             if(-100 >= (currentTile.getBlock(currentTile.getLength() - 1, currentTile.getHeight() - 1).getX() *100) - move_const)
             {
@@ -179,18 +176,10 @@ public class GameView extends SurfaceView implements Runnable {
             nextTile = currentTile.getNextTile();
         }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-        if(player.getYVal() >= 2000){
+        if(player.getYVal() >= screenHeight){
             gameOver();
         }
-=======
         detectCollisions();
->>>>>>> 8593dc6d52fffb1d3cb7494095df1eff104179cf
-=======
-        detectCollisions();
->>>>>>> be1737594565e36c5eb4ca170f653115ac9c085a
-
     }
 
     static boolean isColliding = false;
@@ -282,7 +271,7 @@ public class GameView extends SurfaceView implements Runnable {
         endImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.end_game);
         endImageResized = Bitmap.createScaledBitmap(endImage, 100, 200, false);
         canvas.drawBitmap(endImageResized, screenWidth/2, screenHeight/2, paint);
-        MainActivity.onClick(startButton);
+        context.startActivity(new Intent(context,MainActivity.class));
     }
 
     public boolean onTouchEvent(MotionEvent event){
