@@ -12,9 +12,7 @@ import android.media.MediaPlayer;
 
 public class Player {
 
-  private Bitmap playerImage;
-  private Bitmap playerJumpImage;
-  private Bitmap playerImageResized;
+
   int Xval;
   int Yval;
   int screenWidth;
@@ -27,12 +25,6 @@ public class Player {
   public Player(Context context, int screenX, int screenY){
     screenWidth = screenY;
     screenHeight = screenX;
-
-
-    playerJumpImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.knucklesjump);
-    playerImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.ugandan_knuckle);
-    playerImageResized = Bitmap.createScaledBitmap(playerImage, 200, 200, false);
-
     Xval = 200;
     Yval = screenHeight - 1200;
   }
@@ -40,7 +32,6 @@ public class Player {
   public void update(){
     if(isJumping){
 
-      playerImageResized = Bitmap.createScaledBitmap(playerJumpImage, 200, 200, false);
       Yval -= 30;
       if(Yval <= 400) {
         isJumping = false;
@@ -52,17 +43,12 @@ public class Player {
       Yval += 30;
       if(Yval >= screenHeight - 1200){
         isFalling = false;
-        playerImageResized = Bitmap.createScaledBitmap(playerImage, 200, 200, false);
       }
     }
 
 
   }
 
-
-  public Bitmap getPlayerImage(){
-    return playerImageResized;
-  }
 
   public Rect getHitBox(){
     return hitBox;
