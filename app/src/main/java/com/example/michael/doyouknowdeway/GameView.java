@@ -13,6 +13,10 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 /**
  * Created by michael on 1/27/18.
  */
@@ -20,26 +24,47 @@ import android.view.SurfaceView;
 public class GameView extends SurfaceView implements Runnable {
 
 
-    volatile boolean isPlaying = true;
+    volatile boolean isPlaying = true, init = true;
     private Thread gameThread = null;
     private SurfaceHolder surfaceHolder;
     private Canvas canvas;
     private Context context;
     private Activity activity;
-    private int screenWidth = 0, screenHeight = 0, move_const;
+    private int screenWidth = 0, screenHeight = 0, move_const = 1;
     private Player player;
     private MediaPlayer jumpNoise;
     private Bitmap backgroundImage;
     private MediaPlayer backgroundMusic;
     private Bitmap backgroundImageResized;
-    Tile initTile, currentTile, nextTile;
+    Tile currentTile, nextTile;
+    private ScheduledExecutorService executorService;
     Paint paint = new Paint();
+
+    private Bitmap run1, podCount;
+    private Bitmap run1Resized, podCountResized;
+    private Bitmap run2;
+    private Bitmap playerJumpImage;
+    boolean isRun1 = false;
 
 
     public GameView(Context context, int screenX, int screenY) {
         super(context);
         backgroundImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.background_sky);
         backgroundImageResized = Bitmap.createScaledBitmap(backgroundImage, screenX, screenY, false);
+<<<<<<< HEAD
+=======
+
+        podCount = BitmapFactory.decodeResource(context.getResources(), R.drawable.detergent_pod);
+        run1 = BitmapFactory.decodeResource(context.getResources(), R.drawable.knuckles_run);
+        run1Resized = Bitmap.createScaledBitmap(run1, 200, 200, false);
+        podCountResized = Bitmap.createScaledBitmap(podCount, 20, 20, false);
+
+       run2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.ugandan_knuckle);
+       playerJumpImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.knucklesjump);
+//        run2Resized = Bitmap.createScaledBitmap(run2, screenX, screenY, false);
+
+
+>>>>>>> f31d352dfb151981c5153b43567f4023121526c9
         jumpNoise = MediaPlayer.create(context, R.raw.jump_takeoff);
         backgroundMusic = MediaPlayer.create(context, R.raw.music_baby);
         screenWidth = screenX;
@@ -48,16 +73,33 @@ public class GameView extends SurfaceView implements Runnable {
         backgroundMusic.start();
         this.context = context;
         player = new Player(context, screenX, screenY);
+        currentTile = new Tile(context, 2, screenWidth * 2, screenHeight);
+        currentTile.fillTile();
+
         surfaceHolder = getHolder();
+
+
+
+        executorService = Executors.newSingleThreadScheduledExecutor();
+        executorService.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                if(!player.isJumping) {
+                    if (!isRun1) {
+                        run1Resized = Bitmap.createScaledBitmap(run1, 200, 200, false);
+                        isRun1 = true;
+                    } else {
+                        run1Resized = Bitmap.createScaledBitmap(run2, 200, 200, false);
+                        isRun1 = false;
+                    }
+                }
+            }
+        }, 0, 200, TimeUnit.MILLISECONDS);
 
 
     }
 
     public void run() {
-        backgroundMusic.start();
-        initTile = new Tile(context, 2, screenWidth * 2, screenHeight);
-        currentTile = initTile;
-        currentTile.fillTile();
         while (isPlaying) {
             update();
             draw();
@@ -72,15 +114,17 @@ public class GameView extends SurfaceView implements Runnable {
         if (surfaceHolder.getSurface().isValid()) {
             canvas = surfaceHolder.lockCanvas();
             canvas.drawColor(Color.WHITE);
-
+            canvas.drawBitmap(podCountResized, 0, 0, paint);
             canvas.drawBitmap(backgroundImageResized, 0, 0, paint);
 
-            if(player.getXVal() >= currentTile.getLength() - 25)
+            if(player.getXVal() >= currentTile.getBlock(currentTile.getLength() - 1, currentTile.getHeight() - 1).getX() *100 - ((100 * move_const) + 25))
             {
-                currentTile = nextTile;
+                System.out.println("hello");
+                currentTile = new Tile(nextTile);
+                move_const = 0;
             }
-
-            if(0 == currentTile.isEqual(initTile)) {
+            if(init) {
+                init = false;
                 for (int i = 0; i < currentTile.getLength(); i++) {
                     for (int j = 0; j < currentTile.getHeight(); j++) {
                         if (currentTile.getBlock(i, j) != null) {
@@ -100,16 +144,21 @@ public class GameView extends SurfaceView implements Runnable {
                     for (int j = 0; j < currentTile.getHeight(); j++) {
                         if (currentTile.getBlock(i, j) != null) {
                             canvas.drawBitmap(currentTile.getBlock(i, j).getImage(), (i * 100) - move_const, (j * 100) + 10, paint);
-                            if(!(0 == nextTile.isEqual(currentTile)))
-                            {
-                                canvas.drawBitmap(nextTile.getBlock(i, j).getImage(), (i * 100) + currentTile.getLength() - move_const, (j * 100) + 10, paint);
+                            if(nextTile != null) {
+                                if (i < nextTile.getLength() && j < nextTile.getHeight()) {
+                                    System.out.println(nextTile.getID() + " || " + currentTile.getID());
+                                    if (!(0 == nextTile.isEqualTo(currentTile))) {
+                                        canvas.drawBitmap(nextTile.getBlock(i, j).getImage(), (i * 100) + currentTile.getLength() - move_const, (j * 100) + 10, paint);
+                                    }
+                                }
                             }
+                            System.out.println("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
                         }
                     }
                 }
             }
 
-            canvas.drawBitmap(player.getPlayerImage(),player.getXVal(), player.getYVal(), paint);
+            canvas.drawBitmap(run1Resized,player.getXVal(), player.getYVal(), paint);
 
             //releases the canvas to be redrawn again
             surfaceHolder.unlockCanvasAndPost(canvas);
@@ -121,10 +170,13 @@ public class GameView extends SurfaceView implements Runnable {
      */
     public void update() {
         player.update();
-        if(player.getXVal() >= currentTile.getLength() - 1700)
+
+        if((currentTile.getBlock(currentTile.getLength()-20, currentTile.getHeight() -1).getX() * 100) - 100* move_const <= 200)
         {
             nextTile = currentTile.getNextTile();
+            System.out.println("PPPPPPPPPPPPP " + nextTile.getLength() + " || " + nextTile.getHeight());
         }
+
     }
 
     /**
@@ -154,8 +206,13 @@ public class GameView extends SurfaceView implements Runnable {
         int touchAction = event.getAction();
 
         if(touchAction == MotionEvent.ACTION_DOWN){
-            jumpNoise.start();
-            player.isJumping = true;
+            if(event.getX() < (screenWidth / 2)) {
+                jumpNoise.start();
+                player.isJumping = true;
+                run1Resized = Bitmap.createScaledBitmap(playerJumpImage, 200, 200, false);
+            }
+
+
         }
 
         return true;

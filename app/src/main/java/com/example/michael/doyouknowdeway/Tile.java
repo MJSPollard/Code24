@@ -6,20 +6,19 @@ import android.content.Context;
  * Created by Hughman on 1/27/2018.
  */
 
-<<<<<<< HEAD
-public class
-
-Tile {
-    private int length, height, ID; //might make height constant variable
-=======
 public class Tile {
-    private int length, height
-    private static int ID; //might make height constant variable
->>>>>>> 398d9bf3698eadab7caa75c0119d3b48c278a098
+    private int length, height, ID;
     private Block[] blocks = new Block[5];
     private Block[][] tileMap;
     //private int[] possible_next_tile;
 
+    Tile(Tile copy)
+    {
+        this.length = copy.length;
+        this.height = copy.height;
+        this.blocks = copy.blocks;
+        this.tileMap = copy.tileMap;
+    }
 
     //Creates the initial starting tile
     Tile(Context context, int number_block_types, int length, int height)
@@ -34,12 +33,13 @@ public class Tile {
             this.height = height/100;
             this.length = (length + 100)/100;
     }
-    public Tile(int length, int height)
+    Tile(int length, int height, int ID, Block[] blocks)
     {
-        ID++;
-        tileMap = new Block[(length + 100)/100][height/100];
-        this.height = height/100;
-        this.length = (length + 100)/100;
+        this.ID = ID + 1;
+        this.blocks = blocks;
+        tileMap = new Block[length][height];
+        this.height = height;
+        this.length = length;
     }
 
     public void fillTile()
@@ -51,7 +51,7 @@ public class Tile {
             {
                 if(j == tileMap[i].length - 1)
                 {
-                    if(i == 14)
+                    if(i == 3)
                     {
                         tileMap[i][j] = new Block(blocks[1], i, j);
                     }
@@ -85,7 +85,7 @@ public class Tile {
 
     Tile getNextTile()
     {
-        Tile nextTile = new Tile(length, height);
+        Tile nextTile = new Tile(length, height, ID, blocks);
         nextTile.fillTile();
         return nextTile;
     }
@@ -95,7 +95,7 @@ public class Tile {
         return ID;
     }
 
-    int isEqual(Tile compare)
+    int isEqualTo(Tile compare)
     {
         return ID - compare.getID();
     }
