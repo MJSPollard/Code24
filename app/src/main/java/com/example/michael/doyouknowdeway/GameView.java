@@ -30,7 +30,7 @@ public class GameView extends SurfaceView implements Runnable {
     private Player player;
     private MediaPlayer jumpNoise;
     private Bitmap backgroundImage;
-
+    private MediaPlayer backgroundMusic;
     private Bitmap backgroundImageResized;
     Tile initTile, currentTile, nextTile;
     Paint paint = new Paint();
