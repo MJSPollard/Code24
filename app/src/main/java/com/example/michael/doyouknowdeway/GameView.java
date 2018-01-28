@@ -41,6 +41,8 @@ public class GameView extends SurfaceView implements Runnable {
     Paint paint = new Paint();
     FireBall fireball;
     private int scoreCount = 0;
+    private Bitmap endImage;
+    private Bitmap endImageResized;
     private Bitmap run1, podCount;
     private Bitmap run1Resized, podCountResized;
     private Bitmap run2;
@@ -178,6 +180,10 @@ public class GameView extends SurfaceView implements Runnable {
             System.out.println("PPPPPPPPPPPPP " + nextTile.getLength() + " || " + nextTile.getHeight());
         }
 
+        if(player.getYVal() >= 2000){
+            gameOver();
+        }
+
     }
 
     /**
@@ -200,7 +206,10 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     public void gameOver() {
-
+        endImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.end_game);
+        endImageResized = Bitmap.createScaledBitmap(endImage, 100, 200, false);
+        canvas.drawBitmap(endImageResized, screenWidth/2, screenHeight/2, paint);
+        MainActivity.onClick(startButton);
     }
 
     public boolean onTouchEvent(MotionEvent event){
