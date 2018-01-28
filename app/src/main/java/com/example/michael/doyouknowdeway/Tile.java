@@ -68,6 +68,8 @@ public class Tile {
                 else if(j == tileMap[i].length - 3){
                      if(i == 13){
                         tileMap[i][j] = new Block(blocks[2], i, j);
+                        double k = (double) j;
+                        tidePods.add((double) i + (k/10.00));
                         tidePods.add((double) i + (j/10.00));
                     }
                 }

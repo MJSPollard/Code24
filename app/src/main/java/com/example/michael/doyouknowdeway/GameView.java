@@ -62,7 +62,6 @@ public class GameView extends SurfaceView implements Runnable {
         podCountResized = Bitmap.createScaledBitmap(podCount, 100, 100, false);
         run2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.ugandan_knuckle);
         playerJumpImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.knucklesjump);
-//        run2Resized = Bitmap.createScaledBitmap(run2, screenX, screenY, false);
         jumpNoise = MediaPlayer.create(context, R.raw.jump_takeoff);
         eatNoise = MediaPlayer.create(context, R.raw.eat_1);
         backgroundMusic = MediaPlayer.create(context, R.raw.music_baby);
@@ -99,6 +98,9 @@ public class GameView extends SurfaceView implements Runnable {
 
     }
 
+    /**
+     * Main game loop
+     */
     public void run() {
         while (isPlaying) {
             update();
@@ -116,10 +118,8 @@ public class GameView extends SurfaceView implements Runnable {
             canvas.drawColor(Color.WHITE);
             canvas.drawBitmap(backgroundImageResized, 0, 0, paint);
             canvas.drawBitmap(podCountResized, 0, 0, paint);
-            paint.setColor(Color.BLACK);
-            paint.setTextSize(20);
-            canvas.drawText(Integer.toString(scoreCount), 150, 10, paint);
-
+            String mystr = Integer.toString(scoreCount);
+            canvas.drawText(mystr, 250, 20, paint);
 
             if(-100 >= (currentTile.getBlock(currentTile.getLength() - 1, currentTile.getHeight() - 1).getX() *100) - move_const)
             {
@@ -144,10 +144,10 @@ public class GameView extends SurfaceView implements Runnable {
                     for (int j = 0; j < currentTile.getHeight(); j++) {
                         if (currentTile.getBlock(i, j) != null) {
                             canvas.drawBitmap(currentTile.getBlock(i, j).getImage(), (i * 100) - move_const, (j * 100) + 10, paint);
-                        }
-                        if(nextTile != null) {
-                            if (i < nextTile.getLength() && j < nextTile.getHeight()) {
-                                canvas.drawBitmap(nextTile.getBlock(i, j).getImage(), ((i + currentTile.getLength()) * 100) - move_const, (j * 100) + 10, paint);
+                            if (nextTile != null) {
+                                if (i < nextTile.getLength() && j < nextTile.getHeight()) {
+                                    canvas.drawBitmap(nextTile.getBlock(i, j).getImage(), ((i + currentTile.getLength()) * 100) - move_const, (j * 100) + 10, paint);
+                                }
                             }
                         }
                     }
@@ -197,7 +197,7 @@ public class GameView extends SurfaceView implements Runnable {
         }
         else
         {
-            passOver= 0;
+            passOver= -25;
         }
 
         for(int i = 0; i < currentTile.getHeight(); i++)
@@ -231,9 +231,38 @@ public class GameView extends SurfaceView implements Runnable {
         checkGroundCollision(highestY);
 
         checkTidePodCollision(currentTile, nextTile);
+
+        checkForwardCollision(nextTile, currentX, highestY, passOver);
     }
 
-    public void checkTidePodCollision(Tile currentTile, Tile next)
+    public void checkForwardCollision(Tile next, int x, int y, int passOver)
+    {
+        boolean collision = false;
+        Rect rect = new Rect();
+
+        if(next != null && passOver >= 0)
+        {
+            rect.top = y * 100;
+            rect.bottom = screenHeight;
+            rect.left = passOver + (player.getBitmap().getWidth() / 2);
+            rect.right = passOver + (player.getBitmap().getWidth() / 2) + 100;
+
+             collision = Rect.intersects(player.getHitBox(), rect);
+        }
+        else
+        {
+            rect.top = y * 100;
+            rect.bottom = screenHeight;
+            rect.left = (x+1)* 100;
+            rect.right = (x+2) * 100;
+
+            collision = Rect.intersects(player.getHitBox(), rect);
+        }
+
+        //if collision is true, half player movement until its not true
+    }
+
+    public void checkTidePodCollision(Tile current, Tile next)
     {
         if(next != null && !isPassOver)
         {
@@ -254,7 +283,7 @@ public class GameView extends SurfaceView implements Runnable {
         }
         else
         {
-            for(double iter: currentTile.getTidePods())
+            for(double iter: current.getTidePods())
             {
                 int x = (int) iter;
                 double temp = x;
@@ -275,7 +304,6 @@ public class GameView extends SurfaceView implements Runnable {
 
     private boolean podCollision(int x, int y) {
         Rect tideRect = new Rect();
-
         tideRect.top = y * 100;
         tideRect.left = x* 100 - move_const;
         tideRect.right = (x+1) * 100 - move_const;
@@ -333,6 +361,7 @@ public class GameView extends SurfaceView implements Runnable {
     public void gameOver() {
         /*endImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.end_game);
         endImageResized = Bitmap.createScaledBitmap(endImage, 100, 200, false);
+<<<<<<< HEAD
         canvas.drawBitmap(endImageResized, screenWidth/2, screenHeight/2, paint);*/
 
         redoButton = findViewById(R.id.imageButton2);
@@ -345,6 +374,11 @@ public class GameView extends SurfaceView implements Runnable {
         if(v == redoButton){
             context.startActivity(new Intent(context,MainActivity.class));
         }
+=======
+        canvas.drawBitmap(endImageResized, screenWidth/2, screenHeight/2, paint);
+        backgroundMusic.stop();
+        context.startActivity(new Intent(context,MainActivity.class));
+>>>>>>> e4f32b3b32d5ac8d56658896e4ae276233f79721
     }
 
     public boolean onTouchEvent(MotionEvent event){
