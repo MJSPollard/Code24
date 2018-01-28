@@ -28,6 +28,7 @@ public class FireBall {
         screenHeight = screenY;
         fire = BitmapFactory.decodeResource(context.getResources(), R.drawable.fire_projectile_1);
         fireResized = Bitmap.createScaledBitmap(fire, 100, 100, false);
+        fireNoise = MediaPlayer.create(context, R.raw.fire_ball_sound);
     }
 
     public void update() {
@@ -43,7 +44,9 @@ public class FireBall {
         //sets start location of the ball
         Xval = 200;
         Yval = screenHeight - 300;
+        fireNoise.start();
         isShooting = check;
+
     }
 
     public Bitmap getImage(){
