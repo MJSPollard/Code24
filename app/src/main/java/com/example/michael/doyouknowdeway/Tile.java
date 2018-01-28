@@ -66,9 +66,8 @@ public class Tile {
                     }
                 }
                 else if(j == tileMap[i].length - 3){
-                     if(i == 5){
+                     if(i == 13){
                         tileMap[i][j] = new Block(blocks[2], i, j);
-                        double k = (double) j;
                         tidePods.add((double) i + (j/10.00));
                     }
                 }
@@ -98,6 +97,16 @@ public class Tile {
     public void setNullBlock(int x, int y)
     {
         tileMap[x][y] = null;
+        double compare = (double) x + (y/10.00);
+        for(int i = 0; i < tidePods.size(); i++)
+        {
+            double comparitor = Math.abs(compare - tidePods.get(i));
+            if(0 <= comparitor && comparitor < 1)
+            {
+                tidePods.remove(i);
+                i--;
+            }
+        }
     }
 
 //    public int[] getBlockPosition(int x, int y)
