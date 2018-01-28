@@ -107,6 +107,7 @@ public class Tile {
             {
                 tidePods.remove(i);
                 i--;
+                break;
             }
         }
     }
