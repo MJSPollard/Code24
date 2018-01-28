@@ -29,6 +29,7 @@ public class GameView extends SurfaceView implements Runnable {
     private Player player;
     private MediaPlayer jumpNoise;
     private Bitmap backgroundImage;
+    //private int jump_noise_choice;
 
     private Bitmap backgroundImageResized;
     Tile initTile, currentTile, nextTile;
