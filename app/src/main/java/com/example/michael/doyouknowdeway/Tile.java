@@ -13,7 +13,6 @@ public class Tile {
     private int length, height;
     private Block[] blocks = new Block[5];
     private Block[][] tileMap;
-    //private int[] possible_next_tile;
     private ArrayList<Double> tidePods;
     private Random rand = new Random();
 
