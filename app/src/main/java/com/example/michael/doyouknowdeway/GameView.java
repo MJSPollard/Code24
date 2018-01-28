@@ -154,7 +154,9 @@ public class GameView extends SurfaceView implements Runnable {
 
         if(touchAction == MotionEvent.ACTION_DOWN){
             jumpNoise.start();
-            player.isJumping = true;
+            if(!player.isJumping) {
+                player.isJumping = true;
+            }
         }
 
         return true;
