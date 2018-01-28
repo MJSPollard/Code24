@@ -2,6 +2,8 @@ package com.example.michael.doyouknowdeway;
 
 import android.content.Context;
 
+import java.util.ArrayList;
+
 /**
  * Created by Hughman on 1/27/2018.
  */
@@ -11,6 +13,7 @@ public class Tile {
     private Block[] blocks = new Block[5];
     private Block[][] tileMap;
     //private int[] possible_next_tile;
+    private ArrayList<Double> tidePods;
 
     Tile(Tile copy)
     {
@@ -65,6 +68,7 @@ public class Tile {
                 else if(j == tileMap[i].length - 2){
                      if(i == 5){
                         tileMap[i][j] = new Block(blocks[2], i, j);
+                        tidePods.add((double)i + (j/10));
                     }
                 }
 
@@ -90,6 +94,11 @@ public class Tile {
         return length;
     }
 
+    public void setNullBlock(int x, int y)
+    {
+        tileMap[x][y] = null;
+    }
+
     public int[] getBlockPosition(int x, int y)
     {
         return tileMap[x][y].getPosition();
@@ -105,6 +114,11 @@ public class Tile {
         Tile nextTile = new Tile(length, height, ID, blocks);
         nextTile.fillTile();
         return nextTile;
+    }
+
+    ArrayList<Double> getTidePods()
+    {
+        return tidePods;
     }
 
     public int getID()

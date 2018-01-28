@@ -14,6 +14,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -49,6 +50,7 @@ public class GameView extends SurfaceView implements Runnable {
     private Bitmap run2;
     private Bitmap playerJumpImage;
     boolean isRun1 = false;
+    //private ArrayList<Integer> podLoc;
 
 
     public GameView(Context context, int screenX, int screenY) {
@@ -121,6 +123,7 @@ public class GameView extends SurfaceView implements Runnable {
             {
                 currentTile = new Tile(nextTile);
                 System.out.println("OOOOOOOOOOO");
+                isPassOver = true;
                 nextTile = null;
                 move_const = 0;
             }
@@ -177,13 +180,11 @@ public class GameView extends SurfaceView implements Runnable {
             gameOver();
         }
         detectCollisions();
-        if(((currentTile.getBlock(currentTile.getLength()-(screenWidth/100), currentTile.getHeight() -1).getX() * 100) - move_const <= 200) && nextTile == null)
-        {
-            System.out.println("OUT HERE");
+        if(((currentTile.getBlock(currentTile.getLength()-(screenWidth/100), currentTile.getHeight() -1).getX() * 100) - move_const <= 200) && nextTile == null){
             nextTile = currentTile.getNextTile();
         }
 
-        if(player.getYVal() >= screenHeight){
+        if(player.getYVal() >= screenHeight || player.getXVal() <= 0){
             gameOver();
         }
         detectCollisions();
@@ -227,8 +228,62 @@ public class GameView extends SurfaceView implements Runnable {
             }
         }
 
+        checkGroundCollision(highestY);
+
+        checkTidePodCollision(currentTile, nextTile);
+    }
+
+    public void checkTidePodCollision(Tile current, Tile next)
+    {
+        if(next != null && !isPassOver)
+        {
+            for(double iter: next.getTidePods())
+            {
+                int x = (int) iter;
+                int y = (int) (iter - x)*10;
+
+                boolean hit = podCollision(x, y);
+
+                if(hit)
+                {
+                    scoreCount++;
+                    nextTile.setNullBlock(x, y);
+                }
+            }
+        }
+        else
+        {
+            for(double iter: currentTile.getTidePods())
+            {
+                int x = (int) iter;
+                int y = (int) (iter - x)*10;
+
+                boolean hit = podCollision(x, y);
+
+                if(hit)
+                {
+                    scoreCount++;
+                    nextTile.setNullBlock(x, y);
+                }
+            }
+        }
+
+    }
+
+    private boolean podCollision(int x, int y) {
+        Rect tideRect = new Rect();
+
+        tideRect.top = y * 100;
+        tideRect.left = x* 100 - move_const;
+        tideRect.right = (x+1) * 100 - move_const;
+        tideRect.bottom = (y+1) * 100;
+
+        return Rect.intersects(player.getHitBox(), tideRect);
+    }
+
+    private void checkGroundCollision(int highestY) {
         Rect Blockrect = new Rect();
-        boolean checkGroundCollision;
+        boolean GroundCollision;
 
         if(highestY >= 0) {
             Blockrect.top = (highestY) * 100;
@@ -237,21 +292,20 @@ public class GameView extends SurfaceView implements Runnable {
             Blockrect.bottom = screenHeight;
 
 
-            checkGroundCollision = Rect.intersects(player.getHitBox(), Blockrect);
+            GroundCollision = Rect.intersects(player.getHitBox(), Blockrect);
         }
         else
         {
-            checkGroundCollision = false;
+            GroundCollision = false;
         }
 
-        if(checkGroundCollision){
+        if(GroundCollision){
             isColliding = true;
         } else {
             player.isFalling = true;
             isColliding = false;
         }
     }
-
 
 
     /**
