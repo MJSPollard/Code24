@@ -73,10 +73,10 @@ public class Tile {
         return tileMap[x][y];
     }
 
-
     Tile getNextTile()
     {
         Tile nextTile = new Tile(length, height);
+        nextTile.fillTile();
         return nextTile;
     }
 }

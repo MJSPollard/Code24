@@ -72,11 +72,16 @@ public class GameView extends SurfaceView implements Runnable {
 
             canvas.drawBitmap(backgroundImageResized, 0, 0, paint);
 
+            if(player.getXVal() >= currentTile.getLength() - 25)
+            {
+                currentTile = nextTile;
+            }
+
             if(currentTile.equals(initTile)) {
-                for (int i = 0; i < initTile.getLength(); i++) {
-                    for (int j = 0; j < initTile.getHeight(); j++) {
-                        if (initTile.getBlock(i, j) != null) {
-                            canvas.drawBitmap(initTile.getBlock(i, j).getImage(), (i * 100), (j * 100) + 10, paint);
+                for (int i = 0; i < currentTile.getLength(); i++) {
+                    for (int j = 0; j < currentTile.getHeight(); j++) {
+                        if (currentTile.getBlock(i, j) != null) {
+                            canvas.drawBitmap(currentTile.getBlock(i, j).getImage(), (i * 100), (j * 100) + 10, paint);
                         }
                     }
                 }
@@ -88,10 +93,14 @@ public class GameView extends SurfaceView implements Runnable {
                     move_const += 10;
                 }
 
-                for (int i = 0; i < initTile.getLength(); i++) {
-                    for (int j = 0; j < initTile.getHeight(); j++) {
-                        if (initTile.getBlock(i, j) != null) {
-                            canvas.drawBitmap(initTile.getBlock(i, j).getImage(), (i * 100) - move_const, (j * 100) + 10, paint);
+                for (int i = 0; i < currentTile.getLength(); i++) {
+                    for (int j = 0; j < currentTile.getHeight(); j++) {
+                        if (currentTile.getBlock(i, j) != null) {
+                            canvas.drawBitmap(currentTile.getBlock(i, j).getImage(), (i * 100) - move_const, (j * 100) + 10, paint);
+                            if(!(nextTile.equals(currentTile)))
+                            {
+                                canvas.drawBitmap(nextTile.getBlock(i, j).getImage(), (i * 100) + currentTile.getLength() - move_const, (j * 100) + 10, paint);
+                            }
                         }
                     }
                 }
@@ -111,7 +120,7 @@ public class GameView extends SurfaceView implements Runnable {
         player.update();
         if(player.getXVal() >= currentTile.getLength() - 1700)
         {
-            currentTile.getNextTile();
+            nextTile = currentTile.getNextTile();
         }
     }
 
