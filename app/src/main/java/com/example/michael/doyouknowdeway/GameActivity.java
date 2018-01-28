@@ -43,26 +43,26 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.gameactivity_view);
         setContentView(gameView);
         settingsButton = findViewById(R.id.imageButton4);
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PopupMenu popupMenu = new PopupMenu(GameActivity.this, settingsButton);
-                popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem menuItem) {
-                        Toast.makeText(GameActivity.this, "" + menuItem.getTitle(), Toast.LENGTH_SHORT).show();
-                        if (menuItem.equals("one")) {
-                            onPause();
-                        } else if (menuItem.equals("two")) {
-                            onResume();
-                        }
-                        return true;
-                    }
-                });
-                popupMenu.show();
-            }
-        });
+//        settingsButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                PopupMenu popupMenu = new PopupMenu(GameActivity.this, settingsButton);
+//                popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
+//                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//                    @Override
+//                    public boolean onMenuItemClick(MenuItem menuItem) {
+//                        Toast.makeText(GameActivity.this, "" + menuItem.getTitle(), Toast.LENGTH_SHORT).show();
+////                        if (menuItem.equals("one")) {
+////                            onPause();
+////                        } else if (menuItem.equals("two")) {
+////                            onResume();
+////                        }
+//                        return true;
+//                    }
+//                });
+//                popupMenu.show();
+//            }
+//        });
     }
 
 
