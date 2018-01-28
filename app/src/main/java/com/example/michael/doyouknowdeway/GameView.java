@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.media.MediaPlayer;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -29,8 +30,7 @@ public class GameView extends SurfaceView implements Runnable {
     private Player player;
     private MediaPlayer jumpNoise;
     private Bitmap backgroundImage;
-    //private int jump_noise_choice;
-
+    private MediaPlayer backgroundMusic;
     private Bitmap backgroundImageResized;
     Tile initTile, currentTile, nextTile;
     Paint paint = new Paint();
@@ -42,6 +42,7 @@ public class GameView extends SurfaceView implements Runnable {
         backgroundImageResized = Bitmap.createScaledBitmap(backgroundImage, screenX, screenY, false);
 
         jumpNoise = MediaPlayer.create(context, R.raw.jump_takeoff);
+        backgroundMusic = MediaPlayer.create(context, R.raw.spit);
         screenWidth = screenX;
         screenHeight = screenY;
         activity = (Activity) context;
@@ -53,6 +54,7 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     public void run() {
+        backgroundMusic.start();
         initTile = new Tile(context, 2, screenWidth * 2, screenHeight);
         currentTile = initTile;
         initTile.fillTile();
@@ -98,8 +100,6 @@ public class GameView extends SurfaceView implements Runnable {
                     for (int j = 0; j < currentTile.getHeight(); j++) {
                         if (currentTile.getBlock(i, j) != null) {
                             canvas.drawBitmap(currentTile.getBlock(i, j).getImage(), (i * 100) - move_const, (j * 100) + 10, paint);
-
-
                             if(!(0 == nextTile.isEqual(currentTile)))
                             {
                                 canvas.drawBitmap(nextTile.getBlock(i, j).getImage(), (i * 100) + currentTile.getLength() - move_const, (j * 100) + 10, paint);
@@ -156,9 +156,7 @@ public class GameView extends SurfaceView implements Runnable {
 
         if(touchAction == MotionEvent.ACTION_DOWN){
             jumpNoise.start();
-            if(!player.isJumping) {
-                player.isJumping = true;
-            }
+            player.isJumping = true;
         }
 
         return true;
