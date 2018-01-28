@@ -13,7 +13,7 @@ public class Block {
     private int x, y;
     private Bitmap blockImage;
     private Bitmap blockImageResized;
-    private Boolean harmful;
+    private Boolean harmful, pod;
 
 
     Block(Block copy, int x, int y)
@@ -21,16 +21,18 @@ public class Block {
         this.blockImage = copy.blockImage;
         this.blockImageResized = copy.blockImageResized;
         this.harmful = copy.harmful;
+        this.pod = copy.pod;
         this.x = x;
         this.y = y;
     }
     Block(Context context, int selection)
     {
+        pod = false;
+        harmful = false;
         if(selection == 0)
         {
             blockImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.grass_block);
             blockImageResized = Bitmap.createScaledBitmap(blockImage, 100, 200, false);
-            harmful = false;
         }
         else if(selection == 1)
         {
@@ -41,7 +43,7 @@ public class Block {
         else if(selection == 2){
             blockImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.detergent_pod);
             blockImageResized = Bitmap.createScaledBitmap(blockImage, 150, 150, false);
-            harmful = true;
+            pod = true;
         }
     }
 
@@ -53,6 +55,11 @@ public class Block {
     public Boolean getHarmful()
     {
         return harmful;
+    }
+
+    Boolean isPod()
+    {
+        return pod;
     }
 
     public void setPosition(int x,int y)

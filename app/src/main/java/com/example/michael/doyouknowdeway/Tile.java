@@ -21,6 +21,7 @@ public class Tile {
         this.height = copy.height;
         this.blocks = copy.blocks;
         this.tileMap = copy.tileMap;
+        this.tidePods = copy.tidePods;
     }
 
     //Creates the initial starting tile
@@ -47,6 +48,8 @@ public class Tile {
 
     public void fillTile()
     {
+        tidePods = new ArrayList<Double>();
+
         //add block to Tile
         for(int i = 0; i < tileMap.length; i++)
         {
@@ -65,10 +68,10 @@ public class Tile {
                         tileMap[i][j] = new Block(blocks[0], i, j);
                     }
                 }
-                else if(j == tileMap[i].length - 2){
+                else if(j == tileMap[i].length - 3){
                      if(i == 5){
                         tileMap[i][j] = new Block(blocks[2], i, j);
-                        tidePods.add((double)i + (j/10));
+                        tidePods.add((double) i + (double) (j/10));
                     }
                 }
 

@@ -173,13 +173,6 @@ public class GameView extends SurfaceView implements Runnable {
             fireball.update();
         }
 
-        if((currentTile.getBlock(currentTile.getLength()-(screenWidth/100), currentTile.getHeight() -1).getX() * 100) - move_const <= 200) {
-            nextTile = currentTile.getNextTile();
-        }
-        if(player.getYVal() >= 2000){
-            gameOver();
-        }
-        detectCollisions();
         if(((currentTile.getBlock(currentTile.getLength()-(screenWidth/100), currentTile.getHeight() -1).getX() * 100) - move_const <= 200) && nextTile == null){
             nextTile = currentTile.getNextTile();
         }
@@ -213,14 +206,20 @@ public class GameView extends SurfaceView implements Runnable {
                 passOver += 10;
                 if(nextTile.getBlock(passOver/100, i) != null)
                 {
-                    highestY = i;
-                    break;
+                    if(!nextTile.getBlock(passOver/100, i).isPod())
+                    {
+                        highestY = i;
+                        break;
+                    }
                 }
             }
             else if(currentTile.getBlock(currentX, i) != null)
             {
-                highestY = i;
-                break;
+                if(!currentTile.getBlock(currentX, i).isPod())
+                {
+                    highestY = i;
+                    break;
+                }
             }
             else
             {
@@ -233,7 +232,7 @@ public class GameView extends SurfaceView implements Runnable {
         checkTidePodCollision(currentTile, nextTile);
     }
 
-    public void checkTidePodCollision(Tile current, Tile next)
+    public void checkTidePodCollision(Tile currentTile, Tile next)
     {
         if(next != null && !isPassOver)
         {
@@ -246,6 +245,7 @@ public class GameView extends SurfaceView implements Runnable {
 
                 if(hit)
                 {
+                    System.out.println("WINNER WINNER");
                     scoreCount++;
                     nextTile.setNullBlock(x, y);
                 }
@@ -262,6 +262,7 @@ public class GameView extends SurfaceView implements Runnable {
 
                 if(hit)
                 {
+                    System.out.println("WINNER WINNER");
                     scoreCount++;
                     nextTile.setNullBlock(x, y);
                 }
@@ -282,17 +283,17 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     private void checkGroundCollision(int highestY) {
-        Rect Blockrect = new Rect();
+        Rect blockRect = new Rect();
         boolean GroundCollision;
 
         if(highestY >= 0) {
-            Blockrect.top = (highestY) * 100;
-            Blockrect.left = 200;
-            Blockrect.right = 300;
-            Blockrect.bottom = screenHeight;
+            blockRect.top = (highestY) * 100;
+            blockRect.left = 200;
+            blockRect.right = 300;
+            blockRect.bottom = screenHeight;
 
 
-            GroundCollision = Rect.intersects(player.getHitBox(), Blockrect);
+            GroundCollision = Rect.intersects(player.getHitBox(), blockRect);
         }
         else
         {
