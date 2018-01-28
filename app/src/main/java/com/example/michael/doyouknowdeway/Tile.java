@@ -8,7 +8,6 @@ import android.content.Context;
 
 public class Tile {
     private int length, height, ID;
-  // private int ID; //might make height constant variable
     private Block[] blocks = new Block[5];
     private Block[][] tileMap;
     //private int[] possible_next_tile;
