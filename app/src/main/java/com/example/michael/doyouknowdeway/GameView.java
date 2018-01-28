@@ -40,7 +40,7 @@ public class GameView extends SurfaceView implements Runnable {
     private ScheduledExecutorService executorService;
     Paint paint = new Paint();
     FireBall fireball;
-
+    private int scoreCount = 0;
     private Bitmap run1, podCount;
     private Bitmap run1Resized, podCountResized;
     private Bitmap run2;
@@ -52,8 +52,6 @@ public class GameView extends SurfaceView implements Runnable {
         super(context);
         backgroundImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.background_sky);
         backgroundImageResized = Bitmap.createScaledBitmap(backgroundImage, screenX, screenY, false);
-<<<<<<< HEAD
-=======
 
         podCount = BitmapFactory.decodeResource(context.getResources(), R.drawable.detergent_pod);
         run1 = BitmapFactory.decodeResource(context.getResources(), R.drawable.knuckles_run);
@@ -64,8 +62,6 @@ public class GameView extends SurfaceView implements Runnable {
        playerJumpImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.knucklesjump);
 //        run2Resized = Bitmap.createScaledBitmap(run2, screenX, screenY, false);
 
-
->>>>>>> f31d352dfb151981c5153b43567f4023121526c9
         jumpNoise = MediaPlayer.create(context, R.raw.jump_takeoff);
         backgroundMusic = MediaPlayer.create(context, R.raw.music_baby);
         screenWidth = screenX;
@@ -116,8 +112,9 @@ public class GameView extends SurfaceView implements Runnable {
         if (surfaceHolder.getSurface().isValid()) {
             canvas = surfaceHolder.lockCanvas();
             canvas.drawColor(Color.WHITE);
-            canvas.drawBitmap(podCountResized, 0, 0, paint);
             canvas.drawBitmap(backgroundImageResized, 0, 0, paint);
+            canvas.drawBitmap(podCountResized, 0, 0, paint);
+            canvas.drawText(Integer.toString(scoreCount), 15, 15, paint);
             System.out.println("ghghghg " + (currentTile.getBlock(currentTile.getLength() - 1, currentTile.getHeight() - 1).getX() *100 - ((100 * move_const) + 25)));
             if(50 >= currentTile.getBlock(currentTile.getLength() - 1, currentTile.getHeight() - 1).getX() *100 - ((10 * move_const) + 25))
             {
