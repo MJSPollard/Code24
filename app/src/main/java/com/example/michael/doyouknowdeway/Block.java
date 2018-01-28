@@ -28,13 +28,13 @@ public class Block {
         if(selection == 0)
         {
             blockImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.grass_block);
-            blockImageResized = Bitmap.createScaledBitmap(blockImage, 60, 700, false);
+            blockImageResized = Bitmap.createScaledBitmap(blockImage, 100, 200, false);
             harmful = false;
         }
         else if(selection == 1)
         {
             blockImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.lava_block);
-            blockImageResized = Bitmap.createScaledBitmap(blockImage, 60, 700, false);
+            blockImageResized = Bitmap.createScaledBitmap(blockImage, 100, 200, false);
             harmful = true;
         }
     }
