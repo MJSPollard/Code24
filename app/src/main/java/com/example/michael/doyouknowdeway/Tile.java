@@ -91,17 +91,17 @@ public class Tile {
                         makeBlock(1, j, 1);
                     }
                 }
-                if(i == random_gap && j <= tileMap[i].length)
+                if(i == random_gap && j < tileMap[i].length)
                 {
                     tileMap[i][j] = null;
                 }
-                if(i == scale + random_adjust2 && j == tileMap[i].length - (random_adjust - 1))
+                if(i == scale + random_adjust2 && j == tileMap[i].length - (random_adjust - 2))
                 {
-                         makeBlock(i, j, 2);
+                    makeBlock(i, j, 2);
                 }
-                if(i == random_gap - random_adjust2 && j == tileMap[i].length - random_adjust)
+                if(i == random_gap + random_adjust2 && j == tileMap[i].length - (random_adjust - 2))
                 {
-                    makeBlock(i, j, block_type);
+                    makeBlock(i, j, 2);
                 }
                 if(i == scale - 4 && j >= tileMap[i].length - random_height)
                 {
@@ -115,7 +115,15 @@ public class Tile {
                 {
                     makeBlock(i, j, 0);
                 }
-                if(i == scale - 1 && j >= tileMap[i].length - 1)
+                if(i == scale - 1 && j >= tileMap[i].length - 2)
+                {
+                    makeBlock(i, j, 0);
+                }
+                if(i == random_gap - random_adjust2 && j == tileMap[i].length - random_adjust)
+                {
+                    makeBlock(i, j, block_type);
+                }
+                if(i <= 10 && j == tileMap[i].length - 1)
                 {
                     makeBlock(i, j, 0);
                 }
@@ -171,7 +179,7 @@ public class Tile {
     Tile getNextTile()
     {
         Tile nextTile = new Tile(this);
-        int randomizer = rand.nextInt(length/2);
+        int randomizer = rand.nextInt(length/10);
         if(rand.nextBoolean())
         {
             nextTile = new Tile(length + randomizer, height, blocks);

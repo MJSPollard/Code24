@@ -16,7 +16,7 @@ public class Player {
   int Xval;
   int Yval;
   int screenWidth;
-  int screenHeight;
+  int screenHeight, jumpCount = 0;
   boolean isJumping = false;
   boolean isFalling = false;
   Bitmap playerImage;
@@ -38,7 +38,7 @@ public class Player {
     int currentY = playerImageResized.getHeight();
     if(isJumping){
       Yval -= 30;
-      if(Yval <= currentY - 150) {
+      if(Yval <= currentY + 10) {
         isJumping = false;
         isFalling = true;
       }
@@ -50,6 +50,7 @@ public class Player {
       //change to when ground is hit
       if(GameView.isColliding){
         isFalling = false;
+        jumpCount = 0;
       }
     }
     //update the hitbox location with the ball as it moves
@@ -74,6 +75,16 @@ public class Player {
 
   public int getYVal(){
     return Yval;
+  }
+
+  public int getJumpCount()
+  {
+    return jumpCount;
+  }
+
+  public void incrJump()
+  {
+    jumpCount++;
   }
 
 }

@@ -19,6 +19,7 @@ public class FireBall {
     boolean isShooting = false;
     public Bitmap fire;
     public Bitmap fireResized;
+    Player player;
 
     private Rect hitBox;
     private MediaPlayer fireNoise;
@@ -29,23 +30,25 @@ public class FireBall {
         fire = BitmapFactory.decodeResource(context.getResources(), R.drawable.fire_projectile_1);
         fireResized = Bitmap.createScaledBitmap(fire, 100, 100, false);
         fireNoise = MediaPlayer.create(context, R.raw.fire_ball_sound);
+        player = new Player(context, screenX, screenY);
     }
 
     public void update(Player player) {
         if(isShooting){
             Xval += 50;
+            Yval = player.getYVal();
             if(Xval > screenWidth) {
                 isShooting = false;
                 Xval = 250;
-                Yval = player.getYVal() - (player.getBitmap(),getYVal() / 2);
+
             }
         }
     }
 
     public void setOnScreen(boolean check){
         //sets start location of the ball
-        Xval = 200;
-        Yval = screenHeight - 300;
+        Yval = player.getYVal();
+        Xval = player.getXVal();
         fireNoise.start();
         isShooting = check;
 

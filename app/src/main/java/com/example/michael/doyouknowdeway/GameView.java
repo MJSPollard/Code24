@@ -14,12 +14,8 @@ import android.media.MediaPlayer;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
-import android.widget.ImageButton;
-
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -32,7 +28,7 @@ public class GameView extends SurfaceView implements Runnable{
     volatile boolean isPlaying = true, init = true, isPassOver = true;
     private Thread gameThread = null;
     private SurfaceHolder surfaceHolder;
-    private Canvas canvas;gi
+    private Canvas canvas;
     private Context context;
     private Activity activity;
     private int screenWidth = 0, screenHeight = 0, move_const = 1;
@@ -89,7 +85,7 @@ public class GameView extends SurfaceView implements Runnable{
         this.context = context;
         player = new Player(context, screenX, screenY);
         fireball = new FireBall(context, screenX, screenY);
-        currentTile = new Tile(context, 3, screenWidth + 200, screenHeight);
+        currentTile = new Tile(context, 3, screenWidth + 400, screenHeight);
         currentTile.fillTile();
         surfaceHolder = getHolder();
 
@@ -98,6 +94,7 @@ public class GameView extends SurfaceView implements Runnable{
         executorService.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
+                scoreCount++;
                 if(!player.isJumping) {
                     if (!isRun1) {
                         run1Resized = Bitmap.createScaledBitmap(run1, 200, 200, false);
@@ -327,6 +324,7 @@ public class GameView extends SurfaceView implements Runnable{
         tideRect.right = (x+1) * 100 - move_const;
         tideRect.bottom = (y+1) * 100;
 
+        System.out.println(Rect.intersects(player.getHitBox(), tideRect) + " LLLLLLLLLL");
         return Rect.intersects(player.getHitBox(), tideRect);
     }
 
@@ -377,39 +375,13 @@ public class GameView extends SurfaceView implements Runnable{
     }
 
     public void gameOver() {
-
-        redoButton = findViewById(R.id.imageButton2);
-        redoButton.setOnClickListener(this);
-
-
-    }
-
-    public void onClick(View v){
-        if(v == redoButton){
-            context.startActivity(new Intent(context,MainActivity.class));
-        }
         endImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.end_game);
         endImageResized = Bitmap.createScaledBitmap(endImage, 100, 200, false);
         canvas.drawBitmap(endImageResized, screenWidth/2, screenHeight/2, paint);
         backgroundMusic.stop();
         endGameSound.start();
-<<<<<<< HEAD
-//        canvas.drawText("Your Score: " + mystr, screenWidth/2, screenHeight/2, textPaint);
-//        TimeUnit.SECONDS.sleep(3);
-=======
-        canvas.drawText("Your Score: " + mystr, screenWidth/2, screenHeight/2, textPaint);
-            try
-            {
-                Thread.sleep(1000);
-            }
-            catch(InterruptedException ex)
-            {
-                Thread.currentThread().interrupt();
-            }
->>>>>>> 1b0dd6b9e8f991b44b6cc42a7067d5adb3acc933
         context.startActivity(new Intent(context,MainActivity.class));
     }
-
 
     public boolean onTouchEvent(MotionEvent event){
         int touchAction = event.getAction();
@@ -417,8 +389,16 @@ public class GameView extends SurfaceView implements Runnable{
         if(touchAction == MotionEvent.ACTION_DOWN){
             if(event.getX() < (screenWidth / 2)) {
                 jumpNoise.start();
-                player.isJumping = true;
-                run1Resized = Bitmap.createScaledBitmap(playerJumpImage, 200, 200, false);
+                if(!player.isJumping && !player.isFalling) {
+                    player.isJumping = true;
+                    run1Resized = Bitmap.createScaledBitmap(playerJumpImage, 200, 200, false);
+                }
+                else if(player.getJumpCount() < 1)
+                {
+                    player.incrJump();
+                    player.isJumping = true;
+                    run1Resized = Bitmap.createScaledBitmap(playerJumpImage, 200, 200, false);
+                }
             } else {
                 fireball.setOnScreen(true);
             }
@@ -431,6 +411,7 @@ public class GameView extends SurfaceView implements Runnable{
      */
     public void pause() {
         isPlaying = false;
+        backgroundMusic.pause();
         try {
             gameThread.join();
         } catch (InterruptedException e) {
@@ -442,6 +423,7 @@ public class GameView extends SurfaceView implements Runnable{
      */
     public void resume() {
         isPlaying = true;
+        backgroundMusic.start();
         gameThread = new Thread(this);
         gameThread.start();
     }
