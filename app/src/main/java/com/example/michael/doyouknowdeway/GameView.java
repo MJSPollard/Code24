@@ -30,7 +30,7 @@ public class GameView extends SurfaceView implements Runnable {
     private Canvas canvas;
     private Context context;
     private Activity activity;
-    private int screenWidth = 0, screenHeight = 0, move_const;
+    private int screenWidth = 0, screenHeight = 0, move_const = 1;
     private Player player;
     private MediaPlayer jumpNoise;
     private Bitmap backgroundImage;
@@ -139,10 +139,12 @@ public class GameView extends SurfaceView implements Runnable {
                     for (int j = 0; j < currentTile.getHeight(); j++) {
                         if (currentTile.getBlock(i, j) != null) {
                             canvas.drawBitmap(currentTile.getBlock(i, j).getImage(), (i * 100) - move_const, (j * 100) + 10, paint);
-                            if(i < nextTile.getLength() && j < nextTile.getHeight()) {
-                                System.out.println(nextTile.getID() + " || " + currentTile.getID());
-                                if (!(0 == nextTile.isEqualTo(currentTile))) {
-                                    canvas.drawBitmap(nextTile.getBlock(i, j).getImage(), (i * 100) + currentTile.getLength() - move_const, (j * 100) + 10, paint);
+                            if(nextTile != null) {
+                                if (i < nextTile.getLength() && j < nextTile.getHeight()) {
+                                    System.out.println(nextTile.getID() + " || " + currentTile.getID());
+                                    if (!(0 == nextTile.isEqualTo(currentTile))) {
+                                        canvas.drawBitmap(nextTile.getBlock(i, j).getImage(), (i * 100) + currentTile.getLength() - move_const, (j * 100) + 10, paint);
+                                    }
                                 }
                             }
                             System.out.println("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
@@ -163,11 +165,13 @@ public class GameView extends SurfaceView implements Runnable {
      */
     public void update() {
         player.update();
+
         if((currentTile.getBlock(currentTile.getLength()-20, currentTile.getHeight() -1).getX() * 100) - 100* move_const <= 200)
         {
             nextTile = currentTile.getNextTile();
             System.out.println("PPPPPPPPPPPPP " + nextTile.getLength() + " || " + nextTile.getHeight());
         }
+
     }
 
     /**
