@@ -33,9 +33,10 @@ public class Tile {
             this.height = height/100;
             this.length = (length + 100)/100;
     }
-    Tile(int length, int height, int ID)
+    Tile(int length, int height, int ID, Block[] blocks)
     {
         this.ID = ID + 1;
+        this.blocks = blocks;
         tileMap = new Block[length][height];
         this.height = height;
         this.length = length;
@@ -84,7 +85,7 @@ public class Tile {
 
     Tile getNextTile()
     {
-        Tile nextTile = new Tile(length, height, ID);
+        Tile nextTile = new Tile(length, height, ID, blocks);
         nextTile.fillTile();
         return nextTile;
     }
