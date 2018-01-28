@@ -55,12 +55,21 @@ public class Tile {
                     {
                         tileMap[i][j] = new Block(blocks[1], i, j);
                     }
+<<<<<<< HEAD
                     else if(i == 8 || i == 9)
                     {
+=======
+                    else if(i == 8 || i == 9) {
+>>>>>>> be1737594565e36c5eb4ca170f653115ac9c085a
                         continue;
                     }
                     else {
                         tileMap[i][j] = new Block(blocks[0], i, j);
+                    }
+                }
+                else if(j == tileMap[i].length - 2){
+                     if(i == 5){
+                        tileMap[i][j] = new Block(blocks[2], i, j);
                     }
                 }
             }
