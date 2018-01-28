@@ -61,7 +61,6 @@ public class GameView extends SurfaceView implements Runnable {
         podCountResized = Bitmap.createScaledBitmap(podCount, 100, 100, false);
         run2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.ugandan_knuckle);
         playerJumpImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.knucklesjump);
-//        run2Resized = Bitmap.createScaledBitmap(run2, screenX, screenY, false);
         jumpNoise = MediaPlayer.create(context, R.raw.jump_takeoff);
         eatNoise = MediaPlayer.create(context, R.raw.eat_1);
         backgroundMusic = MediaPlayer.create(context, R.raw.music_baby);
@@ -98,6 +97,9 @@ public class GameView extends SurfaceView implements Runnable {
 
     }
 
+    /**
+     * Main game loop
+     */
     public void run() {
         while (isPlaying) {
             update();
@@ -141,10 +143,10 @@ public class GameView extends SurfaceView implements Runnable {
                     for (int j = 0; j < currentTile.getHeight(); j++) {
                         if (currentTile.getBlock(i, j) != null) {
                             canvas.drawBitmap(currentTile.getBlock(i, j).getImage(), (i * 100) - move_const, (j * 100) + 10, paint);
-                        }
-                        if(nextTile != null) {
-                            if (i < nextTile.getLength() && j < nextTile.getHeight()) {
-                                canvas.drawBitmap(nextTile.getBlock(i, j).getImage(), ((i + currentTile.getLength()) * 100) - move_const, (j * 100) + 10, paint);
+                            if (nextTile != null) {
+                                if (i < nextTile.getLength() && j < nextTile.getHeight()) {
+                                    canvas.drawBitmap(nextTile.getBlock(i, j).getImage(), ((i + currentTile.getLength()) * 100) - move_const, (j * 100) + 10, paint);
+                                }
                             }
                         }
                     }
@@ -230,7 +232,7 @@ public class GameView extends SurfaceView implements Runnable {
         checkTidePodCollision(currentTile, nextTile);
     }
 
-    public void checkTidePodCollision(Tile currentTile, Tile next)
+    public void checkTidePodCollision(Tile current, Tile next)
     {
         if(next != null && !isPassOver)
         {
@@ -251,7 +253,7 @@ public class GameView extends SurfaceView implements Runnable {
         }
         else
         {
-            for(double iter: currentTile.getTidePods())
+            for(double iter: current.getTidePods())
             {
                 int x = (int) iter;
                 double temp = x;
@@ -272,7 +274,6 @@ public class GameView extends SurfaceView implements Runnable {
 
     private boolean podCollision(int x, int y) {
         Rect tideRect = new Rect();
-
         tideRect.top = y * 100;
         tideRect.left = x* 100 - move_const;
         tideRect.right = (x+1) * 100 - move_const;
@@ -331,6 +332,7 @@ public class GameView extends SurfaceView implements Runnable {
         endImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.end_game);
         endImageResized = Bitmap.createScaledBitmap(endImage, 100, 200, false);
         canvas.drawBitmap(endImageResized, screenWidth/2, screenHeight/2, paint);
+        backgroundMusic.stop();
         context.startActivity(new Intent(context,MainActivity.class));
     }
 
