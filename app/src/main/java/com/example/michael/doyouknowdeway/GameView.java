@@ -43,7 +43,7 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     public void run() {
-        initTile = new Tile(context, 1, screenWidth, screenHeight);
+        initTile = new Tile(context, 2, screenWidth, screenHeight);
         initTile.fillTile();
         while (isPlaying) {
             update();
@@ -58,14 +58,14 @@ public class GameView extends SurfaceView implements Runnable {
     public void draw() {
         if (surfaceHolder.getSurface().isValid()) {
             canvas = surfaceHolder.lockCanvas();
-            canvas.drawColor(Color.GREEN);
+            canvas.drawColor(Color.WHITE);
 
             for(int i = 0; i < initTile.getLength(); i++)
             {
                 for(int j = 0; j < initTile.getHeight(); j++)
                 {
                     if(initTile.getBlock(i,j) != null) {
-                        canvas.drawBitmap(initTile.getBlock(i, j).getImage(), i*100, j*100, paint);
+                        canvas.drawBitmap(initTile.getBlock(i, j).getImage(), i*100, (j*100)+10, paint);
                     }
                 }
             }

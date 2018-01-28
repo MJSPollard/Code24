@@ -22,12 +22,13 @@ public class Player {
   boolean isJumping = false;
   boolean isFalling = false;
   private Rect hitBox;
-  private MediaPlayer mp;
+  private MediaPlayer jumpNoise;
 
   public Player(Context context, int screenX, int screenY){
     screenWidth = screenY;
     screenHeight = screenX;
 
+    jumpNoise = MediaPlayer.create(context, R.raw.jump_takeoff);
     playerJumpImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.knucklesjump);
     playerImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.ugandan_knuckle);
     playerImageResized = Bitmap.createScaledBitmap(playerImage, 200, 200, false);
