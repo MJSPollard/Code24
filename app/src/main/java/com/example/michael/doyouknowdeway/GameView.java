@@ -56,7 +56,7 @@ public class GameView extends SurfaceView implements Runnable {
         backgroundMusic.start();
         initTile = new Tile(context, 2, screenWidth * 2, screenHeight);
         currentTile = initTile;
-        initTile.fillTile();
+        currentTile.fillTile();
         while (isPlaying) {
             update();
             draw();
