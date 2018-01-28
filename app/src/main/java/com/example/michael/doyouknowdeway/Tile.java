@@ -31,14 +31,14 @@ public class Tile {
         this.height = height;
     }
 
-    private void fillTile()
+    public void fillTile()
     {
         //add block to Tile
         for(int i = 0; i < length; i++)
         {
             for(int j = 0; j < height; j++)
             {
-                if(i == 25 && j == 25)
+                if(i == 1 || (i == 25 && j == 25))
                 {
                     tileMap[i][j] = new Block(blocks[0], i, j);
                 }
@@ -46,9 +46,24 @@ public class Tile {
         }
     }
 
-    public int[] getBlock(int x, int y)
+    public int getHeight()
+    {
+        return height;
+    }
+
+    public int getLength()
+    {
+        return length;
+    }
+
+    public int[] getBlockPosition(int x, int y)
     {
         return tileMap[x][y].getPosition();
+    }
+
+    public Block getBlock(int x, int y)
+    {
+        return tileMap[x][y];
     }
 
 }
