@@ -56,7 +56,7 @@ public class GameView extends SurfaceView implements Runnable {
         podCount = BitmapFactory.decodeResource(context.getResources(), R.drawable.detergent_pod);
         run1 = BitmapFactory.decodeResource(context.getResources(), R.drawable.knuckles_run);
         run1Resized = Bitmap.createScaledBitmap(run1, 200, 200, false);
-        podCountResized = Bitmap.createScaledBitmap(podCount, 20, 20, false);
+        podCountResized = Bitmap.createScaledBitmap(podCount, 100, 100, false);
        run2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.ugandan_knuckle);
        playerJumpImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.knucklesjump);
 //        run2Resized = Bitmap.createScaledBitmap(run2, screenX, screenY, false);
@@ -112,7 +112,7 @@ public class GameView extends SurfaceView implements Runnable {
             canvas.drawColor(Color.WHITE);
             canvas.drawBitmap(backgroundImageResized, 0, 0, paint);
             canvas.drawBitmap(podCountResized, 0, 0, paint);
-            canvas.drawText(Integer.toString(scoreCount), 15, 15, paint);
+            canvas.drawText(Integer.toString(scoreCount), 150, 150, paint);
 
             if(-100 >= (currentTile.getBlock(currentTile.getLength() - 1, currentTile.getHeight() - 1).getX() *100) - move_const)
             {
