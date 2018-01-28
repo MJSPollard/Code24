@@ -28,6 +28,7 @@ public class GameView extends SurfaceView implements Runnable {
     private int screenWidth = 0, screenHeight = 0, move_const;
     private Player player;
     private MediaPlayer jumpNoise;
+    private MediaPlayer backgroundMusic;
     private Bitmap backgroundImage;
     //private int jump_noise_choice;
 
