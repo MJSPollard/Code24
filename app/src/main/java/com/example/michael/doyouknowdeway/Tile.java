@@ -12,6 +12,13 @@ public class Tile {
     private Block[][] tileMap;
     //private int[] possible_next_tile;
 
+    Tile(Tile copy)
+    {
+        this.length = copy.length;
+        this.height = copy.height;
+        this.blocks = copy.blocks;
+        this.tileMap = copy.tileMap;
+    }
 
     //Creates the initial starting tile
     Tile(Context context, int number_block_types, int length, int height)
@@ -43,7 +50,7 @@ public class Tile {
             {
                 if(j == tileMap[i].length - 1)
                 {
-                    if(i == 14)
+                    if(i == 3)
                     {
                         tileMap[i][j] = new Block(blocks[1], i, j);
                     }
@@ -87,7 +94,7 @@ public class Tile {
         return ID;
     }
 
-    int isEqual(Tile compare)
+    int isEqualTo(Tile compare)
     {
         return ID - compare.getID();
     }
