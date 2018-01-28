@@ -41,7 +41,7 @@ public class Tile {
             {
                 if(j == tileMap[i].length - 1)
                 {
-                    if(j % 2 == 0) {
+                    if(i % 2 == 0) {
                         tileMap[i][j] = new Block(blocks[0], i, j);
                     }
                     else{

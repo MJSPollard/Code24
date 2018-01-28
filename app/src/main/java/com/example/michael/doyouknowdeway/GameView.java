@@ -2,10 +2,13 @@ package com.example.michael.doyouknowdeway;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.media.MediaPlayer;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -16,6 +19,7 @@ import android.view.SurfaceView;
 
 public class GameView extends SurfaceView implements Runnable {
 
+
     volatile boolean isPlaying = true;
     private Thread gameThread = null;
     private SurfaceHolder surfaceHolder;
@@ -24,14 +28,16 @@ public class GameView extends SurfaceView implements Runnable {
     private Activity activity;
     private int screenWidth = 0, screenHeight = 0;
     private Player player;
+    private MediaPlayer jumpNoise;
+    private Bitmap backgroundImage;
     Tile initTile;
     Paint paint = new Paint();
 
 
     public GameView(Context context, int screenX, int screenY) {
         super(context);
-
-
+        backgroundImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.background_sky);
+        jumpNoise = MediaPlayer.create(context, R.raw.jump_takeoff);
         screenWidth = screenX;
         screenHeight = screenY;
         activity = (Activity) context;
@@ -59,6 +65,8 @@ public class GameView extends SurfaceView implements Runnable {
         if (surfaceHolder.getSurface().isValid()) {
             canvas = surfaceHolder.lockCanvas();
             canvas.drawColor(Color.WHITE);
+
+            canvas.drawBitmap(backgroundImage, 0, 0, paint);
 
             for(int i = 0; i < initTile.getLength(); i++)
             {
@@ -112,6 +120,7 @@ public class GameView extends SurfaceView implements Runnable {
         int touchAction = event.getAction();
 
         if(touchAction == MotionEvent.ACTION_DOWN){
+            jumpNoise.start();
             player.isJumping = true;
         }
 

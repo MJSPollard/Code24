@@ -28,7 +28,7 @@ public class Player {
     screenWidth = screenY;
     screenHeight = screenX;
 
-    jumpNoise = MediaPlayer.create(context, R.raw.jump_takeoff);
+
     playerJumpImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.knucklesjump);
     playerImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.ugandan_knuckle);
     playerImageResized = Bitmap.createScaledBitmap(playerImage, 200, 200, false);
