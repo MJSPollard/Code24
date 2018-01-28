@@ -166,6 +166,7 @@ public class GameView extends SurfaceView implements Runnable {
         if((currentTile.getBlock(currentTile.getLength()-20, currentTile.getHeight() -1).getX() * 100) - 100* move_const <= 200)
         {
             nextTile = currentTile.getNextTile();
+            System.out.println("PPPPPPPPPPPPP " + nextTile.getLength() + " || " + nextTile.getHeight());
         }
     }
 
