@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 /**
  * Created by michael on 1/27/18.
+ * Game Activity class invokes the game view class, setting up the activity that the game is played in
  */
 
 public class GameActivity extends AppCompatActivity {

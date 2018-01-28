@@ -8,11 +8,12 @@ import android.media.MediaPlayer;
 
 /**
  * Created by michael on 1/27/18.
+ * Player class for storing data on player location in image pane
  */
 
 public class Player {
 
-
+  //all initialized values for tracking location of the character in the app
   int Xval;
   int Yval;
   int screenWidth;
@@ -24,6 +25,8 @@ public class Player {
   private Rect hitBox;
   private MediaPlayer jumpNoise;
 
+  //player constructor, creates the player in the image pane based on the size of the screen
+  //the app is run on
   public Player(Context context, int screenX, int screenY){
     screenWidth = screenX;
     screenHeight = screenY;
@@ -34,6 +37,7 @@ public class Player {
     hitBox = new Rect(Xval, Yval, playerImageResized.getWidth(), playerImageResized.getHeight());
   }
 
+  //the main update method for moving the character up and down for jumps
   public void update(){
     int currentY = playerImageResized.getHeight();
     if(isJumping){
@@ -44,6 +48,7 @@ public class Player {
       }
     }
 
+    //the compliment to update, handles falling of the character
     else if(isFalling) {
       isJumping = false;
       Yval += 30;
@@ -60,15 +65,18 @@ public class Player {
     hitBox.right = Xval + playerImageResized.getWidth();
   }
 
+  //loads in the image for the ugandan knuckles
   public Bitmap getBitmap()
   {
     return playerImageResized;
   }
 
+  //hitbox for taking damage and collecting tide pods
   public Rect getHitBox(){
     return hitBox;
   }
 
+  //getter methods
   public int getXVal(){
     return Xval;
   }

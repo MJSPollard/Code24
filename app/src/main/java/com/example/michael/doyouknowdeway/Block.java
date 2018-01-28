@@ -6,16 +6,19 @@ import android.graphics.BitmapFactory;
 
 /**
  * Created by Hughman on 1/27/2018.
+ * the Block class creates the filler image for the tiles in the class
  */
 
 public class Block {
 
+    //Bitmaps for the images initialized
     private int x, y;
     private Bitmap blockImage;
     private Bitmap blockImageResized;
     private Boolean harmful, pod;
 
 
+    //block constuctor, to be called in the tile class
     Block(Block copy, int x, int y)
     {
         this.blockImage = copy.blockImage;
@@ -25,6 +28,9 @@ public class Block {
         this.x = x;
         this.y = y;
     }
+
+    //to be used again by the tile class, sets the image and properties on a certain block based
+    //on randomization algorithms
     Block(Context context, int selection)
     {
         pod = false;
@@ -47,6 +53,7 @@ public class Block {
         }
     }
 
+    //getter methods for tile properties
     public Bitmap getImage()
     {
         return blockImageResized;
