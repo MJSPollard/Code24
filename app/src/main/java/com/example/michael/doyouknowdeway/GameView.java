@@ -20,6 +20,7 @@ import android.widget.ImageButton;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by michael on 1/27/18.
@@ -391,6 +392,14 @@ public class GameView extends SurfaceView implements Runnable{
         backgroundMusic.stop();
         endGameSound.start();
         canvas.drawText("Your Score: " + mystr, screenWidth/2, screenHeight/2, textPaint);
+            try
+            {
+                Thread.sleep(1000);
+            }
+            catch(InterruptedException ex)
+            {
+                Thread.currentThread().interrupt();
+            }
         context.startActivity(new Intent(context,MainActivity.class));
     }
 
