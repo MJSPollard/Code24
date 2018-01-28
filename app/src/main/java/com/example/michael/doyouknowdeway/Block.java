@@ -39,6 +39,11 @@ public class Block {
         }
     }
 
+    public Bitmap getImage()
+    {
+        return blockImageResized;
+    }
+
     public Boolean getHarmful()
     {
         return harmful;

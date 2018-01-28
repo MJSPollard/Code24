@@ -24,6 +24,7 @@ public class GameView extends SurfaceView implements Runnable {
     private Activity activity;
     private int screenWidth = 0, screenHeight = 0;
     private Player player;
+    Tile initTile;
     Paint paint = new Paint();
 
 
@@ -42,7 +43,8 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     public void run() {
-
+        initTile = new Tile(context, 1);
+        initTile.fillTile();
         while (isPlaying) {
             update();
             draw();
@@ -59,6 +61,13 @@ public class GameView extends SurfaceView implements Runnable {
             canvas.drawColor(Color.GREEN);
             canvas.drawBitmap(player.getPlayerImage(),player.getXVal(), player.getYVal(), paint);
 
+            for(int i = 0; i < initTile.getHeight(); i++)
+            {
+                for(int j = 0; j < initTile.getLength(); j++)
+                {
+                    canvas.drawBitmap(initTile.getBlock(i,j).getImage(), i, j, paint);
+                }
+            }
             //releases the canvas to be redrawn again
             surfaceHolder.unlockCanvasAndPost(canvas);
         }
