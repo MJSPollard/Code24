@@ -52,6 +52,8 @@ public class GameView extends SurfaceView implements Runnable {
         super(context);
         backgroundImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.background_sky);
         backgroundImageResized = Bitmap.createScaledBitmap(backgroundImage, screenX, screenY, false);
+<<<<<<< HEAD
+=======
 
         podCount = BitmapFactory.decodeResource(context.getResources(), R.drawable.detergent_pod);
         run1 = BitmapFactory.decodeResource(context.getResources(), R.drawable.knuckles_run);
@@ -63,6 +65,7 @@ public class GameView extends SurfaceView implements Runnable {
 //        run2Resized = Bitmap.createScaledBitmap(run2, screenX, screenY, false);
 
 
+>>>>>>> f31d352dfb151981c5153b43567f4023121526c9
         jumpNoise = MediaPlayer.create(context, R.raw.jump_takeoff);
         backgroundMusic = MediaPlayer.create(context, R.raw.music_baby);
         screenWidth = screenX;
@@ -206,7 +209,6 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     public boolean onTouchEvent(MotionEvent event){
-
         int touchAction = event.getAction();
 
         if(touchAction == MotionEvent.ACTION_DOWN){

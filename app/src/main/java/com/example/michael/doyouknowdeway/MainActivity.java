@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private ImageButton startButton, settingsButton;
+    private ImageButton startButton
     private MediaPlayer deway;
 
     @Override
@@ -31,23 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //initialize buttons
         startButton = findViewById(R.id.imageButton2);
-        settingsButton = findViewById(R.id.imageButton4);
         startButton.setOnClickListener(this);
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PopupMenu popupMenu = new PopupMenu(MainActivity.this, settingsButton);
-                popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem menuItem) {
-                        Toast.makeText(MainActivity.this, "" + menuItem.getTitle(),Toast.LENGTH_SHORT).show();
-                        return true;
-                    }
-                });
-                popupMenu.show();
-            }
-        });
 
         deway = MediaPlayer.create(this, R.raw.do_u_kno_de_way);
     }
