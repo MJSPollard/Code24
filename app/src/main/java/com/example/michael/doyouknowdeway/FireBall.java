@@ -31,11 +31,13 @@ public class FireBall {
         fireNoise = MediaPlayer.create(context, R.raw.fire_ball_sound);
     }
 
-    public void update() {
+    public void update(Player player) {
         if(isShooting){
             Xval += 50;
             if(Xval > screenWidth) {
                 isShooting = false;
+                Xval = player.getXVal();
+                Yval = player.getYVal();
             }
         }
     }

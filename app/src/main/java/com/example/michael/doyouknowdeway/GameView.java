@@ -187,7 +187,7 @@ public class GameView extends SurfaceView implements Runnable{
         player.update();
 
         if(fireball.isShooting) {
-            fireball.update();
+            fireball.update(player);
         }
 
         if(((currentTile.getBlock(currentTile.getLength()-(screenWidth/100), currentTile.getHeight() -1).getX() * 100) - move_const <= 200) && nextTile == null){
