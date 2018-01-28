@@ -180,10 +180,25 @@ public class GameView extends SurfaceView implements Runnable {
     static boolean isColliding = false;
 
     public void detectCollisions(){
+        int currentX = (300 + move_const)/100;
+        int highestY = 9;
+        for(int i = 0; i < currentTile.getHeight(); i++)
+        {
+            if(currentTile.getBlock(currentX, i) != null)
+            {
+                highestY = i;
+                break;
+            }
+            else
+            {
+                highestY = -1;
+            }
+        }
+
         Rect Blockrect = new Rect();
         boolean checkGroundCollision;
 
-        if(currentTile.getBlock((300 + move_const)/100, currentTile.getHeight() - 1) != null) {
+        if(highestY >= 0) {
             Blockrect.top = (currentTile.getHeight() - 1) * 100;
             Blockrect.left = 200;
             Blockrect.right = 300;
