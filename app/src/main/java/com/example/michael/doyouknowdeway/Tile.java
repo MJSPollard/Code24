@@ -7,13 +7,13 @@ import android.content.Context;
  */
 
 public class Tile {
-    int length, height; //might make height constant variable
-    Block[] blocks = new Block[5];
-    Block[][] tileMap;
+    private int length, height; //might make height constant variable
+    private Block[] blocks = new Block[5];
+    private Block[][] tileMap;
 
 
     //Creates the initial starting tile
-    public Tile(Context context, int number_block_types, int length, int height)
+    Tile(Context context, int number_block_types, int length, int height)
     {
         System.out.println("Height = " + height);
         //create block classes?
@@ -37,7 +37,6 @@ public class Tile {
         {
             for(int j = 0; j < tileMap[i].length; j++)
             {
-             //   System.out.println("Height = " + height);
                 if(i == 1)
                 {
                     tileMap[i][j] = new Block(blocks[0], i, j);
