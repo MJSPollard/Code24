@@ -42,6 +42,8 @@ public class GameView extends SurfaceView implements Runnable {
 
     private Bitmap run1;
     private Bitmap run1Resized;
+    private Bitmap run2;
+    private Bitmap playerJumpImage;
     boolean isRun1 = false;
 
 
@@ -50,11 +52,13 @@ public class GameView extends SurfaceView implements Runnable {
         backgroundImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.background_sky);
         backgroundImageResized = Bitmap.createScaledBitmap(backgroundImage, screenX, screenY, false);
 
-        backgroundImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.background_sky);
-        backgroundImageResized = Bitmap.createScaledBitmap(backgroundImage, screenX, screenY, false);
+        run1 = BitmapFactory.decodeResource(context.getResources(), R.drawable.knuckles_run);
+        run1Resized = Bitmap.createScaledBitmap(run1, 200, 200, false);
 
-        backgroundImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.background_sky);
-        backgroundImageResized = Bitmap.createScaledBitmap(backgroundImage, screenX, screenY, false);
+       run2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.ugandan_knuckle);
+       playerJumpImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.knucklesjump);
+//        run2Resized = Bitmap.createScaledBitmap(run2, screenX, screenY, false);
+
 
         jumpNoise = MediaPlayer.create(context, R.raw.jump_takeoff);
         backgroundMusic = MediaPlayer.create(context, R.raw.music_baby);
@@ -71,15 +75,21 @@ public class GameView extends SurfaceView implements Runnable {
 
 
 
-//        executorService = Executors.newSingleThreadScheduledExecutor();
-//        executorService.scheduleAtFixedRate(new Runnable() {
-//            @Override
-//            public void run() {
-//                if(!isRun1) {
-//
-//                }
-//            }
-//        }, 0, 1, TimeUnit.SECONDS);
+        executorService = Executors.newSingleThreadScheduledExecutor();
+        executorService.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                if(!player.isJumping) {
+                    if (!isRun1) {
+                        run1Resized = Bitmap.createScaledBitmap(run1, 200, 200, false);
+                        isRun1 = true;
+                    } else {
+                        run1Resized = Bitmap.createScaledBitmap(run2, 200, 200, false);
+                        isRun1 = false;
+                    }
+                }
+            }
+        }, 0, 200, TimeUnit.MILLISECONDS);
 
 
     }
@@ -141,7 +151,7 @@ public class GameView extends SurfaceView implements Runnable {
                 }
             }
 
-            canvas.drawBitmap(player.getPlayerImage(),player.getXVal(), player.getYVal(), paint);
+            canvas.drawBitmap(run1Resized,player.getXVal(), player.getYVal(), paint);
 
             //releases the canvas to be redrawn again
             surfaceHolder.unlockCanvasAndPost(canvas);
@@ -189,6 +199,7 @@ public class GameView extends SurfaceView implements Runnable {
         if(touchAction == MotionEvent.ACTION_DOWN){
             jumpNoise.start();
             player.isJumping = true;
+            run1Resized = Bitmap.createScaledBitmap(playerJumpImage, 200, 200, false);
         }
 
         return true;
