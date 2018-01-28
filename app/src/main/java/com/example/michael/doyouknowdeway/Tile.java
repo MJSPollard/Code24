@@ -71,7 +71,8 @@ public class Tile {
                 else if(j == tileMap[i].length - 3){
                      if(i == 5){
                         tileMap[i][j] = new Block(blocks[2], i, j);
-                        tidePods.add((double) i + (double) (j/10));
+                        double k = (double) j;
+                        tidePods.add((double) i + (k/10.00));
                     }
                 }
 
