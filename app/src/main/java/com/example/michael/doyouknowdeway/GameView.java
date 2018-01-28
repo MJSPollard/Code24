@@ -16,13 +16,13 @@ import android.view.SurfaceView;
 
 public class GameView extends SurfaceView implements Runnable {
 
-    volatile boolean isPlaying = true;
+    volatile boolean isPlaying = true, init = true;
     private Thread gameThread = null;
     private SurfaceHolder surfaceHolder;
     private Canvas canvas;
     private Context context;
     private Activity activity;
-    private int screenWidth = 0, screenHeight = 0;
+    private int screenWidth = 0, screenHeight = 0, move_const;
     private Player player;
     Tile initTile;
     Paint paint = new Paint();
@@ -60,12 +60,29 @@ public class GameView extends SurfaceView implements Runnable {
             canvas = surfaceHolder.lockCanvas();
             canvas.drawColor(Color.GREEN);
 
-            for(int i = 0; i < initTile.getLength(); i++)
+
+            if(init) {
+                init = false;
+                for (int i = 0; i < initTile.getLength(); i++) {
+                    for (int j = 0; j < initTile.getHeight(); j++) {
+                        if (initTile.getBlock(i, j) != null) {
+                            canvas.drawBitmap(initTile.getBlock(i, j).getImage(), (i * 100), (j * 100) + 10, paint);
+                        }
+                    }
+                }
+            }
+            else
             {
-                for(int j = 0; j < initTile.getHeight(); j++)
+                if(player.isJumping)
                 {
-                    if(initTile.getBlock(i,j) != null) {
-                        canvas.drawBitmap(initTile.getBlock(i, j).getImage(), i*100, (j*100)+10, paint);
+                    move_const += 10;
+                }
+
+                for (int i = 0; i < initTile.getLength(); i++) {
+                    for (int j = 0; j < initTile.getHeight(); j++) {
+                        if (initTile.getBlock(i, j) != null) {
+                            canvas.drawBitmap(initTile.getBlock(i, j).getImage(), (i * 100) + move_const, (j * 100) + 10, paint);
+                        }
                     }
                 }
             }
