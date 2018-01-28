@@ -35,9 +35,10 @@ public class Player {
   }
 
   public void update(){
+    int currentY = playerImageResized.getHeight();
     if(isJumping){
       Yval -= 30;
-      if(Yval <= 400) {
+      if(Yval <= currentY - 150) {
         isJumping = false;
         isFalling = true;
       }

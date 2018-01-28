@@ -135,7 +135,7 @@ public class GameView extends SurfaceView implements Runnable {
             String mystr = Integer.toString(scoreCount);
 
 
-            if(-100 >= (currentTile.getBlock(currentTile.getLength() - 1, currentTile.getHeight() - 1).getX() *100) - move_const)
+            if(-100 >= (currentTile.getLength() - 1) *100 - move_const)
             {
                 currentTile = new Tile(nextTile);
                 isPassOver = true;
@@ -160,7 +160,9 @@ public class GameView extends SurfaceView implements Runnable {
                             canvas.drawBitmap(currentTile.getBlock(i, j).getImage(), (i * 100) - move_const, (j * 100) + 10, paint);
                             if (nextTile != null) {
                                 if (i < nextTile.getLength() && j < nextTile.getHeight()) {
-                                    canvas.drawBitmap(nextTile.getBlock(i, j).getImage(), ((i + currentTile.getLength()) * 100) - move_const, (j * 100) + 10, paint);
+                                    if(nextTile.getBlock(i, j) != null) {
+                                        canvas.drawBitmap(nextTile.getBlock(i, j).getImage(), ((i + currentTile.getLength()) * 100) - move_const, (j * 100) + 10, paint);
+                                    }
                                 }
                             }
                         }
@@ -189,7 +191,7 @@ public class GameView extends SurfaceView implements Runnable {
             fireball.update();
         }
 
-        if(((currentTile.getBlock(currentTile.getLength()-(screenWidth/100), currentTile.getHeight() -1).getX() * 100) - move_const <= 200) && nextTile == null){
+        if((((currentTile.getLength() - (screenWidth/100) )* 100) - move_const <= 200) && nextTile == null){
             nextTile = currentTile.getNextTile();
         }
 
@@ -292,7 +294,7 @@ public class GameView extends SurfaceView implements Runnable {
                 {
                     eatNoise.start();
                     scoreCount++;
-                    nextTile.setNullBlock(x, y);
+//                    nextTile.setNullBlock(x, y);
                 }
             }
         }
@@ -379,8 +381,8 @@ public class GameView extends SurfaceView implements Runnable {
         canvas.drawBitmap(endImageResized, screenWidth/2, screenHeight/2, paint);
         backgroundMusic.stop();
         endGameSound.start();
-        canvas.drawText("Your Score: " + mystr, screenWidth/2, screenHeight/2, textPaint);
-        TimeUnit.SECONDS.sleep(3);
+//        canvas.drawText("Your Score: " + mystr, screenWidth/2, screenHeight/2, textPaint);
+//        TimeUnit.SECONDS.sleep(3);
         context.startActivity(new Intent(context,MainActivity.class));
     }
 

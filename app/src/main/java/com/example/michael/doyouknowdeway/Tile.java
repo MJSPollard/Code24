@@ -51,6 +51,19 @@ public class Tile {
         int random_gap = rand.nextInt(length);
         int random_plume = rand.nextInt(length);
 
+        if(random_height == 0)
+        {
+            random_height = 1;
+        }
+        if(random_gap == 0)
+        {
+            random_gap = 1;
+        }
+        if(random_gap - random_plume == 0)
+        {
+            random_gap += 1;
+        }
+
         while(random_plume == random_gap)
         {
             random_plume = rand.nextInt(length);
@@ -61,7 +74,7 @@ public class Tile {
         //add block to Tile
         for(int i = 0; i < tileMap.length; i++)
         {
-            int random_adjust = rand.nextInt(random_height);
+            int random_adjust = rand.nextInt(Math.abs(random_height));
             int random_adjust2 = rand.nextInt(random_gap);
 
             for(int j = 0; j < tileMap[i].length; j++)
@@ -70,9 +83,19 @@ public class Tile {
 
                 if(j == tileMap[i].length - 1)
                 {
-                    makeBlock(i, j, 0);
+                    if(rand.nextBoolean()) {
+                        makeBlock(i, j, 0);
+                    }
+                    else
+                    {
+                        makeBlock(1, j, 1);
+                    }
                 }
-                if(i == scale + random_adjust2 && j == tileMap[i].length - random_adjust)
+                if(i == random_gap && j <= tileMap[i].length)
+                {
+                    tileMap[i][j] = null;
+                }
+                if(i == scale + random_adjust2 && j == tileMap[i].length - (random_adjust - 1))
                 {
                          makeBlock(i, j, 2);
                 }
@@ -80,15 +103,11 @@ public class Tile {
                 {
                     makeBlock(i, j, block_type);
                 }
-                if(i == random_gap && j <= tileMap[i].length)
-                {
-                    continue;
-                }
-                if(i == scale && j >= tileMap[i].length - random_height)
+                if(i == scale - 4 && j >= tileMap[i].length - random_height)
                 {
                     makeBlock(i, j, 0);
                 }
-                if(i == scale - 1 && j >= tileMap[i].length - random_height - random_adjust)
+                if(i == scale - 3 && j >= tileMap[i].length - random_height - random_adjust)
                 {
                     makeBlock(i, j, 0);
                 }
@@ -96,7 +115,7 @@ public class Tile {
                 {
                     makeBlock(i, j, 0);
                 }
-                if(i == scale - 3 && j >= tileMap[i].length - 1)
+                if(i == scale - 1 && j >= tileMap[i].length - 1)
                 {
                     makeBlock(i, j, 0);
                 }
