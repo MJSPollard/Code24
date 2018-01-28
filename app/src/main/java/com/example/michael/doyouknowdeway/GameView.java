@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 public class GameView extends SurfaceView implements Runnable {
 
 
-    volatile boolean isPlaying = true, init = true;
+    volatile boolean isPlaying = true, init = true, isPassOver = true;
     private Thread gameThread = null;
     private SurfaceHolder surfaceHolder;
     private Canvas canvas;
@@ -117,6 +117,7 @@ public class GameView extends SurfaceView implements Runnable {
             if(-100 >= (currentTile.getBlock(currentTile.getLength() - 1, currentTile.getHeight() - 1).getX() *100) - move_const)
             {
                 currentTile = new Tile(nextTile);
+                System.out.println("OOOOOOOOOOO");
                 nextTile = null;
                 move_const = 0;
             }
@@ -138,9 +139,7 @@ public class GameView extends SurfaceView implements Runnable {
                             canvas.drawBitmap(currentTile.getBlock(i, j).getImage(), (i * 100) - move_const, (j * 100) + 10, paint);
                             if(nextTile != null) {
                                 if (i < nextTile.getLength() && j < nextTile.getHeight()) {
-                                    if (!(0 == nextTile.isEqualTo(currentTile))) {
-                                        canvas.drawBitmap(nextTile.getBlock(i, j).getImage(), ((i + currentTile.getLength()) * 100) - move_const, (j * 100) + 10, paint);
-                                    }
+                                    canvas.drawBitmap(nextTile.getBlock(i, j).getImage(), ((i + currentTile.getLength()) * 100) - move_const, (j * 100) + 10, paint);
                                 }
                             }
                         }
@@ -168,8 +167,9 @@ public class GameView extends SurfaceView implements Runnable {
             fireball.update();
         }
 
-        if((currentTile.getBlock(currentTile.getLength()-(screenWidth/100), currentTile.getHeight() -1).getX() * 100) - move_const <= 200)
+        if(((currentTile.getBlock(currentTile.getLength()-(screenWidth/100), currentTile.getHeight() -1).getX() * 100) - move_const <= 200) && nextTile == null)
         {
+            System.out.println("OUT HERE");
             nextTile = currentTile.getNextTile();
         }
 
@@ -180,11 +180,32 @@ public class GameView extends SurfaceView implements Runnable {
     static boolean isColliding = false;
 
     public void detectCollisions(){
+        int highestY = 9, passOver;
         int currentX = (300 + move_const)/100;
-        int highestY = 9;
+
+        if(currentX >= currentTile.getLength() && isPassOver)
+        {
+            passOver = -10;
+            isPassOver = false;
+        }
+        else
+        {
+            passOver= 0;
+        }
+
         for(int i = 0; i < currentTile.getHeight(); i++)
         {
-            if(currentTile.getBlock(currentX, i) != null)
+            if(currentX >= currentTile.getLength())
+            {
+                passOver += 10;
+                if(nextTile.getBlock(passOver/100, i) != null)
+                {
+                    highestY = i;
+                    isPassOver = true;
+                    break;
+                }
+            }
+            else if(currentTile.getBlock(currentX, i) != null)
             {
                 highestY = i;
                 break;
@@ -199,7 +220,7 @@ public class GameView extends SurfaceView implements Runnable {
         boolean checkGroundCollision;
 
         if(highestY >= 0) {
-            Blockrect.top = (currentTile.getHeight() - 1) * 100;
+            Blockrect.top = (highestY) * 100;
             Blockrect.left = 200;
             Blockrect.right = 300;
             Blockrect.bottom = screenHeight;
