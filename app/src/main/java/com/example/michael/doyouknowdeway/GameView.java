@@ -39,6 +39,7 @@ public class GameView extends SurfaceView implements Runnable {
     Tile currentTile, nextTile;
     private ScheduledExecutorService executorService;
     Paint paint = new Paint();
+    FireBall fireball;
 
     private Bitmap run1, podCount;
     private Bitmap run1Resized, podCountResized;
@@ -70,6 +71,7 @@ public class GameView extends SurfaceView implements Runnable {
         backgroundMusic.start();
         this.context = context;
         player = new Player(context, screenX, screenY);
+        fireball = new FireBall(context, screenX, screenY);
         currentTile = new Tile(context, 2, screenWidth * 2, screenHeight);
         currentTile.fillTile();
 
@@ -113,8 +115,8 @@ public class GameView extends SurfaceView implements Runnable {
             canvas.drawColor(Color.WHITE);
             canvas.drawBitmap(podCountResized, 0, 0, paint);
             canvas.drawBitmap(backgroundImageResized, 0, 0, paint);
-
-            if(player.getXVal() >= currentTile.getBlock(currentTile.getLength() - 1, currentTile.getHeight() - 1).getX() *100 - ((100 * move_const) + 25))
+            System.out.println("ghghghg " + (currentTile.getBlock(currentTile.getLength() - 1, currentTile.getHeight() - 1).getX() *100 - ((100 * move_const) + 25)));
+            if(50 >= currentTile.getBlock(currentTile.getLength() - 1, currentTile.getHeight() - 1).getX() *100 - ((10 * move_const) + 25))
             {
                 System.out.println("hello");
                 currentTile = new Tile(nextTile);
@@ -132,10 +134,8 @@ public class GameView extends SurfaceView implements Runnable {
             }
             else
             {
-                if(player.isJumping)
-                {
+
                     move_const += 10;
-                }
 
                 for (int i = 0; i < currentTile.getLength(); i++) {
                     for (int j = 0; j < currentTile.getHeight(); j++) {
@@ -154,7 +154,9 @@ public class GameView extends SurfaceView implements Runnable {
                     }
                 }
             }
-
+            if(fireball.isShooting) {
+                canvas.drawBitmap(fireball.getImage(), fireball.getXVal(), fireball.getYVal(), paint);
+            }
             canvas.drawBitmap(run1Resized,player.getXVal(), player.getYVal(), paint);
 
             //releases the canvas to be redrawn again
@@ -168,7 +170,11 @@ public class GameView extends SurfaceView implements Runnable {
     public void update() {
         player.update();
 
-        if((currentTile.getBlock(currentTile.getLength()-20, currentTile.getHeight() -1).getX() * 100) - 100* move_const <= 200)
+        if(fireball.isShooting) {
+            fireball.update();
+        }
+
+        if((currentTile.getBlock(currentTile.getLength()-20, currentTile.getHeight() -1).getX() * 100) - 10* move_const <= 200)
         {
             nextTile = currentTile.getNextTile();
             System.out.println("PPPPPPPPPPPPP " + nextTile.getLength() + " || " + nextTile.getHeight());
@@ -208,6 +214,8 @@ public class GameView extends SurfaceView implements Runnable {
                 jumpNoise.start();
                 player.isJumping = true;
                 run1Resized = Bitmap.createScaledBitmap(playerJumpImage, 200, 200, false);
+            } else {
+                fireball.setOnScreen(true);
             }
 
 
