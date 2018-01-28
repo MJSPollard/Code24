@@ -52,8 +52,10 @@ public class GameView extends SurfaceView implements Runnable {
 
     public void run() {
         initTile = new Tile(context, 2, screenWidth * 2, screenHeight);
-        currentTile = initTile;
+
         initTile.fillTile();
+        currentTile = initTile;
+
         while (isPlaying) {
             update();
             draw();
@@ -76,7 +78,9 @@ public class GameView extends SurfaceView implements Runnable {
                 currentTile = nextTile;
             }
 
+            System.out.println(currentTile.getID() + " || " + initTile.getID());
             if(0 == currentTile.isEqual(initTile)) {
+                System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
                 for (int i = 0; i < currentTile.getLength(); i++) {
                     for (int j = 0; j < currentTile.getHeight(); j++) {
                         if (currentTile.getBlock(i, j) != null) {
@@ -87,6 +91,7 @@ public class GameView extends SurfaceView implements Runnable {
             }
             else
             {
+                System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
                 if(player.isJumping)
                 {
                     move_const += 10;
