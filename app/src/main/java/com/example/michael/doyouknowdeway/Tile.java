@@ -74,7 +74,7 @@ public class Tile {
     }
 
 
-    Tile getNextTile(int length, int height)
+    Tile getNextTile()
     {
         Tile nextTile = new Tile(length, height);
         return nextTile;
