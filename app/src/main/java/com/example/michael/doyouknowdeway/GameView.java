@@ -198,9 +198,13 @@ public class GameView extends SurfaceView implements Runnable {
         int touchAction = event.getAction();
 
         if(touchAction == MotionEvent.ACTION_DOWN){
-            jumpNoise.start();
-            player.isJumping = true;
-            run1Resized = Bitmap.createScaledBitmap(playerJumpImage, 200, 200, false);
+            if(event.getX() < (screenWidth / 2)) {
+                jumpNoise.start();
+                player.isJumping = true;
+                run1Resized = Bitmap.createScaledBitmap(playerJumpImage, 200, 200, false);
+            }
+
+
         }
 
         return true;
