@@ -7,10 +7,10 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/background_sky2"
-        tools:layout_editor_absoluteX="47dp"
+        app:srcCompat="@drawable/background_sky"
+        tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
 </android.support.constraint.ConstraintLayout>
