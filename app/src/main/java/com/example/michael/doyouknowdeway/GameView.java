@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.widget.ImageButton;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -21,7 +22,7 @@ import java.util.concurrent.TimeUnit;
  * Created by michael on 1/27/18.
  */
 
-public class GameView extends SurfaceView implements Runnable {
+public class GameView extends SurfaceView implements Runnable{
 
 
     volatile boolean isPlaying = true, init = true, isPassOver = true;
@@ -359,10 +360,6 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     public void gameOver() {
-        /*endImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.end_game);
-        endImageResized = Bitmap.createScaledBitmap(endImage, 100, 200, false);
-<<<<<<< HEAD
-        canvas.drawBitmap(endImageResized, screenWidth/2, screenHeight/2, paint);*/
 
         redoButton = findViewById(R.id.imageButton2);
         redoButton.setOnClickListener(this);
@@ -370,15 +367,13 @@ public class GameView extends SurfaceView implements Runnable {
 
     }
 
-    public void redoClick(View v){
+    public void onClick(View v){
         if(v == redoButton){
             context.startActivity(new Intent(context,MainActivity.class));
         }
-=======
         canvas.drawBitmap(endImageResized, screenWidth/2, screenHeight/2, paint);
         backgroundMusic.stop();
         context.startActivity(new Intent(context,MainActivity.class));
->>>>>>> e4f32b3b32d5ac8d56658896e4ae276233f79721
     }
 
     public boolean onTouchEvent(MotionEvent event){
