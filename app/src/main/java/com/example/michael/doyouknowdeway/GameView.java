@@ -14,6 +14,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -49,6 +50,7 @@ public class GameView extends SurfaceView implements Runnable {
     private Bitmap run2;
     private Bitmap playerJumpImage;
     boolean isRun1 = false;
+    //private ArrayList<Integer> podLoc;
 
 
     public GameView(Context context, int screenX, int screenY) {
@@ -121,6 +123,7 @@ public class GameView extends SurfaceView implements Runnable {
             {
                 currentTile = new Tile(nextTile);
                 System.out.println("OOOOOOOOOOO");
+                isPassOver = true;
                 nextTile = null;
                 move_const = 0;
             }
@@ -177,9 +180,7 @@ public class GameView extends SurfaceView implements Runnable {
             gameOver();
         }
         detectCollisions();
-        if(((currentTile.getBlock(currentTile.getLength()-(screenWidth/100), currentTile.getHeight() -1).getX() * 100) - move_const <= 200) && nextTile == null)
-        {
-            System.out.println("OUT HERE");
+        if(((currentTile.getBlock(currentTile.getLength()-(screenWidth/100), currentTile.getHeight() -1).getX() * 100) - move_const <= 200) && nextTile == null){
             nextTile = currentTile.getNextTile();
         }
 
