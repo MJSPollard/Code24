@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.widget.ImageButton;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -28,14 +29,14 @@ import java.util.concurrent.TimeUnit;
  * to work on with many bugs occuring along the wae.
  */
 
-public class GameView extends SurfaceView implements Runnable {
+public class GameView extends SurfaceView implements Runnable{
 
     //many values used later in the class such as integers for locations on screen, sounds for game
     //bitmaps for images and text box holders
     volatile boolean isPlaying = true, init = true, isPassOver = true;
     private Thread gameThread = null;
     private SurfaceHolder surfaceHolder;
-    private Canvas canvas;
+    private Canvas canvas;gi
     private Context context;
     private Activity activity;
     private int screenWidth = 0, screenHeight = 0, move_const = 1;
@@ -191,7 +192,7 @@ public class GameView extends SurfaceView implements Runnable {
         player.update();
 
         if(fireball.isShooting) {
-            fireball.update();
+            fireball.update(player);
         }
 
         if(((currentTile.getBlock(currentTile.getLength()-(screenWidth/100), currentTile.getHeight() -1).getX() * 100) - move_const <= 200) && nextTile == null){
@@ -385,6 +386,17 @@ public class GameView extends SurfaceView implements Runnable {
 
     //end game code, for when the player falls, gets pushed off screen, or runs out of life.
     public void gameOver() {
+
+        redoButton = findViewById(R.id.imageButton2);
+        redoButton.setOnClickListener(this);
+
+
+    }
+
+    public void onClick(View v){
+        if(v == redoButton){
+            context.startActivity(new Intent(context,MainActivity.class));
+        }
         endImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.end_game);
         endImageResized = Bitmap.createScaledBitmap(endImage, 100, 200, false);
         canvas.drawBitmap(endImageResized, screenWidth/2, screenHeight/2, paint);
