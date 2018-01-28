@@ -13,8 +13,6 @@ import android.media.MediaPlayer;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-
-import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -50,7 +48,6 @@ public class GameView extends SurfaceView implements Runnable {
     private Bitmap run2;
     private Bitmap playerJumpImage;
     boolean isRun1 = false;
-    //private ArrayList<Integer> podLoc;
 
 
     public GameView(Context context, int screenX, int screenY) {
@@ -62,8 +59,8 @@ public class GameView extends SurfaceView implements Runnable {
         run1 = BitmapFactory.decodeResource(context.getResources(), R.drawable.knuckles_run);
         run1Resized = Bitmap.createScaledBitmap(run1, 200, 200, false);
         podCountResized = Bitmap.createScaledBitmap(podCount, 100, 100, false);
-       run2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.ugandan_knuckle);
-       playerJumpImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.knucklesjump);
+        run2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.ugandan_knuckle);
+        playerJumpImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.knucklesjump);
 //        run2Resized = Bitmap.createScaledBitmap(run2, screenX, screenY, false);
         jumpNoise = MediaPlayer.create(context, R.raw.jump_takeoff);
         eatNoise = MediaPlayer.create(context, R.raw.eat_1);
@@ -118,15 +115,12 @@ public class GameView extends SurfaceView implements Runnable {
             canvas.drawColor(Color.WHITE);
             canvas.drawBitmap(backgroundImageResized, 0, 0, paint);
             canvas.drawBitmap(podCountResized, 0, 0, paint);
-            paint.setColor(Color.BLACK);
-            paint.setTextSize(20);
-            canvas.drawText(Integer.toString(scoreCount), 150, 10, paint);
+            canvas.drawText(Integer.toString(scoreCount), 250, 20, paint);
 
 
             if(-100 >= (currentTile.getBlock(currentTile.getLength() - 1, currentTile.getHeight() - 1).getX() *100) - move_const)
             {
                 currentTile = new Tile(nextTile);
-                System.out.println("OOOOOOOOOOO");
                 isPassOver = true;
                 nextTile = null;
                 move_const = 0;
@@ -147,10 +141,10 @@ public class GameView extends SurfaceView implements Runnable {
                     for (int j = 0; j < currentTile.getHeight(); j++) {
                         if (currentTile.getBlock(i, j) != null) {
                             canvas.drawBitmap(currentTile.getBlock(i, j).getImage(), (i * 100) - move_const, (j * 100) + 10, paint);
-                            if(nextTile != null) {
-                                if (i < nextTile.getLength() && j < nextTile.getHeight()) {
-                                    canvas.drawBitmap(nextTile.getBlock(i, j).getImage(), ((i + currentTile.getLength()) * 100) - move_const, (j * 100) + 10, paint);
-                                }
+                        }
+                        if(nextTile != null) {
+                            if (i < nextTile.getLength() && j < nextTile.getHeight()) {
+                                canvas.drawBitmap(nextTile.getBlock(i, j).getImage(), ((i + currentTile.getLength()) * 100) - move_const, (j * 100) + 10, paint);
                             }
                         }
                     }
@@ -249,7 +243,6 @@ public class GameView extends SurfaceView implements Runnable {
 
                 if(hit)
                 {
-                    System.out.println("WINNER WINNER");
                     eatNoise.start();
                     scoreCount++;
                     nextTile.setNullBlock(x, y);
@@ -261,16 +254,16 @@ public class GameView extends SurfaceView implements Runnable {
             for(double iter: currentTile.getTidePods())
             {
                 int x = (int) iter;
-                int y = (int) (iter - x)*10;
+                double temp = x;
+                int y = (int) ((iter - temp)*10.00);
 
                 boolean hit = podCollision(x, y);
 
                 if(hit)
                 {
-                    System.out.println("WINNER WINNER");
                     eatNoise.start();
                     scoreCount++;
-                    nextTile.setNullBlock(x, y);
+                    currentTile.setNullBlock(x, y);
                 }
             }
         }

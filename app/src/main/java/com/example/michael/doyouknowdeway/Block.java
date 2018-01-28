@@ -42,7 +42,7 @@ public class Block {
         }
         else if(selection == 2){
             blockImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.detergent_pod);
-            blockImageResized = Bitmap.createScaledBitmap(blockImage, 150, 150, false);
+            blockImageResized = Bitmap.createScaledBitmap(blockImage, 200, 200, false);
             pod = true;
         }
     }
@@ -62,12 +62,6 @@ public class Block {
         return pod;
     }
 
-    public void setPosition(int x,int y)
-    {
-        this.x = x;
-        this.y = y;
-    }
-
     public int getX()
     {
         return x;
@@ -78,11 +72,11 @@ public class Block {
         return y;
     }
 
-    public int[] getPosition()
-    {
-        int[] position = new int[2];
-        position[0] = x;
-        position[1] = y;
-        return position;
-    }
+//    public int[] getPosition()
+//    {
+//        int[] position = new int[2];
+//        position[0] = x;
+//        position[1] = y;
+//        return position;
+//    }
 }
