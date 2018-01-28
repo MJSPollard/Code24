@@ -245,6 +245,10 @@ public class GameView extends SurfaceView implements Runnable {
 
                 if(hit)
                 {
+<<<<<<< HEAD
+=======
+                    System.out.println("WINNER WINNER");
+>>>>>>> 39cdb91d32d922068c425f3ec829bcd2f0138637
                     eatNoise.start();
                     scoreCount++;
                     nextTile.setNullBlock(x, y);
