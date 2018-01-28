@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.widget.ImageButton;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -25,13 +26,13 @@ import java.util.concurrent.TimeUnit;
  * Created by michael on 1/27/18.
  */
 
-public class GameView extends SurfaceView implements Runnable {
+public class GameView extends SurfaceView implements Runnable{
 
 
     volatile boolean isPlaying = true, init = true, isPassOver = true;
     private Thread gameThread = null;
     private SurfaceHolder surfaceHolder;
-    private Canvas canvas;
+    private Canvas canvas;gi
     private Context context;
     private Activity activity;
     private int screenWidth = 0, screenHeight = 0, move_const = 1;
@@ -188,7 +189,7 @@ public class GameView extends SurfaceView implements Runnable {
         player.update();
 
         if(fireball.isShooting) {
-            fireball.update();
+            fireball.update(player);
         }
 
         if((((currentTile.getLength() - (screenWidth/100) )* 100) - move_const <= 200) && nextTile == null){
@@ -376,13 +377,36 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     public void gameOver() {
+
+        redoButton = findViewById(R.id.imageButton2);
+        redoButton.setOnClickListener(this);
+
+
+    }
+
+    public void onClick(View v){
+        if(v == redoButton){
+            context.startActivity(new Intent(context,MainActivity.class));
+        }
         endImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.end_game);
         endImageResized = Bitmap.createScaledBitmap(endImage, 100, 200, false);
         canvas.drawBitmap(endImageResized, screenWidth/2, screenHeight/2, paint);
         backgroundMusic.stop();
         endGameSound.start();
+<<<<<<< HEAD
 //        canvas.drawText("Your Score: " + mystr, screenWidth/2, screenHeight/2, textPaint);
 //        TimeUnit.SECONDS.sleep(3);
+=======
+        canvas.drawText("Your Score: " + mystr, screenWidth/2, screenHeight/2, textPaint);
+            try
+            {
+                Thread.sleep(1000);
+            }
+            catch(InterruptedException ex)
+            {
+                Thread.currentThread().interrupt();
+            }
+>>>>>>> 1b0dd6b9e8f991b44b6cc42a7067d5adb3acc933
         context.startActivity(new Intent(context,MainActivity.class));
     }
 
