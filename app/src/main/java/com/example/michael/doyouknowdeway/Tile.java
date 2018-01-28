@@ -21,7 +21,9 @@ public class Tile {
         {
            // blocks[i] = new Block("grass")
             blocks[i] = new Block(context, i);
-            tileMap = new Block[length][height];
+            tileMap = new Block[length/100][height/100];
+            this.height = height/100;
+            this.length = length/100;
         }
     }
     public Tile(int length, int height)
@@ -37,7 +39,7 @@ public class Tile {
         {
             for(int j = 0; j < tileMap[i].length; j++)
             {
-                if(i == 1)
+                if(j == tileMap[i].length - 1)
                 {
                     tileMap[i][j] = new Block(blocks[0], i, j);
                 }
