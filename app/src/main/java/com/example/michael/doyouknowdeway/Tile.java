@@ -100,6 +100,7 @@ public class Tile {
     {
         tileMap[x][y] = null;
         double compare = (double) x + (y/10.00);
+
         for(int i = 0; i < tidePods.size(); i++)
         {
             double comparitor = Math.abs(compare - tidePods.get(i));
