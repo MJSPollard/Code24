@@ -118,6 +118,7 @@ public class GameView extends SurfaceView implements Runnable {
             canvas.drawBitmap(backgroundImageResized, 0, 0, paint);
             canvas.drawBitmap(podCountResized, 0, 0, paint);
             paint.setColor(Color.black);
+            paint.setTextSize(20);
             canvas.drawText(Integer.toString(scoreCount), 150, 10, paint);
 
 
