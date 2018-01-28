@@ -6,7 +6,9 @@ import android.content.Context;
  * Created by Hughman on 1/27/2018.
  */
 
-public class Tile {
+public class
+
+Tile {
     private int length, height, ID; //might make height constant variable
     private Block[] blocks = new Block[5];
     private Block[][] tileMap;
