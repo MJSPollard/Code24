@@ -6,10 +6,16 @@ import android.content.Context;
  * Created by Hughman on 1/27/2018.
  */
 
+<<<<<<< HEAD
 public class
 
 Tile {
     private int length, height, ID; //might make height constant variable
+=======
+public class Tile {
+    private int length, height
+    private static int ID; //might make height constant variable
+>>>>>>> 398d9bf3698eadab7caa75c0119d3b48c278a098
     private Block[] blocks = new Block[5];
     private Block[][] tileMap;
     //private int[] possible_next_tile;
