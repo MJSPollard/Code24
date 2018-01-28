@@ -14,6 +14,9 @@ import android.media.MediaPlayer;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.widget.ImageButton;
+
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -36,10 +39,12 @@ public class GameView extends SurfaceView implements Runnable{
     private MediaPlayer jumpNoise, eatNoise;
     private Bitmap backgroundImage;
     private MediaPlayer backgroundMusic;
+    private MediaPlayer endGameSound;
     private Bitmap backgroundImageResized;
     Tile currentTile, nextTile;
     private ScheduledExecutorService executorService;
     Paint paint = new Paint();
+    Paint textPaint = new Paint();
     FireBall fireball;
     private int scoreCount = 0;
     private Bitmap endImage;
@@ -54,18 +59,28 @@ public class GameView extends SurfaceView implements Runnable{
 
     public GameView(Context context, int screenX, int screenY) {
         super(context);
+
+        //load images into game
         backgroundImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.background_sky);
         backgroundImageResized = Bitmap.createScaledBitmap(backgroundImage, screenX, screenY, false);
-
         podCount = BitmapFactory.decodeResource(context.getResources(), R.drawable.detergent_pod);
         run1 = BitmapFactory.decodeResource(context.getResources(), R.drawable.knuckles_run);
         run1Resized = Bitmap.createScaledBitmap(run1, 200, 200, false);
         podCountResized = Bitmap.createScaledBitmap(podCount, 100, 100, false);
         run2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.ugandan_knuckle);
         playerJumpImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.knucklesjump);
+
+        //load sounds into game
         jumpNoise = MediaPlayer.create(context, R.raw.jump_takeoff);
         eatNoise = MediaPlayer.create(context, R.raw.eat_1);
         backgroundMusic = MediaPlayer.create(context, R.raw.music_baby);
+        endGameSound = MediaPlayer.create(context, R.raw.end_game);
+
+        //initialize other important stuff
+        textPaint.setColor(Color.WHITE);
+        textPaint.setTextSize(72);
+        textPaint.setStyle(Paint.Style.FILL);
+        paint.setAntiAlias(true);
         screenWidth = screenX;
         screenHeight = screenY;
         activity = (Activity) context;
@@ -75,11 +90,9 @@ public class GameView extends SurfaceView implements Runnable{
         fireball = new FireBall(context, screenX, screenY);
         currentTile = new Tile(context, 3, screenWidth + 200, screenHeight);
         currentTile.fillTile();
-
         surfaceHolder = getHolder();
 
-
-
+        //controls "running" animation
         executorService = Executors.newSingleThreadScheduledExecutor();
         executorService.scheduleAtFixedRate(new Runnable() {
             @Override
@@ -120,7 +133,7 @@ public class GameView extends SurfaceView implements Runnable{
             canvas.drawBitmap(backgroundImageResized, 0, 0, paint);
             canvas.drawBitmap(podCountResized, 0, 0, paint);
             String mystr = Integer.toString(scoreCount);
-            canvas.drawText(mystr, 250, 20, paint);
+
 
             if(-100 >= (currentTile.getBlock(currentTile.getLength() - 1, currentTile.getHeight() - 1).getX() *100) - move_const)
             {
@@ -159,6 +172,7 @@ public class GameView extends SurfaceView implements Runnable{
                 canvas.drawBitmap(fireball.getImage(), fireball.getXVal(), fireball.getYVal(), paint);
             }
             canvas.drawBitmap(run1Resized,player.getXVal(), player.getYVal(), paint);
+            canvas.drawText(mystr, 120, 80, textPaint);
 
             //releases the canvas to be redrawn again
             surfaceHolder.unlockCanvasAndPost(canvas);
@@ -296,7 +310,7 @@ public class GameView extends SurfaceView implements Runnable{
                 {
                     eatNoise.start();
                     scoreCount++;
-                    currentTile.setNullBlock(x, y);
+                    //currentTile.setNullBlock(x, y);
                 }
             }
         }
@@ -371,10 +385,14 @@ public class GameView extends SurfaceView implements Runnable{
         if(v == redoButton){
             context.startActivity(new Intent(context,MainActivity.class));
         }
+        endImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.end_game);
+        endImageResized = Bitmap.createScaledBitmap(endImage, 100, 200, false);
         canvas.drawBitmap(endImageResized, screenWidth/2, screenHeight/2, paint);
         backgroundMusic.stop();
+        endGameSound.start();
         context.startActivity(new Intent(context,MainActivity.class));
     }
+
 
     public boolean onTouchEvent(MotionEvent event){
         int touchAction = event.getAction();
