@@ -13,6 +13,9 @@ import android.media.MediaPlayer;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.widget.ImageButton;
+
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -35,6 +38,7 @@ public class GameView extends SurfaceView implements Runnable {
     private MediaPlayer jumpNoise, eatNoise;
     private Bitmap backgroundImage;
     private MediaPlayer backgroundMusic;
+    private MediaPlayer endGameSound;
     private Bitmap backgroundImageResized;
     Tile currentTile, nextTile;
     private ScheduledExecutorService executorService;
@@ -69,6 +73,7 @@ public class GameView extends SurfaceView implements Runnable {
         jumpNoise = MediaPlayer.create(context, R.raw.jump_takeoff);
         eatNoise = MediaPlayer.create(context, R.raw.eat_1);
         backgroundMusic = MediaPlayer.create(context, R.raw.music_baby);
+        endGameSound = MediaPlayer.create(context, R.raw.end_game);
 
         //initialize other important stuff
         textPaint.setColor(Color.WHITE);
@@ -370,24 +375,20 @@ public class GameView extends SurfaceView implements Runnable {
     public void gameOver() {
         /*endImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.end_game);
         endImageResized = Bitmap.createScaledBitmap(endImage, 100, 200, false);
-<<<<<<< HEAD
         canvas.drawBitmap(endImageResized, screenWidth/2, screenHeight/2, paint);*/
 
         redoButton = findViewById(R.id.imageButton2);
         redoButton.setOnClickListener(this);
-
-
     }
 
     public void redoClick(View v){
         if(v == redoButton){
             context.startActivity(new Intent(context,MainActivity.class));
         }
-=======
         canvas.drawBitmap(endImageResized, screenWidth/2, screenHeight/2, paint);
         backgroundMusic.stop();
+        endGameSound.start();
         context.startActivity(new Intent(context,MainActivity.class));
->>>>>>> e4f32b3b32d5ac8d56658896e4ae276233f79721
     }
 
     public boolean onTouchEvent(MotionEvent event){
