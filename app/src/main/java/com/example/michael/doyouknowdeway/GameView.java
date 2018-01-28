@@ -58,7 +58,7 @@ public class GameView extends SurfaceView implements Runnable {
         podCount = BitmapFactory.decodeResource(context.getResources(), R.drawable.detergent_pod);
         run1 = BitmapFactory.decodeResource(context.getResources(), R.drawable.knuckles_run);
         run1Resized = Bitmap.createScaledBitmap(run1, 200, 200, false);
-        podCountResized = Bitmap.createScaledBitmap(podCount, 20, 20, false);
+        podCountResized = Bitmap.createScaledBitmap(podCount, 100, 100, false);
        run2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.ugandan_knuckle);
        playerJumpImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.knucklesjump);
 //        run2Resized = Bitmap.createScaledBitmap(run2, screenX, screenY, false);
@@ -113,14 +113,11 @@ public class GameView extends SurfaceView implements Runnable {
             canvas = surfaceHolder.lockCanvas();
             canvas.drawColor(Color.WHITE);
             canvas.drawBitmap(backgroundImageResized, 0, 0, paint);
-            //System.out.println("ghghghg " + (currentTile.getBlock(currentTile.getLength() - 1, currentTile.getHeight() - 1).getX() *100 - (10 * move_const)));
-            if(-100 >= (currentTile.getBlock(currentTile.getLength() - 1, currentTile.getHeight() - 1).getX() *100) - move_const)
             canvas.drawBitmap(podCountResized, 0, 0, paint);
-            canvas.drawText(Integer.toString(scoreCount), 15, 15, paint);
-            System.out.println("ghghghg " + (currentTile.getBlock(currentTile.getLength() - 1, currentTile.getHeight() - 1).getX() *100 - ((100 * move_const) + 25)));
-            if(50 >= currentTile.getBlock(currentTile.getLength() - 1, currentTile.getHeight() - 1).getX() *100 - ((10 * move_const) + 25))
+            canvas.drawText(Integer.toString(scoreCount), 150, 150, paint);
+
+            if(-100 >= (currentTile.getBlock(currentTile.getLength() - 1, currentTile.getHeight() - 1).getX() *100) - move_const)
             {
-                System.out.println("hello");
                 currentTile = new Tile(nextTile);
                 nextTile = null;
                 move_const = 0;
@@ -143,7 +140,6 @@ public class GameView extends SurfaceView implements Runnable {
                             canvas.drawBitmap(currentTile.getBlock(i, j).getImage(), (i * 100) - move_const, (j * 100) + 10, paint);
                             if(nextTile != null) {
                                 if (i < nextTile.getLength() && j < nextTile.getHeight()) {
-                                    System.out.println(nextTile.getID() + " || " + currentTile.getID());
                                     if (!(0 == nextTile.isEqualTo(currentTile))) {
                                         canvas.drawBitmap(nextTile.getBlock(i, j).getImage(), ((i + currentTile.getLength()) * 100) - move_const, (j * 100) + 10, paint);
                                     }
@@ -177,14 +173,62 @@ public class GameView extends SurfaceView implements Runnable {
         if((currentTile.getBlock(currentTile.getLength()-(screenWidth/100), currentTile.getHeight() -1).getX() * 100) - move_const <= 200)
         {
             nextTile = currentTile.getNextTile();
-            System.out.println("PPPPPPPPPPPPP " + nextTile.getLength() + " || " + nextTile.getHeight());
         }
 
+<<<<<<< HEAD
         if(player.getYVal() >= 2000){
             gameOver();
         }
+=======
+        detectCollisions();
+>>>>>>> 8593dc6d52fffb1d3cb7494095df1eff104179cf
 
     }
+
+    static boolean isColliding = false;
+
+    public void detectCollisions(){
+        int currentX = (300 + move_const)/100;
+        int highestY = 9;
+        for(int i = 0; i < currentTile.getHeight(); i++)
+        {
+            if(currentTile.getBlock(currentX, i) != null)
+            {
+                highestY = i;
+                break;
+            }
+            else
+            {
+                highestY = -1;
+            }
+        }
+
+        Rect Blockrect = new Rect();
+        boolean checkGroundCollision;
+
+        if(highestY >= 0) {
+            Blockrect.top = (currentTile.getHeight() - 1) * 100;
+            Blockrect.left = 200;
+            Blockrect.right = 300;
+            Blockrect.bottom = screenHeight;
+
+
+            checkGroundCollision = Rect.intersects(player.getHitBox(), Blockrect);
+        }
+        else
+        {
+            checkGroundCollision = false;
+        }
+
+        if(checkGroundCollision){
+            isColliding = true;
+        } else {
+            player.isFalling = true;
+            isColliding = false;
+        }
+    }
+
+
 
     /**
      * ignore for now

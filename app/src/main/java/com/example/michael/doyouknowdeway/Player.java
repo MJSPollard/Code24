@@ -19,19 +19,23 @@ public class Player {
   int screenHeight;
   boolean isJumping = false;
   boolean isFalling = false;
+  Bitmap playerImage;
+  Bitmap playerImageResized;
   private Rect hitBox;
   private MediaPlayer jumpNoise;
 
   public Player(Context context, int screenX, int screenY){
     screenWidth = screenX;
     screenHeight = screenY;
-    Xval = 100;
+    Xval = 250;
     Yval = 720;
+    playerImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.knuckles_run);
+    playerImageResized = Bitmap.createScaledBitmap(playerImage, 200, 200, false);
+    hitBox = new Rect(Xval, Yval, playerImageResized.getWidth(), playerImageResized.getHeight());
   }
 
   public void update(){
     if(isJumping){
-
       Yval -= 30;
       if(Yval <= 400) {
         isJumping = false;
@@ -39,14 +43,18 @@ public class Player {
       }
     }
 
-    if(isFalling) {
+    else if(isFalling) {
       Yval += 30;
-      if(Yval >= screenHeight - 1200){
+      //change to when ground is hit
+      if(GameView.isColliding){
         isFalling = false;
       }
     }
-
-
+    //update the hitbox location with the ball as it moves
+    hitBox.top = Yval;
+    hitBox.bottom = Yval + playerImageResized.getHeight();
+    hitBox.left = Xval;
+    hitBox.right = Xval + playerImageResized.getWidth();
   }
 
 
