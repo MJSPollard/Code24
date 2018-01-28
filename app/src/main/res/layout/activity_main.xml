@@ -37,12 +37,12 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_weight="1"
-        android:fontFamily="sans-serif"
+        android:fontFamily="casual"
         android:gravity="center"
         android:text="De Way"
         android:textColor="@android:color/black"
         android:textSize="50dp"
-        tools:fontFamily="casual" />
+         />
 
     <ImageView
         android:id="@+id/imageView5"
