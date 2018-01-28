@@ -55,7 +55,7 @@ public class Tile {
                     {
                         tileMap[i][j] = new Block(blocks[1], i, j);
                     }
-                    else if(i == 7 || i == 8 || i == 9)
+                    else if(i == 8 || i == 9)
                     {
                         continue;
                     }
