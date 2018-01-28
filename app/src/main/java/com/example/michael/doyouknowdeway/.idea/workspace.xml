@@ -17,7 +17,10 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
+              <folding>
+                <element signature="e#3336#3337#0" expanded="true" />
+                <element signature="e#3367#3368#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -40,14 +43,14 @@
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1561#1562#0" expanded="true" />
-                <marker date="1517116451000" expanded="true" signature="1034:1463" ph="{...}" />
-                <marker date="1517116451000" expanded="true" signature="1530:1534" ph=" }" />
-                <marker date="1517116451000" expanded="true" signature="1561:1567" ph=" { " />
-                <marker date="1517116451000" expanded="true" signature="1581:1585" ph=" }" />
-                <marker date="1517116451000" expanded="true" signature="1609:1615" ph=" { " />
-                <marker date="1517116451000" expanded="true" signature="1627:1631" ph=" }" />
-                <marker date="1517116451000" expanded="true" signature="1655:1661" ph=" { " />
-                <marker date="1517116451000" expanded="true" signature="1673:1677" ph=" }" />
+                <marker date="1517113155000" expanded="true" signature="1034:1463" ph="{...}" />
+                <marker date="1517113155000" expanded="true" signature="1530:1534" ph=" }" />
+                <marker date="1517113155000" expanded="true" signature="1561:1567" ph=" { " />
+                <marker date="1517113155000" expanded="true" signature="1581:1585" ph=" }" />
+                <marker date="1517113155000" expanded="true" signature="1609:1615" ph=" { " />
+                <marker date="1517113155000" expanded="true" signature="1627:1631" ph=" }" />
+                <marker date="1517113155000" expanded="true" signature="1655:1661" ph=" { " />
+                <marker date="1517113155000" expanded="true" signature="1673:1677" ph=" }" />
               </folding>
             </state>
           </provider>
@@ -57,10 +60,8 @@
         <entry file="file://$PROJECT_DIR$/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="495">
-              <caret line="42" column="5" lean-forward="true" selection-start-line="42" selection-start-column="5" selection-end-line="42" selection-end-column="5" />
-              <folding>
-                <marker date="1517116451000" expanded="true" signature="1183:1354" ph="{...}" />
-              </folding>
+              <caret line="41" column="5" lean-forward="true" selection-start-line="41" selection-start-column="5" selection-end-line="41" selection-end-column="5" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -68,8 +69,8 @@
       <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../../../../../AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="17" lean-forward="true" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+            <state relative-caret-position="90">
+              <caret line="6" column="41" lean-forward="false" selection-start-line="6" selection-start-column="41" selection-end-line="6" selection-end-column="41" />
               <folding />
             </state>
           </provider>
@@ -584,14 +585,14 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1561#1562#0" expanded="true" />
-            <marker date="1517116451000" expanded="true" signature="1034:1463" ph="{...}" />
-            <marker date="1517116451000" expanded="true" signature="1530:1534" ph=" }" />
-            <marker date="1517116451000" expanded="true" signature="1561:1567" ph=" { " />
-            <marker date="1517116451000" expanded="true" signature="1581:1585" ph=" }" />
-            <marker date="1517116451000" expanded="true" signature="1609:1615" ph=" { " />
-            <marker date="1517116451000" expanded="true" signature="1627:1631" ph=" }" />
-            <marker date="1517116451000" expanded="true" signature="1655:1661" ph=" { " />
-            <marker date="1517116451000" expanded="true" signature="1673:1677" ph=" }" />
+            <marker date="1517113155000" expanded="true" signature="1034:1463" ph="{...}" />
+            <marker date="1517113155000" expanded="true" signature="1530:1534" ph=" }" />
+            <marker date="1517113155000" expanded="true" signature="1561:1567" ph=" { " />
+            <marker date="1517113155000" expanded="true" signature="1581:1585" ph=" }" />
+            <marker date="1517113155000" expanded="true" signature="1609:1615" ph=" { " />
+            <marker date="1517113155000" expanded="true" signature="1627:1631" ph=" }" />
+            <marker date="1517113155000" expanded="true" signature="1655:1661" ph=" { " />
+            <marker date="1517113155000" expanded="true" signature="1673:1677" ph=" }" />
           </folding>
         </state>
       </provider>
@@ -599,10 +600,8 @@
     <entry file="file://$PROJECT_DIR$/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="495">
-          <caret line="42" column="5" lean-forward="true" selection-start-line="42" selection-start-column="5" selection-end-line="42" selection-end-column="5" />
-          <folding>
-            <marker date="1517116451000" expanded="true" signature="1183:1354" ph="{...}" />
-          </folding>
+          <caret line="41" column="5" lean-forward="true" selection-start-line="41" selection-start-column="5" selection-end-line="41" selection-end-column="5" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -625,7 +624,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#3336#3337#0" expanded="true" />
+            <element signature="e#3367#3368#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -639,8 +641,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../../../../../AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="17" lean-forward="true" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+        <state relative-caret-position="90">
+          <caret line="6" column="41" lean-forward="false" selection-start-line="6" selection-start-column="41" selection-end-line="6" selection-end-column="41" />
           <folding />
         </state>
       </provider>
