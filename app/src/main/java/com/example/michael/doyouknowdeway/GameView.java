@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.media.MediaPlayer;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -78,7 +77,7 @@ public class GameView extends SurfaceView implements Runnable {
                 currentTile = nextTile;
             }
 
-            if(currentTile.equals(initTile)) {
+            if(0 == currentTile.isEqual(initTile)) {
                 for (int i = 0; i < currentTile.getLength(); i++) {
                     for (int j = 0; j < currentTile.getHeight(); j++) {
                         if (currentTile.getBlock(i, j) != null) {
@@ -98,7 +97,9 @@ public class GameView extends SurfaceView implements Runnable {
                     for (int j = 0; j < currentTile.getHeight(); j++) {
                         if (currentTile.getBlock(i, j) != null) {
                             canvas.drawBitmap(currentTile.getBlock(i, j).getImage(), (i * 100) - move_const, (j * 100) + 10, paint);
-                            if(!(nextTile.equals(currentTile)))
+
+
+                            if(!(0 == nextTile.isEqual(currentTile)))
                             {
                                 canvas.drawBitmap(nextTile.getBlock(i, j).getImage(), (i * 100) + currentTile.getLength() - move_const, (j * 100) + 10, paint);
                             }
@@ -154,7 +155,9 @@ public class GameView extends SurfaceView implements Runnable {
 
         if(touchAction == MotionEvent.ACTION_DOWN){
             jumpNoise.start();
-            player.isJumping = true;
+            if(!player.isJumping) {
+                player.isJumping = true;
+            }
         }
 
         return true;
