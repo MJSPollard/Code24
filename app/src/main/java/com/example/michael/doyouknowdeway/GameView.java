@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.media.MediaPlayer;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -28,7 +29,6 @@ public class GameView extends SurfaceView implements Runnable {
     private int screenWidth = 0, screenHeight = 0, move_const;
     private Player player;
     private MediaPlayer jumpNoise;
-    private MediaPlayer backgroundMusic;
     private Bitmap backgroundImage;
 
     private Bitmap backgroundImageResized;
@@ -55,10 +55,8 @@ public class GameView extends SurfaceView implements Runnable {
     public void run() {
         backgroundMusic.start();
         initTile = new Tile(context, 2, screenWidth * 2, screenHeight);
-
-        initTile.fillTile();
         currentTile = initTile;
-
+        initTile.fillTile();
         while (isPlaying) {
             update();
             draw();
@@ -81,9 +79,7 @@ public class GameView extends SurfaceView implements Runnable {
                 currentTile = nextTile;
             }
 
-            System.out.println(currentTile.getID() + " || " + initTile.getID());
             if(0 == currentTile.isEqual(initTile)) {
-                System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
                 for (int i = 0; i < currentTile.getLength(); i++) {
                     for (int j = 0; j < currentTile.getHeight(); j++) {
                         if (currentTile.getBlock(i, j) != null) {
@@ -94,7 +90,6 @@ public class GameView extends SurfaceView implements Runnable {
             }
             else
             {
-                System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
                 if(player.isJumping)
                 {
                     move_const += 10;
@@ -104,8 +99,6 @@ public class GameView extends SurfaceView implements Runnable {
                     for (int j = 0; j < currentTile.getHeight(); j++) {
                         if (currentTile.getBlock(i, j) != null) {
                             canvas.drawBitmap(currentTile.getBlock(i, j).getImage(), (i * 100) - move_const, (j * 100) + 10, paint);
-
-
                             if(!(0 == nextTile.isEqual(currentTile)))
                             {
                                 canvas.drawBitmap(nextTile.getBlock(i, j).getImage(), (i * 100) + currentTile.getLength() - move_const, (j * 100) + 10, paint);
@@ -162,9 +155,7 @@ public class GameView extends SurfaceView implements Runnable {
 
         if(touchAction == MotionEvent.ACTION_DOWN){
             jumpNoise.start();
-            if(!player.isJumping) {
-                player.isJumping = true;
-            }
+            player.isJumping = true;
         }
 
         return true;

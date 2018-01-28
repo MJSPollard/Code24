@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startButton = findViewById(R.id.imageButton2);
         startButton.setOnClickListener(this);
 
-        deway = MediaPlayer.create(this, R.raw.do_u_kno_de_way);
+        deway = MediaPlayer.create(this, R.raw.do_u_kno_de_way.wav);
     }
 
     public void onClick(View v) {
