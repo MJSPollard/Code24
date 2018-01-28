@@ -177,7 +177,6 @@ public class GameView extends SurfaceView implements Runnable {
             nextTile = currentTile.getNextTile();
             System.out.println("PPPPPPPPPPPPP " + nextTile.getLength() + " || " + nextTile.getHeight());
         }
-
     }
 
     /**
