@@ -15,6 +15,7 @@ public class Block {
     private Bitmap blockImageResized;
     private Boolean harmful;
 
+
     Block(Block copy, int x, int y)
     {
         this.blockImage = copy.blockImage;
@@ -39,7 +40,7 @@ public class Block {
         }
         else if(selection == 2){
             blockImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.detergent_pod);
-            blockImageResized = Bitmap.createScaledBitmap(blockImage, 200, 200, false);
+            blockImageResized = Bitmap.createScaledBitmap(blockImage, 150, 150, false);
             harmful = true;
         }
     }
