@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 
 public class Tile {
-    private int length, height, ID;
+    private int length, height;
     private Block[] blocks = new Block[5];
     private Block[][] tileMap;
     //private int[] possible_next_tile;
@@ -27,19 +27,16 @@ public class Tile {
     //Creates the initial starting tile
     Tile(Context context, int number_block_types, int length, int height)
     {
-        ID = 0;
-        //create block classes?
+        //create block classes
         for(int i = 0; i < number_block_types; i++) {
-            // blocks[i] = new Block("grass")
             blocks[i] = new Block(context, i);
         }
             tileMap = new Block[(length + 100)/100][height/100];
             this.height = height/100;
             this.length = (length + 100)/100;
     }
-    Tile(int length, int height, int ID, Block[] blocks)
+    Tile(int length, int height, Block[] blocks)
     {
-        this.ID = ID + 1;
         this.blocks = blocks;
         tileMap = new Block[length][height];
         this.height = height;
@@ -48,7 +45,7 @@ public class Tile {
 
     public void fillTile()
     {
-        tidePods = new ArrayList<Double>();
+        tidePods = new ArrayList<>();
 
         //add block to Tile
         for(int i = 0; i < tileMap.length; i++)
@@ -71,7 +68,8 @@ public class Tile {
                 else if(j == tileMap[i].length - 3){
                      if(i == 5){
                         tileMap[i][j] = new Block(blocks[2], i, j);
-                        tidePods.add((double) i + (double) (j/10));
+                        double k = (double) j;
+                        tidePods.add((double) i + (j/10.00));
                     }
                 }
 
@@ -102,10 +100,10 @@ public class Tile {
         tileMap[x][y] = null;
     }
 
-    public int[] getBlockPosition(int x, int y)
-    {
-        return tileMap[x][y].getPosition();
-    }
+//    public int[] getBlockPosition(int x, int y)
+//    {
+//        return tileMap[x][y].getPosition();
+//    }
 
     Block getBlock(int x, int y)
     {
@@ -114,7 +112,7 @@ public class Tile {
 
     Tile getNextTile()
     {
-        Tile nextTile = new Tile(length, height, ID, blocks);
+        Tile nextTile = new Tile(length, height, blocks);
         nextTile.fillTile();
         return nextTile;
     }
@@ -122,15 +120,5 @@ public class Tile {
     ArrayList<Double> getTidePods()
     {
         return tidePods;
-    }
-
-    public int getID()
-    {
-        return ID;
-    }
-
-    int isEqualTo(Tile compare)
-    {
-        return ID - compare.getID();
     }
 }
