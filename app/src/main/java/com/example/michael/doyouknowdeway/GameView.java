@@ -59,10 +59,6 @@ public class GameView extends SurfaceView implements Runnable {
        run2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.ugandan_knuckle);
        playerJumpImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.knucklesjump);
 //        run2Resized = Bitmap.createScaledBitmap(run2, screenX, screenY, false);
-<<<<<<< HEAD
-
-=======
->>>>>>> 38a4328d05ad582c87bd3ddceb52008676383a95
         jumpNoise = MediaPlayer.create(context, R.raw.jump_takeoff);
         backgroundMusic = MediaPlayer.create(context, R.raw.music_baby);
         screenWidth = screenX;
@@ -116,7 +112,7 @@ public class GameView extends SurfaceView implements Runnable {
             canvas.drawBitmap(podCountResized, 0, 0, paint);
             canvas.drawBitmap(backgroundImageResized, 0, 0, paint);
             //System.out.println("ghghghg " + (currentTile.getBlock(currentTile.getLength() - 1, currentTile.getHeight() - 1).getX() *100 - (10 * move_const)));
-            if(1 >= (currentTile.getBlock(currentTile.getLength() - 1, currentTile.getHeight() - 1).getX() *100) - move_const)
+            if(-100 >= (currentTile.getBlock(currentTile.getLength() - 1, currentTile.getHeight() - 1).getX() *100) - move_const)
             {
                 System.out.println("hello");
                 currentTile = new Tile(nextTile);
@@ -143,7 +139,7 @@ public class GameView extends SurfaceView implements Runnable {
                                 if (i < nextTile.getLength() && j < nextTile.getHeight()) {
                                     System.out.println(nextTile.getID() + " || " + currentTile.getID());
                                     if (!(0 == nextTile.isEqualTo(currentTile))) {
-                                        canvas.drawBitmap(nextTile.getBlock(i, j).getImage(), ((i + currentTile.getLength() + 1) * 100) - move_const, (j * 100) + 10, paint);
+                                        canvas.drawBitmap(nextTile.getBlock(i, j).getImage(), ((i + currentTile.getLength()) * 100) - move_const, (j * 100) + 10, paint);
                                     }
                                 }
                             }
