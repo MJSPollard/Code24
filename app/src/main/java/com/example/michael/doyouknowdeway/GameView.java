@@ -373,23 +373,14 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     public void gameOver() {
-        /*endImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.end_game);
+        endImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.end_game);
         endImageResized = Bitmap.createScaledBitmap(endImage, 100, 200, false);
-        canvas.drawBitmap(endImageResized, screenWidth/2, screenHeight/2, paint);*/
-
-        redoButton = findViewById(R.id.imageButton2);
-        redoButton.setOnClickListener(this);
-    }
-
-    public void redoClick(View v){
-        if(v == redoButton){
-            context.startActivity(new Intent(context,MainActivity.class));
-        }
         canvas.drawBitmap(endImageResized, screenWidth/2, screenHeight/2, paint);
         backgroundMusic.stop();
         endGameSound.start();
         context.startActivity(new Intent(context,MainActivity.class));
     }
+
 
     public boolean onTouchEvent(MotionEvent event){
         int touchAction = event.getAction();
