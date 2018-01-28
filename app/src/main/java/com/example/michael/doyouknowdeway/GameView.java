@@ -20,7 +20,7 @@ import android.view.SurfaceView;
 public class GameView extends SurfaceView implements Runnable {
 
 
-    volatile boolean isPlaying = true;
+    volatile boolean isPlaying = true, init = true;
     private Thread gameThread = null;
     private SurfaceHolder surfaceHolder;
     private Canvas canvas;
@@ -32,7 +32,7 @@ public class GameView extends SurfaceView implements Runnable {
     private Bitmap backgroundImage;
     private MediaPlayer backgroundMusic;
     private Bitmap backgroundImageResized;
-    Tile initTile, currentTile, nextTile;
+    Tile currentTile, nextTile;
     Paint paint = new Paint();
 
 
@@ -49,8 +49,7 @@ public class GameView extends SurfaceView implements Runnable {
         backgroundMusic.start();
         this.context = context;
         player = new Player(context, screenX, screenY);
-        initTile = new Tile(context, 2, screenWidth * 2, screenHeight);
-        currentTile = initTile;
+        currentTile = new Tile(context, 2, screenWidth * 2, screenHeight);
         currentTile.fillTile();
 
         surfaceHolder = getHolder();
@@ -80,8 +79,8 @@ public class GameView extends SurfaceView implements Runnable {
             {
                 currentTile = nextTile;
             }
-            System.out.println(currentTile.getID() + " || " + initTile.getID());
-            if(0 == currentTile.isEqualTo(initTile)) {
+            if(init) {
+                init = false;
                 for (int i = 0; i < currentTile.getLength(); i++) {
                     for (int j = 0; j < currentTile.getHeight(); j++) {
                         if (currentTile.getBlock(i, j) != null) {
@@ -92,7 +91,6 @@ public class GameView extends SurfaceView implements Runnable {
             }
             else
             {
-                System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
                 if(player.isJumping)
                 {
                     move_const += 10;
@@ -125,7 +123,6 @@ public class GameView extends SurfaceView implements Runnable {
         player.update();
         if(player.getXVal() >= currentTile.getLength()*100 - 1700)
         {
-            System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
             nextTile = currentTile.getNextTile();
         }
     }
