@@ -59,18 +59,19 @@ public class GameView extends SurfaceView implements Runnable {
         if (surfaceHolder.getSurface().isValid()) {
             canvas = surfaceHolder.lockCanvas();
             canvas.drawColor(Color.GREEN);
-            canvas.drawBitmap(player.getPlayerImage(),player.getXVal(), player.getYVal(), paint);
 
-            for(int i = 0; i < initTile.getHeight(); i++)
+            for(int i = 0; i < initTile.getLength(); i++)
             {
-                for(int j = 0; j < initTile.getLength(); j++)
+                for(int j = 0; j < initTile.getHeight(); j++)
                 {
                     if(initTile.getBlock(i,j) != null) {
-                        System.out.println("WORKEY");
-                        canvas.drawBitmap(initTile.getBlock(i, j).getImage(), i, j, paint);
+                        canvas.drawBitmap(initTile.getBlock(i, j).getImage(), i*100, j*100, paint);
                     }
                 }
             }
+
+            canvas.drawBitmap(player.getPlayerImage(),player.getXVal(), player.getYVal(), paint);
+
             //releases the canvas to be redrawn again
             surfaceHolder.unlockCanvasAndPost(canvas);
         }
