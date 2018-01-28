@@ -49,6 +49,7 @@ public class GameView extends SurfaceView implements Runnable {
     private Bitmap run2;
     private Bitmap playerJumpImage;
     boolean isRun1 = false;
+    private ImageButton redoButton;
 
 
     public GameView(Context context, int screenX, int screenY) {
@@ -205,7 +206,7 @@ public class GameView extends SurfaceView implements Runnable {
         }
         else
         {
-            passOver= 0;
+            passOver= -25;
         }
 
         for(int i = 0; i < currentTile.getHeight(); i++)
@@ -239,6 +240,35 @@ public class GameView extends SurfaceView implements Runnable {
         checkGroundCollision(highestY);
 
         checkTidePodCollision(currentTile, nextTile);
+
+        checkForwardCollision(nextTile, currentX, highestY, passOver);
+    }
+
+    public void checkForwardCollision(Tile next, int x, int y, int passOver)
+    {
+        boolean collision = false;
+        Rect rect = new Rect();
+
+        if(next != null && passOver >= 0)
+        {
+            rect.top = y * 100;
+            rect.bottom = screenHeight;
+            rect.left = passOver + (player.getBitmap().getWidth() / 2);
+            rect.right = passOver + (player.getBitmap().getWidth() / 2) + 100;
+
+             collision = Rect.intersects(player.getHitBox(), rect);
+        }
+        else
+        {
+            rect.top = y * 100;
+            rect.bottom = screenHeight;
+            rect.left = (x+1)* 100;
+            rect.right = (x+2) * 100;
+
+            collision = Rect.intersects(player.getHitBox(), rect);
+        }
+
+        //if collision is true, half player movement until its not true
     }
 
     public void checkTidePodCollision(Tile current, Tile next)
@@ -338,11 +368,26 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     public void gameOver() {
-        endImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.end_game);
+        /*endImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.end_game);
         endImageResized = Bitmap.createScaledBitmap(endImage, 100, 200, false);
+<<<<<<< HEAD
+        canvas.drawBitmap(endImageResized, screenWidth/2, screenHeight/2, paint);*/
+
+        redoButton = findViewById(R.id.imageButton2);
+        redoButton.setOnClickListener(this);
+
+
+    }
+
+    public void redoClick(View v){
+        if(v == redoButton){
+            context.startActivity(new Intent(context,MainActivity.class));
+        }
+=======
         canvas.drawBitmap(endImageResized, screenWidth/2, screenHeight/2, paint);
         backgroundMusic.stop();
         context.startActivity(new Intent(context,MainActivity.class));
+>>>>>>> e4f32b3b32d5ac8d56658896e4ae276233f79721
     }
 
     public boolean onTouchEvent(MotionEvent event){
