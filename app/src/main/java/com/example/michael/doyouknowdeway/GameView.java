@@ -49,15 +49,16 @@ public class GameView extends SurfaceView implements Runnable {
         backgroundMusic.start();
         this.context = context;
         player = new Player(context, screenX, screenY);
+        initTile = new Tile(context, 2, screenWidth * 2, screenHeight);
+        currentTile = initTile;
+        currentTile.fillTile();
+
         surfaceHolder = getHolder();
 
 
     }
 
     public void run() {
-        currentTile = new Tile(context, 2, screenWidth * 2, screenHeight);
-        //currentTile = initTile;
-        currentTile.fillTile();
         while (isPlaying) {
             update();
             draw();
@@ -79,9 +80,8 @@ public class GameView extends SurfaceView implements Runnable {
             {
                 currentTile = nextTile;
             }
-            System.out.println(currentTile.getID());
-            //System.out.println(initTile.getID());
-            if(0 == currentTile.getID()) {
+            System.out.println(currentTile.getID() + " || " + initTile.getID());
+            if(0 == currentTile.isEqualTo(initTile)) {
                 for (int i = 0; i < currentTile.getLength(); i++) {
                     for (int j = 0; j < currentTile.getHeight(); j++) {
                         if (currentTile.getBlock(i, j) != null) {

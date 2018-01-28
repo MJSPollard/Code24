@@ -87,7 +87,7 @@ public class Tile {
         return ID;
     }
 
-    int isEqual(Tile compare)
+    int isEqualTo(Tile compare)
     {
         return ID - compare.getID();
     }
