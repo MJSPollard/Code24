@@ -3,6 +3,7 @@ package com.example.michael.doyouknowdeway;
 import android.content.Context;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by Hughman on 1/27/2018.
@@ -14,6 +15,7 @@ public class Tile {
     private Block[][] tileMap;
     //private int[] possible_next_tile;
     private ArrayList<Double> tidePods;
+    private Random rand = new Random();
 
     Tile(Tile copy)
     {
@@ -46,43 +48,68 @@ public class Tile {
     public void fillTile()
     {
         tidePods = new ArrayList<>();
+        int random_height = rand.nextInt(height - 4);
+        int random_gap = rand.nextInt(length);
+        int random_plume = rand.nextInt(length);
+
+        while(random_plume == random_gap)
+        {
+            random_plume = rand.nextInt(length);
+        }
+        int scale = Math.abs(random_gap - random_plume);
+
 
         //add block to Tile
         for(int i = 0; i < tileMap.length; i++)
         {
+            int random_adjust = rand.nextInt(random_height);
+            int random_adjust2 = rand.nextInt(random_gap);
+
             for(int j = 0; j < tileMap[i].length; j++)
             {
+                int block_type = rand.nextInt(1);
+
                 if(j == tileMap[i].length - 1)
                 {
-                    if(i == 3) {
-                        tileMap[i][j] = new Block(blocks[1], i, j);
-                    }
-                    else if(i == 9)
-                    {
-                        continue;
-                    }
-                    else {
-                        tileMap[i][j] = new Block(blocks[0], i, j);
-                    }
+                    makeBlock(i, j, 0);
                 }
-                else if(j == tileMap[i].length - 3){
-                     if(i == 13){
-                        tileMap[i][j] = new Block(blocks[2], i, j);
-                        double k = (double) j;
-                        tidePods.add((double) i + (k/10.00));
-                        tidePods.add((double) i + (j/10.00));
-                    }
-                }
-
-                if(i == 8 && j >= tileMap[i].length - 3)
+                if(i == scale + random_adjust2 && j == tileMap[i].length - random_adjust)
                 {
-                    tileMap[i][j] = new Block(blocks[0], i, j);
+                         makeBlock(i, j, 2);
                 }
-                else if(i == 7 && j >= tileMap[i].length - 2)
+                if(i == random_gap - random_adjust2 && j == tileMap[i].length - random_adjust)
                 {
-                    tileMap[i][j] = new Block(blocks[0], i, j);
+                    makeBlock(i, j, block_type);
+                }
+                if(i == random_gap && j <= tileMap[i].length)
+                {
+                    continue;
+                }
+                if(i == scale && j >= tileMap[i].length - random_height)
+                {
+                    makeBlock(i, j, 0);
+                }
+                if(i == scale - 1 && j >= tileMap[i].length - random_height - random_adjust)
+                {
+                    makeBlock(i, j, 0);
+                }
+                if(i == scale - 2 && j >= tileMap[i].length - random_height - random_adjust)
+                {
+                    makeBlock(i, j, 0);
+                }
+                if(i == scale - 3 && j >= tileMap[i].length - 1)
+                {
+                    makeBlock(i, j, 0);
                 }
             }
+        }
+    }
+
+    private void makeBlock(int i, int j, int k) {
+        tileMap[i][j] = new Block(blocks[k], i, j);
+        if(k == 3)
+        {
+            tidePods.add((double) i + (j/10.00));
         }
     }
 
@@ -123,7 +150,24 @@ public class Tile {
 
     Tile getNextTile()
     {
-        Tile nextTile = new Tile(length, height, blocks);
+        Tile nextTile = new Tile(this);
+        int randomizer = rand.nextInt(length/2);
+        if(rand.nextBoolean())
+        {
+            nextTile = new Tile(length + randomizer, height, blocks);
+        }
+        else
+        {
+           if(length - randomizer <= 20)
+           {
+               randomizer = rand.nextInt(randomizer);
+               nextTile = new Tile(length + randomizer, height, blocks);
+           }
+           else
+           {
+               nextTile = new Tile(length - randomizer, height, blocks);
+           }
+        }
         nextTile.fillTile();
         return nextTile;
     }
