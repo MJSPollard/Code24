@@ -102,10 +102,11 @@ public class GameView extends SurfaceView implements Runnable {
 
             canvas.drawBitmap(backgroundImageResized, 0, 0, paint);
 
-            if(player.getXVal() >= currentTile.getLength()*100 - 25)
+            if(player.getXVal() >= currentTile.getBlock(currentTile.getLength() - 1, currentTile.getHeight() - 1).getX() *100 - ((100 * move_const) + 25))
             {
-                System.out.println("fuckfuck fuck");
+                System.out.println("fuckfuckfuck");
                 currentTile = new Tile(nextTile);
+                move_const = 0;
             }
             if(init) {
                 init = false;
@@ -152,8 +153,7 @@ public class GameView extends SurfaceView implements Runnable {
      */
     public void update() {
         player.update();
-        System.out.println(player.getXVal() + "ZZZZZZZZZZZ");
-        if(player.getXVal() >= currentTile.getLength()*100 - 2000)
+        if((currentTile.getBlock(currentTile.getLength()-20, currentTile.getHeight() -1).getX() * 100) - 100* move_const <= 200)
         {
             nextTile = currentTile.getNextTile();
         }

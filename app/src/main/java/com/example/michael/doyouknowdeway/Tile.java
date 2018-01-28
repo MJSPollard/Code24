@@ -50,7 +50,7 @@ public class Tile {
             {
                 if(j == tileMap[i].length - 1)
                 {
-                    if(i == 14)
+                    if(i == 3)
                     {
                         tileMap[i][j] = new Block(blocks[1], i, j);
                     }
