@@ -41,7 +41,12 @@ public class Tile {
             {
                 if(j == tileMap[i].length - 1)
                 {
-                    tileMap[i][j] = new Block(blocks[0], i, j);
+                    if(j % 2 == 0) {
+                        tileMap[i][j] = new Block(blocks[0], i, j);
+                    }
+                    else{
+                        tileMap[i][j] = new Block(blocks[1], i, j);
+                    }
                 }
             }
         }
