@@ -34,7 +34,7 @@ public class GameView extends SurfaceView implements Runnable {
     private Activity activity;
     private int screenWidth = 0, screenHeight = 0, move_const = 1;
     private Player player;
-    private MediaPlayer jumpNoise;
+    private MediaPlayer jumpNoise, eatNoise;
     private Bitmap backgroundImage;
     private MediaPlayer backgroundMusic;
     private Bitmap backgroundImageResized;
@@ -66,6 +66,7 @@ public class GameView extends SurfaceView implements Runnable {
        playerJumpImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.knucklesjump);
 //        run2Resized = Bitmap.createScaledBitmap(run2, screenX, screenY, false);
         jumpNoise = MediaPlayer.create(context, R.raw.jump_takeoff);
+        eatNoise = MediaPlayer.create(context, R.raw.eat_1);
         backgroundMusic = MediaPlayer.create(context, R.raw.music_baby);
         screenWidth = screenX;
         screenHeight = screenY;
@@ -249,6 +250,7 @@ public class GameView extends SurfaceView implements Runnable {
 
                 if(hit)
                 {
+                    eatNoise.start();
                     scoreCount++;
                     nextTile.setNullBlock(x, y);
                 }
