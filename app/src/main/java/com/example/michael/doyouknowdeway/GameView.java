@@ -24,7 +24,6 @@ public class GameView extends SurfaceView implements Runnable {
     private Activity activity;
     private int screenWidth = 0, screenHeight = 0;
     private Player player;
-    private Block block;
     Tile initTile;
     Paint paint = new Paint();
 
@@ -67,7 +66,7 @@ public class GameView extends SurfaceView implements Runnable {
                 for(int j = 0; j < initTile.getLength(); j++)
                 {
                     if(initTile.getBlock(i,j) != null) {
-                        //System.out.println("YOOOOOOYOOO");
+                        System.out.println("WORKEY");
                         canvas.drawBitmap(initTile.getBlock(i, j).getImage(), i, j, paint);
                     }
                 }
