@@ -380,7 +380,14 @@ public class GameView extends SurfaceView implements Runnable {
         backgroundMusic.stop();
         endGameSound.start();
         canvas.drawText("Your Score: " + mystr, screenWidth/2, screenHeight/2, textPaint);
-        TimeUnit.SECONDS.sleep(3);
+            try
+            {
+                Thread.sleep(1000);
+            }
+            catch(InterruptedException ex)
+            {
+                Thread.currentThread().interrupt();
+            }
         context.startActivity(new Intent(context,MainActivity.class));
     }
 
