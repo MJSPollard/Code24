@@ -13,6 +13,10 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 /**
  * Created by michael on 1/27/18.
  */
@@ -33,11 +37,22 @@ public class GameView extends SurfaceView implements Runnable {
     private MediaPlayer backgroundMusic;
     private Bitmap backgroundImageResized;
     Tile currentTile, nextTile;
+    private ScheduledExecutorService executorService;
     Paint paint = new Paint();
+
+    private Bitmap run1;
+    private Bitmap run1Resized;
+    boolean isRun1 = false;
 
 
     public GameView(Context context, int screenX, int screenY) {
         super(context);
+        backgroundImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.background_sky);
+        backgroundImageResized = Bitmap.createScaledBitmap(backgroundImage, screenX, screenY, false);
+
+        backgroundImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.background_sky);
+        backgroundImageResized = Bitmap.createScaledBitmap(backgroundImage, screenX, screenY, false);
+
         backgroundImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.background_sky);
         backgroundImageResized = Bitmap.createScaledBitmap(backgroundImage, screenX, screenY, false);
 
@@ -53,6 +68,18 @@ public class GameView extends SurfaceView implements Runnable {
         currentTile.fillTile();
 
         surfaceHolder = getHolder();
+
+
+
+//        executorService = Executors.newSingleThreadScheduledExecutor();
+//        executorService.scheduleAtFixedRate(new Runnable() {
+//            @Override
+//            public void run() {
+//                if(!isRun1) {
+//
+//                }
+//            }
+//        }, 0, 1, TimeUnit.SECONDS);
 
 
     }
