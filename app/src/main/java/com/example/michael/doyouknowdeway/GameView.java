@@ -117,8 +117,8 @@ public class GameView extends SurfaceView implements Runnable {
             canvas.drawColor(Color.WHITE);
             canvas.drawBitmap(backgroundImageResized, 0, 0, paint);
             canvas.drawBitmap(podCountResized, 0, 0, paint);
-            canvas.drawText(Integer.toString(scoreCount), 250, 20, paint);
-
+            String mystr = Integer.toString(scoreCount);
+            canvas.drawText(mystr, 250, 20, paint);
 
             if(-100 >= (currentTile.getBlock(currentTile.getLength() - 1, currentTile.getHeight() - 1).getX() *100) - move_const)
             {
