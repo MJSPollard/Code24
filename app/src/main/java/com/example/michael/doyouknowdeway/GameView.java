@@ -30,6 +30,7 @@ public class GameView extends SurfaceView implements Runnable {
     private Player player;
     private MediaPlayer jumpNoise;
     private Bitmap backgroundImage;
+    private Bitmap backgroundImageResized;
     Tile initTile;
     Paint paint = new Paint();
 
@@ -37,6 +38,7 @@ public class GameView extends SurfaceView implements Runnable {
     public GameView(Context context, int screenX, int screenY) {
         super(context);
         backgroundImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.background_sky);
+        backgroundImageResized = Bitmap.createScaledBitmap(backgroundImage, screenX, screenY, false);
         jumpNoise = MediaPlayer.create(context, R.raw.jump_takeoff);
         screenWidth = screenX;
         screenHeight = screenY;
@@ -66,8 +68,7 @@ public class GameView extends SurfaceView implements Runnable {
             canvas = surfaceHolder.lockCanvas();
             canvas.drawColor(Color.WHITE);
 
-            canvas.drawBitmap(backgroundImage, 0, 0, paint);
-
+            canvas.drawBitmap(backgroundImageResized, 0, 0, paint);
 
 
             if(init) {
@@ -158,6 +159,9 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
 
+    /**
+     * Resume the game
+     */
     public void resume() {
         isPlaying = true;
         gameThread = new Thread(this);
