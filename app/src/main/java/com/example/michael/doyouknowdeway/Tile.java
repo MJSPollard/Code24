@@ -54,7 +54,7 @@ public class Tile {
                     if(i == 3) {
                         tileMap[i][j] = new Block(blocks[1], i, j);
                     }
-                    else if(i == 8 || i == 9)
+                    else if(i == 9)
                     {
                         continue;
                     }
@@ -66,6 +66,15 @@ public class Tile {
                      if(i == 5){
                         tileMap[i][j] = new Block(blocks[2], i, j);
                     }
+                }
+
+                if(i == 8 && j >= tileMap[i].length - 3)
+                {
+                    tileMap[i][j] = new Block(blocks[0], i, j);
+                }
+                else if(i == 7 && j >= tileMap[i].length - 2)
+                {
+                    tileMap[i][j] = new Block(blocks[0], i, j);
                 }
             }
         }
