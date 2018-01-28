@@ -27,7 +27,7 @@ public class GameView extends SurfaceView implements Runnable {
     volatile boolean isPlaying = true, init = true, isPassOver = true;
     private Thread gameThread = null;
     private SurfaceHolder surfaceHolder;
-    private Canvas canvas;
+    private Canvas canvas;gi
     private Context context;
     private Activity activity;
     private int screenWidth = 0, screenHeight = 0, move_const = 1;
