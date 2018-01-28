@@ -187,7 +187,6 @@ public class GameView extends SurfaceView implements Runnable {
             gameOver();
         }
         detectCollisions();
->
     }
 
     static boolean isColliding = false;
