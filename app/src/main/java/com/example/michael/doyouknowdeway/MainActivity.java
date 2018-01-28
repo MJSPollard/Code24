@@ -8,10 +8,11 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button startButton;
+    private ImageButton startButton;
     private MediaPlayer mp;
 
     @Override
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         //initialize buttons
-        startButton = (Button) findViewById(R.id.startButton);
+        startButton = findViewById(R.id.imageButton2);
         startButton.setOnClickListener(this);
 
 

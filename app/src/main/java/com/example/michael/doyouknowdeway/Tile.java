@@ -15,6 +15,7 @@ public class Tile {
     //Creates the initial starting tile
     public Tile(Context context, int number_block_types, int length, int height)
     {
+        System.out.println("Height = " + height);
         //create block classes?
         for(int i = 0; i < number_block_types; i++)
         {
@@ -32,11 +33,12 @@ public class Tile {
     public void fillTile()
     {
         //add block to Tile
-        for(int i = 0; i < length; i++)
+        for(int i = 0; i < tileMap.length; i++)
         {
-            for(int j = 0; j < height; j++)
+            for(int j = 0; j < tileMap[i].length; j++)
             {
-                if(j == height)
+             //   System.out.println("Height = " + height);
+                if(i == 1)
                 {
                     tileMap[i][j] = new Block(blocks[0], i, j);
                 }

@@ -50,7 +50,7 @@
         android:layout_alignLeft="@+id/Title"
         android:layout_alignStart="@+id/Title"
         android:layout_below="@+id/Title"
-        android:background="clear"
+        android:background="@android:color/transparent"
         app:srcCompat="@drawable/playbutton" />
 
 </RelativeLayout>

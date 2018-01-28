@@ -67,6 +67,7 @@ public class GameView extends SurfaceView implements Runnable {
                 for(int j = 0; j < initTile.getLength(); j++)
                 {
                     if(initTile.getBlock(i,j) != null) {
+                        //System.out.println("YOOOOOOYOOO");
                         canvas.drawBitmap(initTile.getBlock(i, j).getImage(), i, j, paint);
                     }
                 }
