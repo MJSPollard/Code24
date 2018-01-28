@@ -23,11 +23,15 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Created by michael on 1/27/18.
+ * The big class that does most of the work for the code, sets the overall view of the game, getting
+ * the character, tiles, and player motions all together for a working game. Took us the most time
+ * to work on with many bugs occuring along the wae.
  */
 
 public class GameView extends SurfaceView implements Runnable {
 
-
+    //many values used later in the class such as integers for locations on screen, sounds for game
+    //bitmaps for images and text box holders
     volatile boolean isPlaying = true, init = true, isPassOver = true;
     private Thread gameThread = null;
     private SurfaceHolder surfaceHolder;
@@ -56,7 +60,8 @@ public class GameView extends SurfaceView implements Runnable {
     boolean isRun1 = false;
     private ImageButton redoButton;
 
-
+    //starts of the program, creating the background for the game based on the dimensions of the
+    //phone being used
     public GameView(Context context, int screenX, int screenY) {
         super(context);
 
@@ -124,7 +129,7 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     /**
-     * Redraws the screen in the new positions
+     * Redraws the screen in the new positions, creating continuous movement for the game
      */
     public void draw() {
         if (surfaceHolder.getSurface().isValid()) {
@@ -201,6 +206,7 @@ public class GameView extends SurfaceView implements Runnable {
 
     static boolean isColliding = false;
 
+    //detects collisions so the player can collect tide pods and jump off of surfaces
     public void detectCollisions(){
         int highestY = 9, passOver;
         int currentX = (300 + move_const)/100;
@@ -250,6 +256,7 @@ public class GameView extends SurfaceView implements Runnable {
         checkForwardCollision(nextTile, currentX, highestY, passOver);
     }
 
+    //for running into walls
     public void checkForwardCollision(Tile next, int x, int y, int passOver)
     {
         boolean collision = false;
@@ -277,6 +284,7 @@ public class GameView extends SurfaceView implements Runnable {
         //if collision is true, half player movement until its not true
     }
 
+    //for collecting the juicy tide pods
     public void checkTidePodCollision(Tile current, Tile next)
     {
         if(next != null && !isPassOver)
@@ -317,6 +325,7 @@ public class GameView extends SurfaceView implements Runnable {
 
     }
 
+    //compliment to the previous method
     private boolean podCollision(int x, int y) {
         Rect tideRect = new Rect();
         tideRect.top = y * 100;
@@ -327,6 +336,7 @@ public class GameView extends SurfaceView implements Runnable {
         return Rect.intersects(player.getHitBox(), tideRect);
     }
 
+    //for jumping off of the ground, compliment to above methods
     private void checkGroundCollision(int highestY) {
         Rect blockRect = new Rect();
         boolean GroundCollision;
@@ -373,6 +383,7 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
+    //end game code, for when the player falls, gets pushed off screen, or runs out of life.
     public void gameOver() {
         endImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.end_game);
         endImageResized = Bitmap.createScaledBitmap(endImage, 100, 200, false);
@@ -392,6 +403,7 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
 
+    //handles the player touching the screen to jump
     public boolean onTouchEvent(MotionEvent event){
         int touchAction = event.getAction();
 
@@ -408,7 +420,7 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     /**
-     * Pause game
+     * Pause game (to be implemented later)
      */
     public void pause() {
         isPlaying = false;

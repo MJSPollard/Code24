@@ -1,3 +1,10 @@
+/**
+ * Authors: Hugh Jackovivh, Austin Johnson, Cory Petersen, Mike Pollard, Matt Sagen
+ * Description: Main class for Da Wae app
+ * Code24 - 1/27/2018
+ */
+
+
 package com.example.michael.doyouknowdeway;
 
 import android.content.Intent;
@@ -36,8 +43,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         deway = MediaPlayer.create(this, R.raw.do_u_kno_de_way);
     }
 
+    //method for when user selects play game
     public void onClick(View v) {
         if (v == startButton) {
+            //starts de wae
             deway.start();
             Intent myIntent = new Intent(this, GameActivity.class);
             myIntent.putExtra("levelValue", "1");

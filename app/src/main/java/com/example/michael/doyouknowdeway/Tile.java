@@ -7,6 +7,7 @@ import java.util.Random;
 
 /**
  * Created by Hughman on 1/27/2018.
+ * Tile Class for setting the structure and locations of blocks
  */
 
 public class Tile {
@@ -16,6 +17,7 @@ public class Tile {
     private ArrayList<Double> tidePods;
     private Random rand = new Random();
 
+    //copy for use in later parts of code
     Tile(Tile copy)
     {
         this.length = copy.length;
@@ -36,6 +38,8 @@ public class Tile {
             this.height = height/100;
             this.length = (length + 100)/100;
     }
+
+    //sets length and height of block (standardized)
     Tile(int length, int height, Block[] blocks)
     {
         this.blocks = blocks;
@@ -44,6 +48,7 @@ public class Tile {
         this.length = length;
     }
 
+    //fills the tile with a block
     public void fillTile()
     {
         tidePods = new ArrayList<>();
@@ -58,7 +63,8 @@ public class Tile {
         int scale = Math.abs(random_gap - random_plume);
 
 
-        //add block to Tile
+        //add block to Tile, compliment to the fillTile(), additionally adds random gaps in the game
+        //to present some level of difficulty
         for(int i = 0; i < tileMap.length; i++)
         {
             int random_adjust = rand.nextInt(random_height);
@@ -104,6 +110,7 @@ public class Tile {
         }
     }
 
+    //makes the block to be added up above
     private void makeBlock(int i, int j, int k) {
         tileMap[i][j] = new Block(blocks[k], i, j);
         if(k == 3)
@@ -112,6 +119,7 @@ public class Tile {
         }
     }
 
+    //getter methods
     int getHeight()
     {
         return height;
@@ -122,6 +130,7 @@ public class Tile {
         return length;
     }
 
+    //to make the gaps in the blocks
     public void setNullBlock(int x, int y)
     {
         tileMap[x][y] = null;
