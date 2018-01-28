@@ -22,7 +22,7 @@ public class GameActivity extends AppCompatActivity {
         //sets full screen mode
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+        setContentView(R.layout.gameactivity_view);
         //gets the screen size
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
