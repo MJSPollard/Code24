@@ -23,10 +23,10 @@ public class Player {
   private MediaPlayer jumpNoise;
 
   public Player(Context context, int screenX, int screenY){
-    screenWidth = screenY;
-    screenHeight = screenX;
-    Xval = 200;
-    Yval = screenHeight - 1200;
+    screenWidth = screenX;
+    screenHeight = screenY;
+    Xval = 100;
+    Yval = 720;
   }
 
   public void update(){
