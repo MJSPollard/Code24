@@ -390,6 +390,7 @@ public class GameView extends SurfaceView implements Runnable{
         canvas.drawBitmap(endImageResized, screenWidth/2, screenHeight/2, paint);
         backgroundMusic.stop();
         endGameSound.start();
+        canvas.drawText("Your Score: " + mystr, screenWidth/2, screenHeight/2, textPaint);
         context.startActivity(new Intent(context,MainActivity.class));
     }
 
