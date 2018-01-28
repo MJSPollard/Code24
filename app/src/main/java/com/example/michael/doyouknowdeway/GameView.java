@@ -40,8 +40,8 @@ public class GameView extends SurfaceView implements Runnable {
     private ScheduledExecutorService executorService;
     Paint paint = new Paint();
 
-    private Bitmap run1;
-    private Bitmap run1Resized;
+    private Bitmap run1, podCount;
+    private Bitmap run1Resized, podCountResized;
     private Bitmap run2;
     private Bitmap playerJumpImage;
     boolean isRun1 = false;
@@ -52,8 +52,10 @@ public class GameView extends SurfaceView implements Runnable {
         backgroundImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.background_sky);
         backgroundImageResized = Bitmap.createScaledBitmap(backgroundImage, screenX, screenY, false);
 
+        podCount = BitmapFactory.decodeResource(context.getResources(), R.drawable.detergent_pod);
         run1 = BitmapFactory.decodeResource(context.getResources(), R.drawable.knuckles_run);
         run1Resized = Bitmap.createScaledBitmap(run1, 200, 200, false);
+        podCountResized = Bitmap.createScaledBitmap(podCount, 20, 20, false);
 
        run2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.ugandan_knuckle);
        playerJumpImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.knucklesjump);
@@ -109,12 +111,12 @@ public class GameView extends SurfaceView implements Runnable {
         if (surfaceHolder.getSurface().isValid()) {
             canvas = surfaceHolder.lockCanvas();
             canvas.drawColor(Color.WHITE);
-
+            canvas.drawBitmap(podCountResized, 0, 0, paint);
             canvas.drawBitmap(backgroundImageResized, 0, 0, paint);
 
             if(player.getXVal() >= currentTile.getBlock(currentTile.getLength() - 1, currentTile.getHeight() - 1).getX() *100 - ((100 * move_const) + 25))
             {
-                System.out.println("fuckfuckfuck");
+                System.out.println("hello");
                 currentTile = new Tile(nextTile);
                 move_const = 0;
             }
