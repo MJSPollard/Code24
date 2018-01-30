@@ -99,7 +99,6 @@ public class GameView extends SurfaceView implements Runnable{
         executorService.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
-                scoreCount++;
                 if(!player.isJumping) {
                     if (!isRun1) {
                         run1Resized = Bitmap.createScaledBitmap(run1, 200, 200, false);
@@ -299,8 +298,8 @@ public class GameView extends SurfaceView implements Runnable{
                 if(hit)
                 {
                     eatNoise.start();
-                    scoreCount++;
-//                    nextTile.setNullBlock(x, y);
+                    scoreCount += 10;
+                    nextTile.setNullBlock(x, y);
                 }
             }
         }
@@ -317,8 +316,9 @@ public class GameView extends SurfaceView implements Runnable{
                 if(hit)
                 {
                     eatNoise.start();
-                    scoreCount++;
-                    //currentTile.setNullBlock(x, y);
+                    scoreCount += 10;
+                    currentTile.setNullBlock(x, y);
+                    return;
                 }
             }
         }
@@ -333,7 +333,6 @@ public class GameView extends SurfaceView implements Runnable{
         tideRect.right = (x+1) * 100 - move_const;
         tideRect.bottom = (y+1) * 100;
 
-        System.out.println(Rect.intersects(player.getHitBox(), tideRect) + " LLLLLLLLLL");
         return Rect.intersects(player.getHitBox(), tideRect);
     }
 
