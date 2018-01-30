@@ -138,7 +138,7 @@ public class GameView extends SurfaceView implements Runnable{
             String mystr = Integer.toString(scoreCount);
 
 
-            if(-100 >= (currentTile.getLength() - 1) *100 - move_const)
+            if(0 >= (currentTile.getLength() * 100) - move_const)
             {
                 currentTile = new Tile(nextTile);
                 isPassOver = true;
@@ -148,7 +148,7 @@ public class GameView extends SurfaceView implements Runnable{
             if(init) {
                 init = false;
                 for (int i = 0; i < currentTile.getLength(); i++) {
-                    for (int j = 0; j < currentTile.getHeight(); j++) {
+                    for (int j = currentTile.getHeight() - 1; j >= 0; j--) {
                         if (currentTile.getBlock(i, j) != null) {
                             canvas.drawBitmap(currentTile.getBlock(i, j).getImage(), (i * 100), (j * 100) + 10, paint);
                         }
@@ -158,14 +158,14 @@ public class GameView extends SurfaceView implements Runnable{
             else
             {
                 for (int i = 0; i < currentTile.getLength(); i++) {
-                    for (int j = 0; j < currentTile.getHeight(); j++) {
+                    for (int j = currentTile.getHeight() - 1; j >= 0; j--) {
                         if (currentTile.getBlock(i, j) != null) {
                             canvas.drawBitmap(currentTile.getBlock(i, j).getImage(), (i * 100) - move_const, (j * 100) + 10, paint);
-                            if (nextTile != null) {
-                                if (i < nextTile.getLength() && j < nextTile.getHeight()) {
-                                    if(nextTile.getBlock(i, j) != null) {
-                                        canvas.drawBitmap(nextTile.getBlock(i, j).getImage(), ((i + currentTile.getLength()) * 100) - move_const, (j * 100) + 10, paint);
-                                    }
+                        }
+                        if (nextTile != null) {
+                            if (i < nextTile.getLength() && j < nextTile.getHeight()) {
+                                if (nextTile.getBlock(i, j) != null) {
+                                    canvas.drawBitmap(nextTile.getBlock(i, j).getImage(), ((i + currentTile.getLength()) * 100) - move_const, (j * 100) + 10, paint);
                                 }
                             }
                         }
