@@ -329,9 +329,9 @@ public class GameView extends SurfaceView implements Runnable{
     private boolean podCollision(int x, int y) {
         Rect tideRect = new Rect();
         tideRect.top = y * 100;
-        tideRect.left = x* 100 - move_const;
-        tideRect.right = (x+1) * 100 - move_const;
-        tideRect.bottom = (y+1) * 100;
+        tideRect.left = x* 100 - move_const + 10;
+        tideRect.right = (x+2) * 100 - move_const;
+        tideRect.bottom = (y+2) * 100 + 10;
 
         return Rect.intersects(player.getHitBox(), tideRect);
     }
