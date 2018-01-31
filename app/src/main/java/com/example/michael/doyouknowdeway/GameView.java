@@ -99,7 +99,6 @@ public class GameView extends SurfaceView implements Runnable{
         executorService.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
-                scoreCount++;
                 if(!player.isJumping) {
                     if (!isRun1) {
                         run1Resized = Bitmap.createScaledBitmap(run1, 200, 200, false);
@@ -138,7 +137,7 @@ public class GameView extends SurfaceView implements Runnable{
             String mystr = Integer.toString(scoreCount);
 
 
-            if(-100 >= (currentTile.getLength() - 1) *100 - move_const)
+            if(0 >= (currentTile.getLength() * 100) - move_const)
             {
                 currentTile = new Tile(nextTile);
                 isPassOver = true;
@@ -148,7 +147,7 @@ public class GameView extends SurfaceView implements Runnable{
             if(init) {
                 init = false;
                 for (int i = 0; i < currentTile.getLength(); i++) {
-                    for (int j = 0; j < currentTile.getHeight(); j++) {
+                    for (int j = currentTile.getHeight() - 1; j >= 0; j--) {
                         if (currentTile.getBlock(i, j) != null) {
                             canvas.drawBitmap(currentTile.getBlock(i, j).getImage(), (i * 100), (j * 100) + 10, paint);
                         }
@@ -158,14 +157,14 @@ public class GameView extends SurfaceView implements Runnable{
             else
             {
                 for (int i = 0; i < currentTile.getLength(); i++) {
-                    for (int j = 0; j < currentTile.getHeight(); j++) {
+                    for (int j = currentTile.getHeight() - 1; j >= 0; j--) {
                         if (currentTile.getBlock(i, j) != null) {
                             canvas.drawBitmap(currentTile.getBlock(i, j).getImage(), (i * 100) - move_const, (j * 100) + 10, paint);
-                            if (nextTile != null) {
-                                if (i < nextTile.getLength() && j < nextTile.getHeight()) {
-                                    if(nextTile.getBlock(i, j) != null) {
-                                        canvas.drawBitmap(nextTile.getBlock(i, j).getImage(), ((i + currentTile.getLength()) * 100) - move_const, (j * 100) + 10, paint);
-                                    }
+                        }
+                        if (nextTile != null) {
+                            if (i < nextTile.getLength() && j < nextTile.getHeight()) {
+                                if (nextTile.getBlock(i, j) != null) {
+                                    canvas.drawBitmap(nextTile.getBlock(i, j).getImage(), ((i + currentTile.getLength()) * 100) - move_const, (j * 100) + 10, paint);
                                 }
                             }
                         }
@@ -299,8 +298,8 @@ public class GameView extends SurfaceView implements Runnable{
                 if(hit)
                 {
                     eatNoise.start();
-                    scoreCount++;
-//                    nextTile.setNullBlock(x, y);
+                    scoreCount += 10;
+                    nextTile.setNullBlock(x, y);
                 }
             }
         }
@@ -317,8 +316,9 @@ public class GameView extends SurfaceView implements Runnable{
                 if(hit)
                 {
                     eatNoise.start();
-                    scoreCount++;
-                    //currentTile.setNullBlock(x, y);
+                    scoreCount += 10;
+                    currentTile.setNullBlock(x, y);
+                    return;
                 }
             }
         }
@@ -329,11 +329,10 @@ public class GameView extends SurfaceView implements Runnable{
     private boolean podCollision(int x, int y) {
         Rect tideRect = new Rect();
         tideRect.top = y * 100;
-        tideRect.left = x* 100 - move_const;
-        tideRect.right = (x+1) * 100 - move_const;
-        tideRect.bottom = (y+1) * 100;
+        tideRect.left = x* 100 - move_const + 10;
+        tideRect.right = (x+2) * 100 - move_const;
+        tideRect.bottom = (y+2) * 100 + 10;
 
-        System.out.println(Rect.intersects(player.getHitBox(), tideRect) + " LLLLLLLLLL");
         return Rect.intersects(player.getHitBox(), tideRect);
     }
 

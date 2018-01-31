@@ -42,6 +42,7 @@ public class Tile {
     //sets length and height of block (standardized)
     Tile(int length, int height, Block[] blocks)
     {
+        rand = new Random();
         this.blocks = blocks;
         tileMap = new Block[length][height];
         this.height = height;
@@ -94,7 +95,7 @@ public class Tile {
                     }
                     else
                     {
-                        makeBlock(1, j, 1);
+                        makeBlock(i, j, 1);
                     }
                 }
                 if(i == random_gap && j < tileMap[i].length)
@@ -103,11 +104,11 @@ public class Tile {
                 }
                 if(i == scale + random_adjust2 && j == tileMap[i].length - (random_adjust - 2))
                 {
-                    makeBlock(i, j, 2);
+                    makeBlock(i, j, 0);
                 }
                 if(i == random_gap + random_adjust2 && j == tileMap[i].length - (random_adjust - 2))
                 {
-                    makeBlock(i, j, 2);
+                    makeBlock(i, j, 0);
                 }
                 if(i == scale - 4 && j >= tileMap[i].length - random_height)
                 {
@@ -125,9 +126,9 @@ public class Tile {
                 {
                     makeBlock(i, j, 0);
                 }
-                if(i == random_gap - random_adjust2 && j == tileMap[i].length - random_adjust)
+                if(i == random_gap - random_adjust2 && j == tileMap[i].length - random_adjust - 3)
                 {
-                    makeBlock(i, j, block_type);
+                    makeBlock(i, j, 2);
                 }
                 if(i <= 10 && j == tileMap[i].length - 1)
                 {
@@ -140,7 +141,7 @@ public class Tile {
     //makes the block to be added up above
     private void makeBlock(int i, int j, int k) {
         tileMap[i][j] = new Block(blocks[k], i, j);
-        if(k == 3)
+        if(k == 2)
         {
             tidePods.add((double) i + (j/10.00));
         }
@@ -170,15 +171,10 @@ public class Tile {
             {
                 tidePods.remove(i);
                 i--;
-                break;
+                return;
             }
         }
     }
-
-//    public int[] getBlockPosition(int x, int y)
-//    {
-//        return tileMap[x][y].getPosition();
-//    }
 
     Block getBlock(int x, int y)
     {
