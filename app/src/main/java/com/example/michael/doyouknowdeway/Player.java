@@ -15,14 +15,14 @@ public class Player {
 
   //all initialized values for tracking location of the character in the app
   int Xval;
-  int Yval;
+  int Yval, Yval_jump_start;
   int screenWidth;
   int screenHeight, jumpCount = 0;
   boolean isJumping = false;
   boolean isFalling = false;
   Bitmap playerImage;
   Bitmap playerImageResized;
-  private Rect hitBox;
+  private Rect hitBox, feetBox;
   private MediaPlayer jumpNoise;
 
   //player constructor, creates the player in the image pane based on the size of the screen
@@ -35,14 +35,14 @@ public class Player {
     playerImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.knuckles_run);
     playerImageResized = Bitmap.createScaledBitmap(playerImage, 200, 200, false);
     hitBox = new Rect(Xval, Yval, playerImageResized.getWidth(), playerImageResized.getHeight());
+    feetBox = new Rect(Xval, Yval + playerImageResized.getHeight() - 10, playerImageResized.getWidth(), playerImageResized.getHeight());
   }
 
   //the main update method for moving the character up and down for jumps
   public void update(){
-    int currentY = playerImageResized.getHeight();
     if(isJumping){
       Yval -= 30;
-      if(Yval <= currentY + 10) {
+      if(Yval <= Yval_jump_start - 301) {
         isJumping = false;
         isFalling = true;
       }
@@ -76,6 +76,11 @@ public class Player {
     return hitBox;
   }
 
+  public Rect getFeetBox()
+  {
+    return feetBox;
+  }
+
   //getter methods
   public int getXVal(){
     return Xval;
@@ -93,6 +98,11 @@ public class Player {
   public void incrJump()
   {
     jumpCount++;
+  }
+
+  public void setYval(int val)
+  {
+    Yval_jump_start = val;
   }
 
 }

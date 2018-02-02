@@ -47,7 +47,7 @@ public class GameView extends SurfaceView implements Runnable{
     Paint paint = new Paint();
     Paint textPaint = new Paint();
     FireBall fireball;
-    private int scoreCount = 0;
+    private int scoreCount = 0, passOver;
     private Bitmap endImage;
     private Bitmap endImageResized;
     private Bitmap run1, podCount;
@@ -207,8 +207,8 @@ public class GameView extends SurfaceView implements Runnable{
 
     //detects collisions so the player can collect tide pods and jump off of surfaces
     public void detectCollisions(){
-        int highestY = 9, passOver;
-        int currentX = (300 + move_const)/100;
+        int highestY = 9;
+        int currentX = (250 + move_const)/100;
 
         if(currentX >= currentTile.getLength() && isPassOver)
         {
@@ -217,7 +217,7 @@ public class GameView extends SurfaceView implements Runnable{
         }
         else
         {
-            passOver= -25;
+            passOver= -25; //arbitrary
         }
 
         for(int i = 0; i < currentTile.getHeight(); i++)
@@ -299,7 +299,9 @@ public class GameView extends SurfaceView implements Runnable{
                 {
                     eatNoise.start();
                     scoreCount += 10;
+                    System.out.println("Cur Next: " + x + " || " + y);
                     nextTile.setNullBlock(x, y);
+                    return;
                 }
             }
         }
@@ -317,6 +319,7 @@ public class GameView extends SurfaceView implements Runnable{
                 {
                     eatNoise.start();
                     scoreCount += 10;
+                    System.out.println("Current: " + x + " || " + y);
                     currentTile.setNullBlock(x, y);
                     return;
                 }
@@ -328,10 +331,20 @@ public class GameView extends SurfaceView implements Runnable{
     //compliment to the previous method
     private boolean podCollision(int x, int y) {
         Rect tideRect = new Rect();
-        tideRect.top = y * 100;
-        tideRect.left = x* 100 - move_const + 10;
-        tideRect.right = (x+2) * 100 - move_const;
-        tideRect.bottom = (y+2) * 100 + 10;
+        if(isPassOver && x < 3)
+        {
+            System.out.println("TEST: " + x + " || " + y);
+            tideRect.top = (y * 100);
+            tideRect.left = x * 100 + passOver + 10;
+            tideRect.right = (x + 2) * 100 + passOver;
+            tideRect.bottom = (y + 2) * 100 + 10;
+        }
+        else {
+            tideRect.top = y * 100;
+            tideRect.left = x * 100 - move_const + 10;
+            tideRect.right = (x + 2) * 100 - move_const;
+            tideRect.bottom = (y + 2) * 100 + 10;
+        }
 
         return Rect.intersects(player.getHitBox(), tideRect);
     }
@@ -345,10 +358,11 @@ public class GameView extends SurfaceView implements Runnable{
             blockRect.top = (highestY) * 100;
             blockRect.left = 200;
             blockRect.right = 300;
-            blockRect.bottom = screenHeight;
+            //changed this valued -- this is to remind myself
+            blockRect.bottom = highestY * 100 + 10; //still needs work //make player hitbox just his feet
 
 
-            GroundCollision = Rect.intersects(player.getHitBox(), blockRect);
+            GroundCollision = Rect.intersects(player.getFeetBox(), blockRect);
         }
         else
         {
@@ -361,15 +375,6 @@ public class GameView extends SurfaceView implements Runnable{
             player.isFalling = true;
             isColliding = false;
         }
-    }
-
-
-    /**
-     * ignore for now
-     *
-     * @param s
-     */
-    public void setLevel(String s) {
     }
 
     /**
@@ -401,11 +406,13 @@ public class GameView extends SurfaceView implements Runnable{
             if(event.getX() < (screenWidth / 2)) {
                 jumpNoise.start();
                 if(!player.isJumping && !player.isFalling) {
+                    player.setYval(player.getYVal());
                     player.isJumping = true;
                     run1Resized = Bitmap.createScaledBitmap(playerJumpImage, 200, 200, false);
                 }
                 else if(player.getJumpCount() < 1)
                 {
+                    player.setYval(player.getYVal());
                     player.incrJump();
                     player.isJumping = true;
                     run1Resized = Bitmap.createScaledBitmap(playerJumpImage, 200, 200, false);
