@@ -34,6 +34,7 @@ public class Player {
     Yval = 720;
     playerImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.knuckles_run);
     playerImageResized = Bitmap.createScaledBitmap(playerImage, 200, 200, false);
+    //shouldn't his right side be xval + width?
     hitBox = new Rect(Xval, Yval, playerImageResized.getWidth(), playerImageResized.getHeight());
     feetBox = new Rect(Xval, Yval + playerImageResized.getHeight() - 10, playerImageResized.getWidth(), playerImageResized.getHeight());
   }
@@ -63,6 +64,11 @@ public class Player {
     hitBox.bottom = Yval + playerImageResized.getHeight();
     hitBox.left = Xval;
     hitBox.right = Xval + playerImageResized.getWidth();
+
+    feetBox.top = Yval + playerImageResized.getHeight() - 10;
+    feetBox.bottom = Yval + playerImageResized.getHeight();
+    feetBox.left = Xval;
+    feetBox.right = Xval + playerImageResized.getWidth();
   }
 
   //loads in the image for the ugandan knuckles
@@ -76,10 +82,7 @@ public class Player {
     return hitBox;
   }
 
-  public Rect getFeetBox()
-  {
-    return feetBox;
-  }
+  public Rect getFeetBox() { return feetBox; }
 
   //getter methods
   public int getXVal(){

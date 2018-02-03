@@ -355,14 +355,15 @@ public class GameView extends SurfaceView implements Runnable{
         boolean GroundCollision;
 
         if(highestY >= 0) {
-            blockRect.top = (highestY) * 100;
+            blockRect.top = (highestY) * 100 - 25;
             blockRect.left = 200;
             blockRect.right = 300;
             //changed this valued -- this is to remind myself
-            blockRect.bottom = highestY * 100 + 10; //still needs work //make player hitbox just his feet
+            blockRect.bottom = highestY * 100 + 25; //still needs work //make player hitbox just his feet
 
 
             GroundCollision = Rect.intersects(player.getFeetBox(), blockRect);
+            System.out.println("WWWWWW : " + GroundCollision);
         }
         else
         {
