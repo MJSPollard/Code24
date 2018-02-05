@@ -15,14 +15,14 @@ public class Player {
 
   //all initialized values for tracking location of the character in the app
   int Xval;
-  int Yval;
+  int Yval, Yval_jump_start;
   int screenWidth;
   int screenHeight, jumpCount = 0;
   boolean isJumping = false;
   boolean isFalling = false;
   Bitmap playerImage;
   Bitmap playerImageResized;
-  private Rect hitBox;
+  private Rect hitBox, feetBox;
   private MediaPlayer jumpNoise;
 
   //player constructor, creates the player in the image pane based on the size of the screen
@@ -34,15 +34,16 @@ public class Player {
     Yval = 720;
     playerImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.knuckles_run);
     playerImageResized = Bitmap.createScaledBitmap(playerImage, 200, 200, false);
+    //shouldn't his right side be xval + width?
     hitBox = new Rect(Xval, Yval, playerImageResized.getWidth(), playerImageResized.getHeight());
+    feetBox = new Rect(Xval, Yval + playerImageResized.getHeight() - 10, playerImageResized.getWidth(), playerImageResized.getHeight());
   }
 
   //the main update method for moving the character up and down for jumps
   public void update(){
-    int currentY = playerImageResized.getHeight();
     if(isJumping){
       Yval -= 30;
-      if(Yval <= currentY + 10) {
+      if(Yval <= Yval_jump_start - 301) {
         isJumping = false;
         isFalling = true;
       }
@@ -63,6 +64,11 @@ public class Player {
     hitBox.bottom = Yval + playerImageResized.getHeight();
     hitBox.left = Xval;
     hitBox.right = Xval + playerImageResized.getWidth();
+
+    feetBox.top = Yval + playerImageResized.getHeight() - 10;
+    feetBox.bottom = Yval + playerImageResized.getHeight();
+    feetBox.left = Xval;
+    feetBox.right = Xval + playerImageResized.getWidth();
   }
 
   //loads in the image for the ugandan knuckles
@@ -75,6 +81,8 @@ public class Player {
   public Rect getHitBox(){
     return hitBox;
   }
+
+  public Rect getFeetBox() { return feetBox; }
 
   //getter methods
   public int getXVal(){
@@ -93,6 +101,11 @@ public class Player {
   public void incrJump()
   {
     jumpCount++;
+  }
+
+  public void setYval(int val)
+  {
+    Yval_jump_start = val;
   }
 
 }

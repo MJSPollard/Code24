@@ -38,8 +38,6 @@ public class GameActivity extends AppCompatActivity {
         gameView = new GameView(this, size.x, size.y);
 
         Bundle bundle = getIntent().getExtras();
-        level = bundle.getString("levelValue");
-        gameView.setLevel(level);
 
         setContentView(R.layout.gameactivity_view);
         setContentView(gameView);
