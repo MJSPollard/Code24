@@ -22,13 +22,12 @@ import java.util.concurrent.TimeUnit;
  * Created by michael on 1/27/18.
  * The big class that does most of the work for the code, sets the overall view of the game, getting
  * the character, tiles, and player motions all together for a working game. Took us the most time
- * to work on with many bugs occuring along the wae.
+ * to work on with many bugs occuring along de wae.
  */
 
 public class GameView extends SurfaceView implements Runnable{
 
-    //many values used later in the class such as integers for locations on screen, sounds for game
-    //bitmaps for images and text box holders
+    //
     volatile boolean isPlaying = true, init = true, isPassOver = true;
     private Thread gameThread = null;
     private SurfaceHolder surfaceHolder;
@@ -44,9 +43,9 @@ public class GameView extends SurfaceView implements Runnable{
     private Bitmap backgroundImageResized;
     Tile currentTile, nextTile;
     private ScheduledExecutorService executorService;
-    Paint paint = new Paint();
-    Paint textPaint = new Paint();
-    FireBall fireball;
+    private Paint paint = new Paint();
+    private Paint textPaint = new Paint();
+    private FireBall fireball;
     private int scoreCount = 0, passOver;
     private Bitmap endImage;
     private Bitmap endImageResized;
@@ -54,7 +53,7 @@ public class GameView extends SurfaceView implements Runnable{
     private Bitmap run1Resized, podCountResized;
     private Bitmap run2;
     private Bitmap playerJumpImage;
-    boolean isRun1 = false;
+    private boolean isRun1 = false;
     private ImageButton redoButton;
 
     //starts of the program, creating the background for the game based on the dimensions of the
@@ -109,9 +108,7 @@ public class GameView extends SurfaceView implements Runnable{
                     }
                 }
             }
-        }, 0, 200, TimeUnit.MILLISECONDS);
-
-
+        }, 0, 200, TimeUnit.MILLISECONDS); //can change "speed" of run by altering the second param
     }
 
     /**
@@ -134,7 +131,7 @@ public class GameView extends SurfaceView implements Runnable{
             canvas.drawColor(Color.WHITE);
             canvas.drawBitmap(backgroundImageResized, 0, 0, paint);
             canvas.drawBitmap(podCountResized, 0, 0, paint);
-            String mystr = Integer.toString(scoreCount);
+            String scoreCountStr = Integer.toString(scoreCount);
 
 
             if(0 >= (currentTile.getLength() * 100) - move_const)
@@ -176,7 +173,7 @@ public class GameView extends SurfaceView implements Runnable{
                 canvas.drawBitmap(fireball.getImage(), fireball.getXVal(), fireball.getYVal(), paint);
             }
             canvas.drawBitmap(run1Resized,player.getXVal(), player.getYVal(), paint);
-            canvas.drawText(mystr, 120, 80, textPaint);
+            canvas.drawText(scoreCountStr, 120, 80, textPaint);
 
             //releases the canvas to be redrawn again
             surfaceHolder.unlockCanvasAndPost(canvas);
@@ -203,9 +200,14 @@ public class GameView extends SurfaceView implements Runnable{
         detectCollisions();
     }
 
+    //initially sets player to not be colliding - changed almost instantly
     static boolean isColliding = false;
 
-    //detects collisions so the player can collect tide pods and jump off of surfaces
+    //
+
+    /**
+     * Detects collisions so the player can collect tide pods and jump off of surfaces.
+     */
     public void detectCollisions(){
         int highestY = 9;
         int currentX = (250 + move_const)/100;
@@ -255,7 +257,13 @@ public class GameView extends SurfaceView implements Runnable{
         checkForwardCollision(nextTile, currentX, highestY, passOver);
     }
 
-    //for running into walls
+    /**
+     * Method used to check if the player has hit a wall in front of them.
+     * @param next - the next tile
+     * @param x - player x position
+     * @param y - player y position
+     * @param passOver - the location being passed over.
+     */
     public void checkForwardCollision(Tile next, int x, int y, int passOver)
     {
         boolean collision = false;
@@ -283,7 +291,11 @@ public class GameView extends SurfaceView implements Runnable{
         //if collision is true, half player movement until its not true
     }
 
-    //for collecting the juicy tide pods
+    /**
+     * Method that checks if a player has hit a tidepod, if so, adds to score count
+     * @param current - the current tile
+     * @param next - the next tile
+     */
     public void checkTidePodCollision(Tile current, Tile next)
     {
         if(next != null && !isPassOver)
@@ -349,7 +361,11 @@ public class GameView extends SurfaceView implements Runnable{
         return Rect.intersects(player.getHitBox(), tideRect);
     }
 
-    //for jumping off of the ground, compliment to above methods
+
+    /**
+     * Method used for jumping off of the ground.
+     * @param highestY
+     */
     private void checkGroundCollision(int highestY) {
         Rect blockRect = new Rect();
         boolean GroundCollision;
@@ -389,17 +405,55 @@ public class GameView extends SurfaceView implements Runnable{
         }
     }
 
-    //end game code, for when the player falls, gets pushed off screen, or runs out of life.
+    /**
+     * Method that
+     */
     public void gameOver() {
+        //end image is not currently working
         endImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.end_game);
         endImageResized = Bitmap.createScaledBitmap(endImage, 100, 200, false);
         canvas.drawBitmap(endImageResized, screenWidth/2, screenHeight/2, paint);
+
+        //free up memory from bitmaps
+        backgroundImage.recycle();
+        backgroundImage = null;
+
+        backgroundImageResized.recycle();
+        backgroundImageResized = null;
+
+        podCount.recycle();
+        podCount = null;
+
+        podCountResized.recycle();
+        podCountResized = null;
+
+        backgroundImage.recycle();
+        backgroundImage = null;
+
+        run1.recycle();
+        run1 = null;
+
+        run1Resized.recycle();
+        run1Resized = null;
+
+        run2.recycle();
+        run2 = null;
+        playerJumpImage.recycle();
+        playerJumpImage = null;
+
         backgroundMusic.stop();
+
+        Runtime.getRuntime().gc(); //manually run garbage collector
+
         endGameSound.start();
         context.startActivity(new Intent(context,MainActivity.class));
     }
 
-
+    /**
+     * Method used to dictate what to do when the android screen is touched.
+     * @param event - the type of touch on the screen
+     * @return - true when screen is touched
+     */
     public boolean onTouchEvent(MotionEvent event){
         int touchAction = event.getAction();
 
@@ -426,7 +480,7 @@ public class GameView extends SurfaceView implements Runnable{
     }
 
     /**
-     * Pause game (to be implemented later)
+     * Method that pauses the game when necessary (i.e when home button is pressed)
      */
     public void pause() {
         isPlaying = false;
@@ -438,7 +492,7 @@ public class GameView extends SurfaceView implements Runnable{
         }
     }
     /**
-     * Resume the game
+     * Resumes the game after a pause
      */
     public void resume() {
         isPlaying = true;
@@ -446,5 +500,7 @@ public class GameView extends SurfaceView implements Runnable{
         gameThread = new Thread(this);
         gameThread.start();
     }
+
+
 
 }
